@@ -1,40 +1,25 @@
-import { useEffect, useState } from "react";
-import { AppService } from "../../services";
+import React, { Suspense } from "react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Menu from "./menu/Menu";
+import Header from "./header/Header";
+
+const Home = React.lazy(() => import('./home/Home'));
+const User = React.lazy(() => import('./users/User'));
 
 const Admin = () => {
-    const [data, setData] = useState<[{ name: string }]>([{ name: '' }]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-    console.log(123);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const data = await AppService.createData();
-        console.log(data);
-      } catch (err) {
-        setError('Error fetching posts');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
 
   return (
-    <div>
-      Admin
-      <ul>
-        {data.map((i) => (
-          <li>
-            {i.name}
-          </li>
-        ))}
-      </ul>
+      <div className="container">
+        <Menu />
+        <div className="main-content">
+          <Header />
+          <Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                <Route index element={<Home />} />
+                <Route path="User" element={<User />} />
+              </Routes>
+            </Suspense>
+        </div>
     </div>
   );
   };

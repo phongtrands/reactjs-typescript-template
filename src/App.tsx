@@ -1,5 +1,6 @@
 
-import './App.css'
+// import './App.css'
+import './assets/styles/index.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/login/Login'
 import Admin from './pages/admin/Admin';
@@ -10,13 +11,13 @@ function App() {
   return (
     <>
       <Router>
-      <Routes>
-        <Route path="/Login" element={<Login />} />
-        <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Admin />} />
-        </Route>
-      </Routes>
-    </Router>
+        <Routes>
+          <Route path="/Login" element={<Login />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="*" element={<Admin />} />
+            </Route>
+        </Routes>
+      </Router>
     </>
   )
 }
