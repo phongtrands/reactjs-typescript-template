@@ -1,29 +1,13 @@
-import { lazy, StrictMode, Suspense } from 'react';
-import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './redux/store.ts';
+import ReactDOM from 'react-dom/client';
 
-import ErrorBoundary from '~/components/ErrorBoundary';
-import PrivateRoute from '~/components/PrivateRoute';
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-const LoginPage = lazy(() => import('~/pages/LoginPage'));
-const HomePage = lazy(() => import('~/pages/HomePage'));
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <ErrorBoundary>
-        <Suspense fallback={<div>Loading....</div>}>
-          <Routes>
-            <Route element={<PrivateRoute allowedRoles={['admin']} />}>
-              <Route path='/login' element={<LoginPage />} />
-            </Route>
-            <Route path='/home' element={<HomePage />} />
-          </Routes>
-        </Suspense>
-      </ErrorBoundary>
-    </BrowserRouter>
+root.render(
+  <Provider store={store}>
     <App />
-  </StrictMode>,
+  </Provider>,
 );
