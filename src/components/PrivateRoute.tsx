@@ -1,11 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-interface PrivateRouteProps {
-  allowedRoles: string[];
-}
-
-const PrivateRoute = ({ allowedRoles }: PrivateRouteProps) => {
-  console.log(allowedRoles);
+const PrivateRoute = () => {
   // const userRole: string | null = localStorage.getItem('userRole');
   // if (!userRole || !allowedRoles.includes(userRole)) {
   //   return <Navigate to='/login' replace />;

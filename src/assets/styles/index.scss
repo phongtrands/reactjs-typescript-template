@@ -1,0 +1,44 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 400px; /* Giới hạn chiều rộng của form */
+  padding: 30px;
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  .login-btn {
+    border-radius: 35px;
+  }
+  .login-title-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #444;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+}

@@ -1,8 +1,7 @@
 import { lazy, Suspense } from 'react';
-// import './index.css';
-import './assets/styles/index.css';
+import './assets/styles/index.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-// import './App.css';
 
 import ErrorBoundary from '~/components/ErrorBoundary';
 import PrivateRoute from '~/components/PrivateRoute';
@@ -17,8 +16,8 @@ function App() {
         <ErrorBoundary>
           <Suspense fallback={<div>Loading....</div>}>
             <Routes>
-              <Route element={<PrivateRoute allowedRoles={['admin']} />}>
-                <Route path='*' element={<HomePage />} />
+              <Route element={<PrivateRoute />}>
+                <Route path='/' element={<HomePage />} />
               </Route>
               <Route path='/login' element={<LoginPage />} />
             </Routes>
