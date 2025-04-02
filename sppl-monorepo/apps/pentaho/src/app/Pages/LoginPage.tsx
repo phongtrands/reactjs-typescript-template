@@ -1,5 +1,5 @@
 import { Button, Paper, TextField, Typography } from '@mui/material';
-import logo from '../../assets/images/singpools-logo.png';
+// import logo from '../../assets/image/singpools-logo.png';
 import { ChangeEvent, useState } from 'react';
 
 const LoginPage = () => {
@@ -24,7 +24,7 @@ const LoginPage = () => {
     <div className='container'>
       <Paper elevation={3} className='login-form'>
         <div>
-          <img src={logo} alt='Logo' className='logo' />
+          {/* <img src={logo} alt='Logo' className='logo' /> */}
         </div>
         <Typography className='login-title-text mt-3' variant='h5' component='h2' gutterBottom>
           DATA HUB LOGIN

@@ -23,21 +23,20 @@ export default [
           ],
         },
       ],
-      'prettier/prettier': [
-        'warn',
-        {
-          arrowParens: 'always',
-          semi: true,
-          trailingComma: 'all',
-          tabWidth: 2,
-          endOfLine: 'auto',
-          useTabs: false,
-          singleQuote: true,
-          printWidth: 60,
-          jsxSingleQuote: true,
-        },
-      ],
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
+  },
+  {
+    files: [
+      '**/*.ts',
+      '**/*.tsx',
+      '**/*.cts',
+      '**/*.mts',
+      '**/*.js',
+      '**/*.jsx',
+      '**/*.cjs',
+      '**/*.mjs',
+    ],
+    // Override or add rules here
+    rules: {},
   },
 ];
