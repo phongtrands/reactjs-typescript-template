@@ -1,0 +1,92 @@
+{
+  "name": "pentaho",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/pentaho/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "swc",
+        "outputPath": "dist/apps/pentaho",
+        "index": "apps/pentaho/src/index.html",
+        "baseHref": "/",
+        "main": "apps/pentaho/src/main.ts",
+        "tsConfig": "apps/pentaho/tsconfig.app.json",
+        "assets": ["apps/pentaho/src/favicon.ico", "apps/pentaho/src/assets"],
+        "styles": ["apps/pentaho/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "apps/pentaho/webpack.config.ts"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/pentaho/src/environments/environment.ts",
+              "with": "apps/pentaho/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "webpackConfig": "apps/pentaho/webpack.config.prod.ts"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/react:module-federation-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "pentaho:build",
+        "hmr": true,
+        "port": 4201
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "pentaho:build:development"
+        },
+        "production": {
+          "buildTarget": "pentaho:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "executor": "@nx/react:module-federation-static-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "serveTarget": "pentaho:serve"
+      },
+      "configurations": {
+        "development": {
+          "serveTarget": "pentaho:serve:development"
+        },
+        "production": {
+          "serveTarget": "pentaho:serve:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/pentaho/jest.config.ts"
+      }
+    }
+  }
+}
