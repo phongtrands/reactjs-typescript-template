@@ -15,6 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@datahub/components": ["libs/datahub/components/src/index.ts"],
+      "@datahub/domain": ["libs/datahub/domain/src/index.ts"],
+      "@datahub/feature": ["libs/datahub/feature/src/index.ts"],
+      "@datahub/utils": ["libs/datahub/utils/src/index.ts"],
+      "@shared/components": ["libs/shared/components/src/index.ts"],
       "datahub/Module": ["apps/datahub/src/remote-entry.ts"],
       "sapfin/Module": ["apps/sapfin/src/remote-entry.ts"]
     }

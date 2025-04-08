@@ -52,6 +52,11 @@
       ],
       "dependsOn": ["^build"],
       "cache": true
+    },
+    "@nx/vite:build": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "generators": {
@@ -68,9 +73,29 @@
       "library": {
         "style": "scss",
         "linter": "eslint",
-        "compiler": "swc"
+        "compiler": "swc",
+        "unitTestRunner": "jest"
       }
     }
   },
-  "defaultProject": "shell"
+  "defaultProject": "shell",
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "eslint:lint"
+      }
+    },
+    {
+      "plugin": "@nx/vite/plugin",
+      "options": {
+        "buildTargetName": "build",
+        "testTargetName": "test",
+        "serveTargetName": "serve",
+        "previewTargetName": "preview",
+        "serveStaticTargetName": "serve-static",
+        "typecheckTargetName": "typecheck"
+      }
+    }
+  ]
 }

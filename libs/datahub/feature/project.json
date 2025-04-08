@@ -1,0 +1,16 @@
+{
+  "name": "datahub-feature",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/datahub/feature/src",
+  "projectType": "library",
+  "tags": ["type:feature", "scope:datahub"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/datahub/feature/jest.config.ts"
+      }
+    }
+  }
+}
