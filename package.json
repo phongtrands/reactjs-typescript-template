@@ -2,7 +2,14 @@
   "name": "@sppl-web-apps/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "ng": "nx",
+    "start": "npm run lint && nx serve",
+    "dev": "npm run lint && nx serve --devRemotes=datahub,sapfin",
+    "build": "npm run lint && nx build",
+    "graph": "nx graph",
+    "lint": "nx run-many -t lint --skip-nx-cache"
+  },
   "private": true,
   "devDependencies": {
     "@eslint/js": "^9.8.0",

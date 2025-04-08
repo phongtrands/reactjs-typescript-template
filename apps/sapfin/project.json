@@ -1,7 +1,7 @@
 {
-  "name": "shell",
-  "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps//src",
+  "name": "sapfin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/sapfin/src",
   "projectType": "application",
   "tags": [],
   "targets": {
@@ -11,15 +11,15 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "swc",
-        "outputPath": "dist/apps/",
-        "index": "apps/src/index.html",
+        "outputPath": "dist/apps/sapfin",
+        "index": "apps/sapfin/src/index.html",
         "baseHref": "/",
-        "main": "apps//src/main.ts",
-        "tsConfig": "apps/tsconfig.app.json",
-        "assets": ["apps/src/favicon.ico", "apps/src/assets"],
-        "styles": ["apps/src/styles.scss"],
+        "main": "apps/sapfin/src/main.ts",
+        "tsConfig": "apps/sapfin/tsconfig.app.json",
+        "assets": ["apps/sapfin/src/favicon.ico", "apps/sapfin/src/assets"],
+        "styles": ["apps/sapfin/src/styles.scss"],
         "scripts": [],
-        "webpackConfig": "apps//webpack.config.ts"
+        "webpackConfig": "apps/sapfin/webpack.config.ts"
       },
       "configurations": {
         "development": {
@@ -31,8 +31,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/src/environments/environment.ts",
-              "with": "apps/src/environments/environment.prod.ts"
+              "replace": "apps/sapfin/src/environments/environment.ts",
+              "with": "apps/sapfin/src/environments/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -41,7 +41,7 @@
           "namedChunks": false,
           "extractLicenses": true,
           "vendorChunk": false,
-          "webpackConfig": "apps//webpack.config.prod.ts"
+          "webpackConfig": "apps/sapfin/webpack.config.prod.ts"
         }
       }
     },
@@ -49,16 +49,16 @@
       "executor": "@nx/react:module-federation-dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "shell:build",
+        "buildTarget": "sapfin:build",
         "hmr": true,
-        "port": 4200
+        "port": 4202
       },
       "configurations": {
         "development": {
-          "buildTarget": "shell:build:development"
+          "buildTarget": "sapfin:build:development"
         },
         "production": {
-          "buildTarget": "shell:build:production",
+          "buildTarget": "sapfin:build:production",
           "hmr": false
         }
       }
@@ -70,14 +70,14 @@
       "executor": "@nx/react:module-federation-static-server",
       "defaultConfiguration": "production",
       "options": {
-        "serveTarget": "shell:serve"
+        "serveTarget": "sapfin:serve"
       },
       "configurations": {
         "development": {
-          "serveTarget": "shell:serve:development"
+          "serveTarget": "sapfin:serve:development"
         },
         "production": {
-          "serveTarget": "shell:serve:production"
+          "serveTarget": "sapfin:serve:production"
         }
       }
     },
@@ -85,7 +85,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/jest.config.ts"
+        "jestConfig": "apps/sapfin/jest.config.ts"
       }
     }
   }

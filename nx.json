@@ -57,19 +57,20 @@
   "generators": {
     "@nx/react": {
       "application": {
-        "compiler": "swc", 
         "style": "scss",
         "linter": "eslint",
-        "bundler": "webpack"
+        "bundler": "webpack",
+        "compiler": "swc"
       },
       "component": {
         "style": "scss"
       },
       "library": {
-        "compiler": "swc", 
         "style": "scss",
-        "linter": "eslint"
+        "linter": "eslint",
+        "compiler": "swc"
       }
     }
-  }
+  },
+  "defaultProject": "shell"
 }

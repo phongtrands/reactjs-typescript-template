@@ -14,7 +14,7 @@ const config: ModuleFederationConfig = {
    * declare module 'my-external-remote';
    *
    */
-  remotes: [],
+  remotes: ['sapfin', 'datahub', 'sapfin'],
 };
 
 export default config;
