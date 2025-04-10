@@ -22,16 +22,16 @@ module.exports = [
             },
             {
               sourceTag: 'scope:shell',
-              onlyDependOnLibsWithTags: ['scope:datahub-app', 'scope:sapfin-app', 'scope:shared'],
+              onlyDependOnLibsWithTags: ['scope:datahub-app', 'scope:sapfin-app', 'scope:shared', 'scope:datahub'],
             },
             {
               sourceTag: 'scope:datahub-app',
               onlyDependOnLibsWithTags: ['scope:datahub', 'scope:shared'],
             },
-            {
-              sourceTag: 'type:app',
-              onlyDependOnLibsWithTags: ['type:feature', 'type:components'],
-            },
+            // {
+            //   sourceTag: 'type:app',
+            //   onlyDependOnLibsWithTags: ['type:feature', 'type:components'],
+            // },
             {
               sourceTag: 'scope:shared',
               onlyDependOnLibsWithTags: ['scope:shared'],

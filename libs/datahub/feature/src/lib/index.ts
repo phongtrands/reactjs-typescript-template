@@ -1,1 +1,1 @@
-export * from './datahub-main/datahub-main'
+export * from './datahub-main/index'

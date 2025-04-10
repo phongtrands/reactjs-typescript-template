@@ -20,6 +20,7 @@
       "@datahub/feature": ["libs/datahub/feature/src/index.ts"],
       "@datahub/utils": ["libs/datahub/utils/src/index.ts"],
       "@shared/components": ["libs/shared/components/src/index.ts"],
+      "@shared/services": ["libs/shared/services/src/index.ts"],
       "datahub/Module": ["apps/datahub/src/remote-entry.ts"],
       "sapfin/Module": ["apps/sapfin/src/remote-entry.ts"]
     }

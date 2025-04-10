@@ -1,1 +1,1 @@
-export * from './lib';
+export { default as PrivateRoute} from './lib/PrivateRoute'
