@@ -1,13 +1,22 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './App.module.scss';
-
-import NxWelcome from './nx-welcome';
+import { Route, Routes } from "react-router-dom";
+import { publicPaths, privatePaths} from '@datahub/feature'
+import  { PrivateRoute } from '@shared/components'
+import { Suspense } from "react";
 
 export function App() {
   return (
-    <div>
-      <NxWelcome title="datahub" />
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        {publicPaths?.map((i) => (
+          <Route path={i.path} element={<i.component />} />
+        ))}
+        <Route element={<PrivateRoute key='datahub' loginUrl='/datahub/login' />}>
+          {privatePaths?.map((i) => (
+            <Route path={i.path} element={<i.component />} />
+          ))}
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 
