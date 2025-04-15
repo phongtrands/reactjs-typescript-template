@@ -13,7 +13,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/datahub" replace />} />
         <Route path="/datahub/*" element={<Datahub />} />
-        <Route path="/sapfin" element={<Sapfin />} />
+        <Route path="/sapfin/*" element={<Sapfin />} />
       </Routes>
     </React.Suspense>
   );

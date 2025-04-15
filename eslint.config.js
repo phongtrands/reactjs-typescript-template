@@ -28,6 +28,10 @@ module.exports = [
               sourceTag: 'scope:datahub-app',
               onlyDependOnLibsWithTags: ['scope:datahub', 'scope:shared'],
             },
+            {
+              sourceTag: 'scope:sapfin-app',
+              onlyDependOnLibsWithTags: ['scope:sapfin', 'scope:shared'],
+            },
             // {
             //   sourceTag: 'type:app',
             //   onlyDependOnLibsWithTags: ['type:feature', 'type:components'],
