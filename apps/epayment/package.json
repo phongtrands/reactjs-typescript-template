@@ -1,0 +1,9 @@
+{
+  "name": "@sppl-monorepo/epayment",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "epayment",
+    "tags": ["scope:epayment"]
+  }
+}

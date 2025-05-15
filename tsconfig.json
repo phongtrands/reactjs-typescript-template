@@ -2,5 +2,24 @@
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./apps/sapfin"
+    },
+    {
+      "path": "./apps/epayment"
+    },
+    {
+      "path": "./apps/risk-monitoring"
+    },
+    {
+      "path": "./libs/shared/services"
+    },
+    {
+      "path": "./libs/shared/components"
+    },
+    {
+      "path": "./libs/shared/ui-components"
+    }
+  ]
 }

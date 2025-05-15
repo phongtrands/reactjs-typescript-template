@@ -1,0 +1,9 @@
+{
+  "name": "@sppl-monorepo/risk-monitoring",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "risk-monitoring",
+    "tags": ["scope:risk-monitoring"]
+  }
+}

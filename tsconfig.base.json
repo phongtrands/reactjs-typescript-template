@@ -5,9 +5,9 @@
     "emitDeclarationOnly": true,
     "importHelpers": true,
     "isolatedModules": true,
-    "lib": ["es2022"],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "lib": ["es2022", "DOM"],
+    "module": "esnext",
+    "moduleResolution": "node",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
@@ -16,6 +16,12 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "customConditions": ["development"]
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@shared/components": ["libs/shared/components/src/index.ts"],
+      "@shared/services": ["libs/shared/services/src/index.ts"],
+      "@shared/ui-components": ["libs/shared/ui-components/src/index.ts"]
+    }
   }
 }
