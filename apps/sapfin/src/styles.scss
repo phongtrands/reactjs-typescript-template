@@ -1,67 +1,64 @@
 @import 'bootstrap/scss/bootstrap';
 
-
-.sapfin-header {
-    background-color: #f5f5f5;
-    border-bottom: 1px solid #ddd;
-    .header-top {
-      position: relative;
-      background-color: #055bb1;
-      .logo {
-        img {
-          max-height: 40px;
-        }
-      }
-      .main-title {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: white;
-      }
-    }
-    .header-bottom {
-      font-size: 0.9rem;
-      color: white;
-      background-color: #18b2e6;
-      .subtitle {
-        font-weight: 500;
-      }
-      .user-info {
-        a {
-          color: white;
-          text-decoration: none;
-  
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-    }
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', sans-serif;
 }
-.sapfin-main-layout {
-    background-color: #f8f9fa; 
-    .sapfin-action-bar {
-        .sapfin-source-dropdown {
-            border:black;
-            background-color: #055bb1;
-            .sapfin-source-label {
-              font-weight: bold;
-              color: #fff;
-            }
-            .default-dropdown {
-              background: #fff;
-            }
-        }
+.header {
+  .top-bar {
+    background-color: #005b84;
+    .logo {
+      width: 50px;
+      height: 50px;
+      background-color: transparent; // placeholder cho logo
     }
-    .sapfin-main-content {
-      background-color: #fff;
-      padding: 1.5rem;
-      border-radius: 0.5rem;
-      box-shadow: 0 0 8px rgba(0,0,0,0.05);
-      .sap-response-title {
-        font-weight: bold;
-      }
-      .text-area {
-        width: 100%;
+    .title {
+      color: white;
+    }
+  }
+  .bottom-bar {
+    background-color: #0792c9;
+    .left {
+      font-size: 14px;
+    }
+    .right {
+      font-size: 14px;
+      .logout:hover {
+        text-decoration: underline;
       }
     }
+  }
+}
+
+.sapfin-action-bar {
+  .sapfin-source-dropdown {
+    border:black;
+    background-color: #005b84;
+    .sapfin-source-label {
+      font-weight: bold;
+      color: #fff;
+    }
+    .default-dropdown {
+      background: #fff;
+    }
+  }
+}
+
+.login-page {
+  height: 100vh;
+  background-color: #fff;
+
+  .login-box {
+    border: 2px solid #0077b6;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .underline {
+    width: 60px;
+    height: 3px;
+    background-color: #0077b6;
+    border-radius: 2px;
+  }
 }

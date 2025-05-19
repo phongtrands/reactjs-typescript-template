@@ -48,14 +48,14 @@ export default [
       curly: 'error',
       'no-multiple-empty-lines': ['error', { max: 1 }],
       'object-curly-spacing': ['error', 'always'],
-      'import/order': [
-        'warn',
-        {
-          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-          'newlines-between': 'always',
-          alphabetize: { order: 'asc', caseInsensitive: true },
-        },
-      ],
+      // 'import/order': [
+      //   'warn',
+      //   {
+      //     groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+      //     'newlines-between': 'always',
+      //     alphabetize: { order: 'asc', caseInsensitive: true },
+      //   },
+      // ],
     },
   },
 ];

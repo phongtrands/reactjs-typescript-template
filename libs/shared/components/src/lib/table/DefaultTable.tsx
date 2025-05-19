@@ -18,7 +18,7 @@ const DefaultTable = ({ isCheckBox = false }) => {
           <TableRow >
             <TableCell
               sx={{
-                backgroundColor: '#1565c0',
+                backgroundColor: '#005b84',
                 color: 'black',
                 fontWeight: 'bold',
               }}

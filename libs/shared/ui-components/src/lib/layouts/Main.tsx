@@ -1,22 +1,22 @@
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Button, InputLabel } from '@mui/material';
-import { DefaultTable } from '@shared/components';
+import { Button, InputLabel, TextareaAutosize } from '@mui/material';
+import { DefaultTable, Dropdown } from '@shared/components';
 
 const Main = () => {
   return (
-    <div className="sapfin-main-layout">
+    <div className="p-3">
         <div className="sapfin-action-bar py-2 px-4 bg-light d-flex justify-content-between align-items-center">
             <div className="sapfin-source-dropdown d-flex align-items-center gap-2">
                 <InputLabel className='sapfin-source-label' >Source</InputLabel>
-                {/* <DefaultDropdown /> */}
+                <Dropdown />
             </div>
         </div>
-        <div className="sapfin-main-content mt-4">
+        <div className="container-fluid shadow rounded bg-white mt-4">
             <div className="">
-                <div className="row">
+                <div className="row p-2">
                     <div className="col-7">
-                        <p className='sap-response-title'>Preview Folder</p>
+                        <h6 className="fw-bold mb-2">Preview Folder</h6>
                         <div className="row">
                             <div className="col px-0">
                                 <DefaultTable />
@@ -26,29 +26,36 @@ const Main = () => {
                             </div>
                         </div>
                         <div className='d-flex justify-content-end mt-1'>
-                            <Button className="ms-1" variant="outlined"  color="inherit">Reject</Button>
-                            <Button className="ms-1" variant="outlined"  color="inherit">Download</Button>
+                            <Button className="border border-secondary ms-1" variant="contained"  color="inherit">Reject</Button>
+                            <Button className="border border-secondary ms-1" variant="contained"  color="inherit">Download</Button>
 
                         </div>
                     </div>
                     <div className="col-1 d-flex justify-content-center align-items-center">
                         <div>
-                            <Button className='mb-1' variant="outlined" color="inherit" startIcon={<ArrowForwardIosIcon />}></Button>
-                            <Button className='mt-1' variant="outlined" color="inherit" startIcon={<ArrowBackIosNewIcon />}></Button>
+                            <Button className='border border-secondary mb-1' variant="contained" color="inherit" startIcon={<ArrowForwardIosIcon />}></Button>
+                            <Button className='border border-secondary mt-1' variant="contained" color="inherit" startIcon={<ArrowBackIosNewIcon />}></Button>
                         </div>
                     </div>
                     <div className="col-4">
-                        <p className='sap-response-title'>Upload Folder</p>
+                        <h6 className="fw-bold mb-2">Upload Folder</h6>
                         <DefaultTable />
                         <div className='d-flex justify-content-end mt-1'>
-                            <Button className="ms-1" variant="outlined"  color="inherit">Test Run</Button>
-                            <Button className="ms-1" variant="outlined"  color="inherit">Actual Run</Button>
+                            <Button className="border border-secondary ms-1" variant="contained"  color="inherit">Test Run</Button>
+                            <Button className="border border-secondary ms-1" variant="contained"  color="inherit">Actual Run</Button>
                         </div>
                     </div>
                 </div>
-                <div className='mt-3'>
-                    {/* <p className='sap-response-title'>SAP Response</p>
-                    <DefaultTextArea /> */}
+                <div className='container-fluid mt-3 pb-3'>
+                    <h6 className="fw-bold">SAP Response</h6>
+                    <TextareaAutosize
+                    className="form-control w-100"
+                    maxRows={4}
+                    minRows={4}
+                    aria-label="maximum height"
+                    placeholder="Maximum 4 rows"
+                    defaultValue={'qqqqqqqqqqqqqqqqqqqqqqqqq\nqqqqqqqqqqqqqqqqqqqqqqqqq'}
+                    />
                 </div>
             </div>
         </div>

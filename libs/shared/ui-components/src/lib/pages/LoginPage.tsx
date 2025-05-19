@@ -1,6 +1,6 @@
-import { Button, Paper, TextField, Typography } from '@mui/material';
-// import logo from '../../assets/image/singpools-logo.png';
+import { Box, Button, FormControlLabel, Paper, Switch, TextField, Typography } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
+import { Header } from '../layouts';
 
 const LoginPage = () => {
   const [userName, setUserName] = useState('');
@@ -21,46 +21,56 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='container'>
-      <Paper elevation={3} className='login-form'>
-        <div>
-          <img alt='Logo' className='logo' />
-        </div>
-        <Typography className='login-title-text mt-3' variant='h5' component='h2' gutterBottom>
-          DATA HUB LOGIN
-        </Typography>
-        <form className='ms-3 me-3'>
-          <div className='form-group'>
-            <div className='d-flex justify-content-start'>
-              <span>User Name:</span>
-            </div>
+    <div>
+      <Header></Header>
+      <div className="login-page d-flex justify-content-center align-items-center">
+        <Paper elevation={3} className="login-box p-4">
+          <Typography variant="h5" className="text-center fw-bold mb-2">
+            Login Now
+          </Typography>
+          <div className="underline mx-auto mb-4"></div>
+
+          <Box component="form" noValidate autoComplete="off">
             <TextField
-              placeholder='Enter your username'
+              label="Username"
+              variant="outlined"
               fullWidth
-              margin='normal'
-              value={userName}
-              onChange={onChange}
+              required
+              margin="normal"
               name='userName'
-            />
-          </div>
-          <div className='form-group'>
-            <div className='d-flex justify-content-start'>
-              <span>Password:</span>
-            </div>
-            <TextField
-              placeholder='Enter your password'
-              fullWidth
-              margin='normal'
-              value={password}
               onChange={onChange}
-              name='password'
+              value={userName}
             />
-          </div>
-          <Button className='login-btn' variant='contained' color='primary' fullWidth onClick={onClick}>
-            Login
-          </Button>
-        </form>
-      </Paper>
+            <TextField
+              label="Password"
+              type="password"
+              variant="outlined"
+              fullWidth
+              required
+              margin="normal"
+              name='password'
+              onChange={onChange}
+              value={password}
+            />
+            <FormControlLabel
+              control={<Switch defaultChecked color="primary" />}
+              label="Remember me"
+              className="mt-2"
+            />
+
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              className="mt-4"
+              disabled={ !( userName && password ) }
+              onClick={onClick}
+            >
+              Login
+            </Button>
+          </Box>
+        </Paper>
+      </div>
     </div>
   );
 };

@@ -29,5 +29,5 @@
     "eslint.config.cjs",
     "eslint.config.mjs"
   ],
-  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx", "../ui-components/src/lib/pages/HomePage.tsx", "../ui-components/src/lib/pages/LoginPage.tsx", "../ui-components/src/lib/layouts/Footer.tsx", "../ui-components/src/lib/layouts/Header.tsx", "../ui-components/src/lib/layouts/Main.tsx"]
+  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx", "../ui-components/src/lib/pages/sapfin-pages/HomePage.tsx", "../ui-components/src/lib/pages/LoginPage.tsx", "../ui-components/src/lib/layouts/Footer.tsx", "../ui-components/src/lib/layouts/Header.tsx", "../ui-components/src/lib/layouts/Main.tsx"]
 }

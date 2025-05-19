@@ -1,4 +1,4 @@
-import { Footer, Header, Main } from '../layouts';
+import { Footer, Header, Main } from '../../layouts';
 
 const HomePage = () => {
   return (
