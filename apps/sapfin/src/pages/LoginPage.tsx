@@ -1,6 +1,6 @@
 import { Box, Button, FormControlLabel, Paper, Switch, TextField, Typography } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
-import { Header } from '../layouts';
+import Header from '../components/layout/Header';
 
 const LoginPage = () => {
   const [userName, setUserName] = useState('');

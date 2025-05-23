@@ -19,7 +19,7 @@ const Header = () => {
           /> */}
 
           <Typography
-            variant="h6"
+            variant="h4"
             sx={{
               position: 'absolute',
               left: '50%',

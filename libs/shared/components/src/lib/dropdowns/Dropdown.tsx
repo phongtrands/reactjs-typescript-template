@@ -15,8 +15,7 @@ const DefaultDropDown = () => {
 
     return(
             <Select
-            id="default-dropdown"
-            className="default-dropdown"
+            sx={{ bgcolor: '#fff' }}
             value={value}
             onChange={handleChange}
             >
