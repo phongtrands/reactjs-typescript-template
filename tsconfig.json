@@ -20,6 +20,21 @@
     },
     {
       "path": "./libs/shared/ui-components"
+    },
+    {
+      "path": "./libs/config"
+    },
+    {
+      "path": "./libs/types"
+    },
+    {
+      "path": "./libs/utils"
+    },
+    {
+      "path": "./libs/services"
+    },
+    {
+      "path": "./libs/ui-shared"
     }
   ]
 }

@@ -57,7 +57,8 @@
   "workspaces": [
     "packages/*",
     "apps/*",
-    "libs/shared/*"
+    "libs/shared/*",
+    "libs/*"
   ],
   "dependencies": {
     "@emotion/react": "^11.14.0",
