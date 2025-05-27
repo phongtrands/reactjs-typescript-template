@@ -1,6 +1,6 @@
 import {
   Table, TableBody, TableCell, TableContainer, TableHead,
-  TableRow, Paper, TextField, CircularProgress,
+  TableRow, TextField, CircularProgress,
   IconButton,
   Box,
   Typography,

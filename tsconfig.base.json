@@ -16,7 +16,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "rootDir": ".",
+    // "rootDir": ".",
     "baseUrl": ".",
     "paths": {
       "@libs/config": ["libs/config/src/index.ts"],
