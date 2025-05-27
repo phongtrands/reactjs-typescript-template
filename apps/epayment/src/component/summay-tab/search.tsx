@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { SpButton, SpCalendar, SpDropdown } from '@shared/ui-components';
-import { Button, SelectChangeEvent } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material';
 import './search.scss';
+import { SpButton, SpCalendar, SpDropdown } from '@libs/ui-shared';
 
 const Search: React.FC = () => {
   const [bank, setBank] = useState<string | undefined>(undefined);

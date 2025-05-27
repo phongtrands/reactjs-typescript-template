@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SpTabs } from '@shared/ui-components';
+import { SpTabs } from '@libs/ui-shared';
 import Search from './summay-tab/search';
 
 const TabsEpayment = () => {

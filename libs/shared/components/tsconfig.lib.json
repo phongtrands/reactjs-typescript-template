@@ -34,6 +34,11 @@
     "../ui-components/src/lib/pages/LoginPage.tsx",
     "../ui-components/src/lib/layouts/Footer.tsx",
     "../ui-components/src/lib/layouts/Header.tsx",
-    "../ui-components/src/lib/layouts/Main.tsx"
+    "../ui-components/src/lib/layouts/Main.tsx",
+    "../../ui-shared/src/lib/components/tabs",
+    "../../ui-shared/src/lib/components/dropdown",
+    "../../ui-shared/src/lib/components/calendar",
+    "../../ui-shared/src/lib/components/button",
+    "../../ui-shared/src/lib/components/card"
   ]
 }

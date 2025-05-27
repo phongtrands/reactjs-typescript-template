@@ -1,4 +1,4 @@
-import { SpCard } from '@shared/ui-components';
+import { SpCard } from '@libs/ui-shared';
 
 const Header = () => {
   return (
@@ -9,12 +9,24 @@ const Header = () => {
             width: '75px',
             height: '75px',
           }}
-          src='../../../public/logo.png'
+          src='logo.png'
           alt='Company Logo'
         />
       }
       title='ePayment Recon'
-      footer='SAP Portal'
+      footer={
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <img
+            style={{
+              width: '100px',
+              height: '30px',
+            }}
+            src='sap_logo.png'
+            alt='sap Logo'
+          />
+          <span style={{ display: 'flex' }}>SAP Portal</span>
+        </div>
+      }
     />
   );
 };
