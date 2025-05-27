@@ -146,10 +146,9 @@ const Main = () => {
             SAP Response
           </Typography>
           <TextareaAutosize
-            style={{ width: '100%', padding: '8px' }}
+            style={{ width: '100%', padding: '8px', resize: 'none', overflow: 'auto', boxSizing: 'border-box' }}
             minRows={4}
             maxRows={4}
-            placeholder="Maximum 4 rows"
             defaultValue={'qqqqqqqqqqqqqqqqqqqqqqqqq\nqqqqqqqqqqqqqqqqqqqqqqqqq'}
           />
         </Box>
