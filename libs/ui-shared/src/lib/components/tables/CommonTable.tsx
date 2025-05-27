@@ -140,7 +140,6 @@ function CommonTable<T extends { id: string | number }>({
                   align={col.align || 'center'}
                   style={{ width: col.width }}
                   sx={{
-                    // border: '1px solid #ddd',
                     color: 'black',
                     fontWeight: 'bold',
                     backgroundColor: backgroundHeader ? String(backgroundHeader) : 'white',
