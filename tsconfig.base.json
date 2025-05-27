@@ -19,6 +19,11 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
+      "@libs/config": ["libs/config/src/index.ts"],
+      "@libs/services": ["libs/services/src/index.ts"],
+      "@libs/types": ["libs/types/src/index.ts"],
+      "@libs/ui-shared": ["libs/ui-shared/src/index.ts"],
+      "@libs/utils": ["libs/utils/src/index.ts"],
       "@shared/components": ["libs/shared/components/src/index.ts"],
       "@shared/services": ["libs/shared/services/src/index.ts"],
       "@shared/ui-components": ["libs/shared/ui-components/src/index.ts"]

@@ -3,7 +3,10 @@
   "include": [],
   "references": [
     {
-      "path": "../../libs/shared/ui-components"
+      "path": "../../libs/types"
+    },
+    {
+      "path": "../../libs/ui-shared"
     },
     {
       "path": "../../libs/shared/components"

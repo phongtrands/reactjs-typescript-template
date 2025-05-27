@@ -1,1 +1,1 @@
-export * from './lib/libs/types.js';
+export * from './lib/commonTable.js';
