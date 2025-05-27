@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SpTabs } from '@libs/ui-shared';
-import Search from './summay-tab/search';
+import SummaryTab from './summay-tab/summaryTab';
 
 const TabsEpayment = () => {
   const [activeTab, setActiveTab] = useState('summary');
@@ -16,7 +16,7 @@ const TabsEpayment = () => {
     {
       label: 'Summary',
       value: 'summary',
-      content: <Search />,
+      content: <SummaryTab />,
       isHidden: isHidden('summary'),
       onClick: () => setActiveTab('summary'),
     },
