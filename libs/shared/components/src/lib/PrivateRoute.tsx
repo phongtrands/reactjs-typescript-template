@@ -2,12 +2,12 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 interface PrivateRouteProps {
-  key: string;
+  storageKey: string;
   loginUrl: string;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ key, loginUrl }) => {
-  const token = localStorage.getItem(key);
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ storageKey, loginUrl }) => {
+  const token = localStorage.getItem(storageKey);
   if (token) {
     return <Navigate to={loginUrl} replace />;
   }
