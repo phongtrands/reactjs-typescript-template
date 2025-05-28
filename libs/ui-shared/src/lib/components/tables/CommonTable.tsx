@@ -22,7 +22,7 @@ function CommonTable<T extends { id: string | number }>({
   pagination = false,
   rowsPerPage = 5,
   maxHeight,
-  minHeight,
+  minHeight = 0,
   backgroundHeader,
   searchColumn,
   onChange,
@@ -126,7 +126,7 @@ function CommonTable<T extends { id: string | number }>({
       <TableContainer
         sx={{
         maxHeight: `${(rowsPerPage + 1) * 6}vh`,
-        minHeight: `${(rowsPerPage + 1) * 6}vh`,
+        minHeight: `${(minHeight + 1) * 6}vh`,
         overflowY: 'auto',
         border: '1px solid #ddd',
         }}
@@ -147,6 +147,8 @@ function CommonTable<T extends { id: string | number }>({
                     lineHeight: '6vh',
                     padding: 0,
                     pl: 1,
+                    pr: 1,
+                    border: '1px solid #ddd',
                   }}
                 >
                   {col.headerName}
@@ -174,6 +176,7 @@ function CommonTable<T extends { id: string | number }>({
                         pl: 1,
                         height: '6vh',
                         lineHeight: '6vh',
+                        border: '1px solid #ddd',
                       }}
                     >
                         {renderCellContent(row, col)}
