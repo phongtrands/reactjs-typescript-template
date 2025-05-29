@@ -1,7 +1,7 @@
-import { CommonTable, SpButton } from '@libs/ui-shared';
+import { Table, Button } from '@core/components';
 import { Box, Grid, IconButton, Paper, Typography } from '@mui/material';
 import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
-import { ColumnConfig } from '@libs/types';
+import { ColumnConfig } from '@core/types';
 
 const ExceptionsTab: React.FC = () => {
 
@@ -54,10 +54,10 @@ const ExceptionsTab: React.FC = () => {
                     <IconButton color='primary'>
                         <SaveAltOutlinedIcon />
                     </IconButton>
-                    <SpButton variant='outlined' color='inherit'>Download Report</SpButton>
+                    <Button variant='outlined' color='inherit'>Download Report</Button>
                 </Box>
             </Box>
-            <CommonTable
+            <Table
                 columns={columns}
                 data={[]}
                 pagination

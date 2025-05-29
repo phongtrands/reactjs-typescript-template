@@ -58,7 +58,8 @@
     "packages/*",
     "apps/*",
     "libs/shared/*",
-    "libs/*"
+    "libs/*",
+    "libs/core/*"
   ],
   "dependencies": {
     "@emotion/react": "^11.14.0",

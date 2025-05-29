@@ -13,28 +13,25 @@
       "path": "./apps/risk-monitoring"
     },
     {
-      "path": "./libs/shared/services"
+      "path": "./libs/core/ui-shared"
     },
     {
-      "path": "./libs/shared/components"
+      "path": "./libs/core/config"
     },
     {
-      "path": "./libs/shared/ui-components"
+      "path": "./libs/core/services"
     },
     {
-      "path": "./libs/config"
+      "path": "./libs/core/types"
     },
     {
-      "path": "./libs/types"
+      "path": "./libs/core/ultils"
     },
     {
-      "path": "./libs/utils"
+      "path": "./libs/auth"
     },
     {
-      "path": "./libs/services"
-    },
-    {
-      "path": "./libs/ui-shared"
+      "path": "./libs/core/components"
     }
   ]
 }

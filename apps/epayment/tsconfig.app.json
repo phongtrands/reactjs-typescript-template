@@ -28,16 +28,16 @@
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
   "references": [
     {
-      "path": "../../libs/shared/components/tsconfig.lib.json"
+      "path": "../../libs/auth/tsconfig.lib.json"
     },
     {
-      "path": "../../libs/shared/ui-components/tsconfig.lib.json"
+      "path": "../../libs/core/services/tsconfig.lib.json"
     },
     {
-      "path": "../../libs/types/tsconfig.lib.json"
+      "path": "../../libs/core/types/tsconfig.lib.json"
     },
     {
-      "path": "../../libs/ui-shared/tsconfig.lib.json"
+      "path": "../../libs/core/components/tsconfig.lib.json"
     }
   ]
 }

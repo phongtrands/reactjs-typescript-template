@@ -1,8 +1,8 @@
-import { SpCard } from '@libs/ui-shared';
+import { Card } from '@core/components';
 
 const Header = () => {
   return (
-    <SpCard
+    <Card
       children={
         <img
           style={{

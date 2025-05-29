@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { SpTabs } from '@libs/ui-shared';
-import Table from '../table/table';
+import TableTab from '../table/TableTab';
+import { Tabs } from '@core/components';
 
 const FileTab: React.FC = () => {
   const [activeTab, setActiveTab] = useState('mt940');
@@ -9,7 +9,7 @@ const FileTab: React.FC = () => {
     {
       label: 'MT940',
       value: 'mt940',
-      content: <Table />,
+      content: <TableTab />,
       onClick: () => setActiveTab('summary'),
     },
     {
@@ -21,7 +21,7 @@ const FileTab: React.FC = () => {
   ];
   return (
     <div style={{ marginTop: '16px' }}>
-      <SpTabs tabs={tabs} defaultTab={activeTab} />
+      <Tabs tabs={tabs} defaultTab={activeTab} />
     </div>
   );
 };

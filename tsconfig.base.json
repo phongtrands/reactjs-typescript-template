@@ -18,14 +18,12 @@
     "target": "es2022",
     "baseUrl": ".",
     "paths": {
-      "@libs/config": ["libs/config/src/index.ts"],
-      "@libs/services": ["libs/services/src/index.ts"],
-      "@libs/types": ["libs/types/src/index.ts"],
-      "@libs/ui-shared": ["libs/ui-shared/src/index.ts"],
-      "@libs/utils": ["libs/utils/src/index.ts"],
-      "@shared/components": ["libs/shared/components/src/index.ts"],
-      "@shared/services": ["libs/shared/services/src/index.ts"],
-      "@shared/ui-components": ["libs/shared/ui-components/src/index.ts"]
+      "@core/components": ["libs/core/components/src/index.ts"],
+      "@core/config": ["libs/core/config/src/index.ts"],
+      "@core/services": ["libs/core/services/src/index.ts"],
+      "@core/types": ["libs/core/types/src/index.ts"],
+      "@core/utils": ["libs/core/utils/src/index.ts"],
+      "@libs/auth": ["libs/auth/src/index.ts"]
     }
   }
 }

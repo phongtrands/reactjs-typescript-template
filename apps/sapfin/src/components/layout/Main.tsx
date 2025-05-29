@@ -1,9 +1,9 @@
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Box, Button, Grid, InputLabel, Paper, TextareaAutosize, Typography } from '@mui/material';
-import { Dropdown } from '@shared/components';
-import { CommonTable } from '@libs/ui-shared';
-import { ColumnConfig } from '@libs/types';
+import { Box, Button, Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextareaAutosize, Typography } from '@mui/material';
+import { Table } from '@core/components';
+import { ColumnConfig } from '@core/types';
+import React from 'react';
 
 interface File {
   id: string;
@@ -11,6 +11,16 @@ interface File {
 }
 
 const Main = () => {
+
+  const menuData = [
+          'BMCS',
+          'Menu2',
+          'Menu3',
+      ];
+  const [value, setValue] = React.useState(menuData[0]);
+      const handleChange = (event: SelectChangeEvent) => {
+          setValue(event.target.value);
+        };
 
   const data: File[] = [
   { id: '1', filename: 'Row1' },
@@ -54,7 +64,20 @@ const Main = () => {
             <InputLabel sx={{ fontWeight: 'bold', color: '#fff' }}>
             Source
             </InputLabel>
-            <Dropdown/>
+            <Select
+            sx={{ bgcolor: '#fff' }}
+            value={value}
+            onChange={handleChange}
+            >
+                {menuData.map((item) => (
+                    <MenuItem
+                    key={item}
+                    value={item}
+                    >
+                    {item}
+                    </MenuItem>
+                ))}
+            </Select>
         </Box>
         </Box>
 
@@ -66,14 +89,14 @@ const Main = () => {
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <CommonTable<File>
+                <Table<File>
                   data={data}
                   columns={colum}
                   backgroundHeader='#0286c2'
                 />
               </Grid>
               <Grid item xs={6}>
-                <CommonTable<File>
+                <Table<File>
                   data={data}
                   columns={columCheckbox}
                   backgroundHeader='#0286c2'
@@ -117,7 +140,7 @@ const Main = () => {
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
               Upload Folder
             </Typography>
-            <CommonTable<File>
+            <Table<File>
               data={data}
               columns={colum}
               backgroundHeader='#0286c2'

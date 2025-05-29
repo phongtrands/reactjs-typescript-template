@@ -1,7 +1,7 @@
 import { Box, IconButton, Paper, Typography } from '@mui/material';
 import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
-import { CommonTable, SpButton } from '@libs/ui-shared';
-import { ColumnConfig } from '@libs/types';
+import { Table, Button } from '@core/components';
+import { ColumnConfig } from '@core/types';
 
 const MatchingTab: React.FC = () => {
 
@@ -22,24 +22,24 @@ const MatchingTab: React.FC = () => {
                     <IconButton color='primary'>
                         <SaveAltOutlinedIcon />
                     </IconButton>
-                    <SpButton variant='outlined' color='inherit'>Download SAPFIN</SpButton>
+                    <Button variant='outlined' color='inherit'>Download SAPFIN</Button>
                 </Box>
                 <Box display="flex" alignItems="center">
                     <IconButton color='primary'>
                         <SaveAltOutlinedIcon />
                     </IconButton>
-                    <SpButton variant='outlined' color='inherit'>Download Report(MT940)</SpButton>
+                    <Button variant='outlined' color='inherit'>Download Report(MT940)</Button>
                 </Box>
                 <Box display="flex" alignItems="center">
                     <IconButton color='primary'>
                         <SaveAltOutlinedIcon />
                     </IconButton>
-                    <SpButton variant='outlined' color='inherit'>Download Report(Host)</SpButton>
+                    <Button variant='outlined' color='inherit'>Download Report(Host)</Button>
                 </Box>
             </Box>
         </Box>
         <Box mt={3}>
-            <CommonTable
+            <Table
             columns={columns}
             data={[]}
             pagination
@@ -52,7 +52,7 @@ const MatchingTab: React.FC = () => {
             <Typography variant="h5" fontWeight="bold" mb={2} ml={3}>
                 Non ePayment
             </Typography>
-            <CommonTable
+            <Table
             columns={columns}
             data={[]}
             pagination

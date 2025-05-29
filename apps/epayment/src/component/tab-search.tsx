@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { SpTabs } from '@libs/ui-shared';
+import { useState } from 'react';
 import SummaryTab from './summay-tab/summaryTab';
 import MatchingTab from './matching-tab/MatchingTab';
 import ExceptionsTab from './exceptions-tab/ExceptionsTab';
+import { Tabs } from '@core/components';
 
 const TabsEpayment = () => {
   const [activeTab, setActiveTab] = useState('summary');
@@ -38,7 +38,7 @@ const TabsEpayment = () => {
     },
   ];
 
-  return <SpTabs tabs={tabs} defaultTab={activeTab} />;
+  return <Tabs tabs={tabs} defaultTab={activeTab} />;
 };
 
 export default TabsEpayment;

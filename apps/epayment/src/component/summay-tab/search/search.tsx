@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SelectChangeEvent } from '@mui/material';
 import './search.scss';
-import { SpButton, SpCalendar, SpDropdown } from '@libs/ui-shared';
+import { Button, Calendar, Dropdown } from '@core/components';
 
 const Search: React.FC = () => {
   const [bank, setBank] = useState<string | undefined>(undefined);
@@ -17,7 +17,7 @@ const Search: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <SpDropdown
+      <Dropdown
         className='sp-dropdown'
         label='Bank'
         value={bank}
@@ -27,7 +27,7 @@ const Search: React.FC = () => {
           { label: 'Bank B', value: 'bankB' },
         ]}
       />
-      <SpDropdown
+      <Dropdown
         className='sp-dropdown'
         label='Account No'
         value={accountNo}
@@ -37,16 +37,16 @@ const Search: React.FC = () => {
           { label: '789012', value: '789012' },
         ]}
       />
-      <SpCalendar
+      <Calendar
         className='sp-calendar'
         label='Bank Statement Date'
         defaultFromDate={bankStatementDate.fromDate}
         defaultToDate={bankStatementDate.toDate}
         onSelect={(fromDate: Date | undefined, toDate: Date | undefined) => setBankStatementDate({ fromDate, toDate })}
       />
-      <SpButton className='sp-button' onClick={handleSearch} variant='contained'>
+      <Button className='sp-button' onClick={handleSearch} variant='contained'>
         Search
-      </SpButton>
+      </Button>
     </div>
   );
 };
