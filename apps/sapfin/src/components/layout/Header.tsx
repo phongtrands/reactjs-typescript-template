@@ -5,14 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const logoutHandler = () => {
-    dispatch(logout());
-    navigate('/', { replace: true });
-  };
-
   return (
     <Box component="header">
       <AppBar position="static" sx={{ backgroundColor: '#005B85' }}>
@@ -73,7 +65,6 @@ const Header = () => {
             href="#"
             underline="hover"
             sx={{ color: 'white', fontWeight: 'bold' }}
-            onClick={logoutHandler}
           >
             Logout
           </Link>

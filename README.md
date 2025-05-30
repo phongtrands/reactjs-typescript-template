@@ -18,6 +18,7 @@
 | **Eslint**          | 9.26.0           |
 | **Prettier**        | 3.5.3            |
 | **Vite**            | 6.0.0            |
+| **Jest**            | 21.0.3           |
 
 ## Install
 
@@ -31,14 +32,19 @@ Install `nx` extension for VSCode
     npm run dev
     nx run-many --target=serve --projects=sapfin,epayment --parallel
 ```
-2. Run each app
+2. Run sapfin app
 
 ```bash
     npm run dev:sapfin
+    nx serve sapfin
+```
+3. Run epayment app
+
+```bash
     npm run dev:sapfin
     nx serve sapfin
-    nx serve epayment
 ```
+
 ## Build
 
 ## Test
@@ -75,13 +81,12 @@ apps/
 libs/
   └── auth/
         └── src/
-              └── lib/
-                    └── components/
-                    └── pages/
-                    └── services/
-                    └── store/
-                    └── types/
-              └── index.ts/     
+             └── components/
+             └── pages/
+             └── services/
+             └── store/
+             └── types/
+             └── index.ts/     
   └── core/            
         └── services/ 
         └── component/

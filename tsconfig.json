@@ -10,9 +10,6 @@
       "path": "./apps/epayment"
     },
     {
-      "path": "./apps/risk-monitoring"
-    },
-    {
       "path": "./libs/core/config"
     },
     {
