@@ -26,10 +26,10 @@
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
   "references": [
     {
-      "path": "../../core/services/tsconfig.lib.json"
+      "path": "../types/tsconfig.lib.json"
     },
     {
-      "path": "../../core/types/tsconfig.lib.json"
+      "path": "../services/tsconfig.lib.json"
     }
   ]
 }

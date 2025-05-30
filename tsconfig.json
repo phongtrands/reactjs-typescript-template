@@ -13,9 +13,6 @@
       "path": "./apps/risk-monitoring"
     },
     {
-      "path": "./libs/core/ui-shared"
-    },
-    {
       "path": "./libs/core/config"
     },
     {

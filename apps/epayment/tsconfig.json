@@ -12,7 +12,7 @@
       "path": "../../libs/core/types"
     },
     {
-      "path": "../../libs/core/ui-shared"
+      "path": "../../libs/core/components"
     },
     {
       "path": "./tsconfig.app.json"

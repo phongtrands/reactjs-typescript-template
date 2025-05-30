@@ -2,13 +2,13 @@
   "name": "@sppl-monorepo/source",
   "version": "0.0.0",
   "license": "MIT",
+  "engines": { "node": ">=22.0.0 <23.0.0" },
   "scripts": {
     "ng": "nx",
     "start": "npm run lint && nx serve",
-    "dev": "npm run lint && nx run-many --target=serve --projects=sapfin,epayment,risk-monitoring --parallel",
+    "dev": "npm run lint && nx run-many --target=serve --projects=sapfin,epayment --parallel",
     "dev:sapfin": "nx lint sapfin && nx serve sapfin",
     "dev:epayment": "nx lint epayment && nx serve epayment",
-    "dev:risk-monitoring": "nx lint risk-monitoring && nx serve risk-monitoring",
     "build": "npm run lint && nx build",
     "graph": "nx graph",
     "lint": "nx run-many -t lint --skip-nx-cache"
