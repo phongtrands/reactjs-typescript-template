@@ -17,9 +17,10 @@ export default defineConfig(() => ({
   plugins: [react()],
   resolve: {
     alias: {
-      '@libs/ui-shared': resolve(__dirname, '../../libs/ui-shared/src/index.ts'),
-      '@libs/types': resolve(__dirname, '../../libs/types/src/index.ts'),
-      '@shared/components': resolve(__dirname, '../../libs/shared/components/src/index.ts'),
+      '@core/services': resolve(__dirname, '../../libs/core/services/src/index.ts'),
+      '@core/components': resolve(__dirname, '../../libs/core/components/src/index.ts'),
+      '@core/types': resolve(__dirname, '../../libs/core/types/src/index.ts'),
+      '@libs/auth': resolve(__dirname, '../../libs/auth/src/index.ts'),
     }
   },
   // Uncomment this if you are using workers.

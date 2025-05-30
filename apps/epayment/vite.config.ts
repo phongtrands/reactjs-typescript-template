@@ -1,6 +1,7 @@
 /// <reference types='vitest' />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
+import { resolve } from 'path';
 
 export default defineConfig(() => ({
   root: __dirname,
@@ -14,6 +15,13 @@ export default defineConfig(() => ({
     host: 'localhost',
   },
   plugins: [react()],
+  resolve: {
+    alias: {
+      '@core/services': resolve(__dirname, '../../libs/core/services/src/index.ts'),
+      '@core/components': resolve(__dirname, '../../libs/core/components/src/index.ts'),
+      '@libs/auth': resolve(__dirname, '../../libs/auth/src/index.ts'),
+    },
+  },
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [ nxViteTsPaths() ],

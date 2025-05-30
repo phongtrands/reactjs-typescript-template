@@ -3,6 +3,18 @@
   "include": [],
   "references": [
     {
+      "path": "../../libs/auth"
+    },
+    {
+      "path": "../../libs/core/services"
+    },
+    {
+      "path": "../../libs/core/types"
+    },
+    {
+      "path": "../../libs/core/components"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ],
