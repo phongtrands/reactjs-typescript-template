@@ -19,7 +19,6 @@
     "baseUrl": ".",
     "paths": {
       "@core/components": ["libs/core/components/src/index.ts"],
-      "@core/config": ["libs/core/config/src/index.ts"],
       "@core/services": ["libs/core/services/src/index.ts"],
       "@core/types": ["libs/core/types/src/index.ts"],
       "@core/utils": ["libs/core/utils/src/index.ts"],

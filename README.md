@@ -24,6 +24,30 @@
 
 Install `nx` extension for VSCode
 
+1. Create workspace
+
+```bash
+    npx create-nx-workspace sppl-monorepo
+```
+2. Create App
+
+```bash
+    npx nx generate @nx/react:application --directory=apps/sapfin --linter=eslint --name=sapfin --compiler=swc --e2eTestRunner=none --setParserOptionsProject=true --style=scss --no-interactive
+```
+3. Create Library
+
+```bash
+    npx nx generate @nx/react:library --directory=libs/shared/components --bundler=vite --linter=eslint --name=shared/components --compiler=swc --importPath=@shared/components --setParserOptionsProject=true --style=scss --no-interactiv # for react library
+```
+
+```bash
+    npx nx generate @nx/js:library --directory=libs/shared/services --bundler=vite --importPath=@shared/services --linter=eslint --name=shared/services --setParserOptionsProject=true --no-interactive # for typescript library
+```
+4. Remove App/Library
+
+```bash
+    npx nx generate @nx/workspace:remove --projectName=core/config --no-interactive
+```
 ## Start development server on local
 
 1. Run all app
@@ -45,11 +69,17 @@ Install `nx` extension for VSCode
     nx serve sapfin
 ```
 
+4. Check source code
+
+```bash
+    npm run lint
+```
+
 ## Build
 
 ## Test
 
-## Structure
+## Folder Structure of Project
 
 apps/
   └── sapfin/
