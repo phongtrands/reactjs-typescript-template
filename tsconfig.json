@@ -10,9 +10,6 @@
       "path": "./apps/epayment"
     },
     {
-      "path": "./libs/core/config"
-    },
-    {
       "path": "./libs/core/services"
     },
     {

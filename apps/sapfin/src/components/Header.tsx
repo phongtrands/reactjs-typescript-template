@@ -1,7 +1,4 @@
-import { useAppDispatch } from '@core/services';
-import { logout } from '@libs/auth';
 import { AppBar, Box, Typography, Toolbar, Link } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
