@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, ClickAwayListener, InputLabel, SxProps, TextField } from '@mui/material';
+import { Box, ClickAwayListener, InputLabel, SxProps, TextField } from '@mui/material';
 import { LocalizationProvider, DateCalendar } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { CalendarProps } from '@core/types';
+import SPButton from '../button/SPButton.tsx';
 
-interface SPCalendarProps {
-  label?: string;
-  defaultFromDate?: Date | undefined;
-  defaultToDate?: Date | undefined;
-  onCancel?: () => void;
-  onSelect?: (fromDate: Date | undefined, toDate: Date | undefined) => void;
-  className?: string;
-}
-
-const SPCalendar: React.FC<SPCalendarProps> = ({
+const SPCalendar: React.FC<CalendarProps> = ({
   label,
   defaultFromDate = undefined,
   defaultToDate = undefined,
@@ -98,12 +91,12 @@ const SPCalendar: React.FC<SPCalendarProps> = ({
                   />
                 </Box>
                 <Box display='flex' justifyContent='flex-end' gap={2}>
-                  <Button variant='outlined' onClick={handleCancel}>
+                  <SPButton variant='outlined' onClick={handleCancel}>
                     Cancel
-                  </Button>
-                  <Button variant='contained' onClick={handleSelect}>
+                  </SPButton>
+                  <SPButton variant='contained' onClick={handleSelect}>
                     Select
-                  </Button>
+                  </SPButton>
                 </Box>
               </Box>
             )}

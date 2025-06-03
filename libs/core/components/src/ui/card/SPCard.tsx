@@ -1,15 +1,9 @@
 import React from 'react';
 import './sp-card.scss';
 import { Card, Link, Typography } from '@mui/material';
+import { CardProps } from '@core/types';
 
-interface SPCardProps {
-  title: string;
-  imgUrl?: string;
-  children?: React.ReactNode;
-  footer?: React.ReactNode;
-}
-
-const SPCard: React.FC<SPCardProps> = ({ title, footer, children }) => {
+const SPCard: React.FC<CardProps> = ({ title, footer, children }) => {
   return (
     <div>
       <Card className='sp-card'>

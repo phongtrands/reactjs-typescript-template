@@ -1,21 +1,9 @@
 import React from 'react';
 import './sp-tabs.scss';
-import { Tabs, Tab, Box, TabsProps, TabProps } from '@mui/material';
+import { Tabs, Tab, Box } from '@mui/material';
+import { TabsProps } from '@core/types';
 
-interface ITabItem extends Omit<TabProps, 'label' | 'value' | 'content'> {
-  label: string;
-  value: string;
-  content: React.ReactNode;
-  isHidden?: boolean;
-}
-
-interface SPTabsProps extends Omit<TabsProps, 'value' | 'onChange'> {
-  tabs: ITabItem[];
-  defaultTab?: string;
-  onTabChange?: (event: React.SyntheticEvent, value: string) => void;
-}
-
-const SPTabs: React.FC<SPTabsProps> = ({ tabs, defaultTab, onTabChange, ...tabsProps }) => {
+const SPTabs: React.FC<TabsProps> = ({ tabs, defaultTab, onTabChange, ...tabsProps }) => {
   const [activeTab, setActiveTab] = React.useState(defaultTab || tabs[0].value);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {

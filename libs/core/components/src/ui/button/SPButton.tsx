@@ -1,17 +1,8 @@
 import React from 'react';
 import Button from '@mui/material/Button';
+import { ButtonProps } from '@core/types';
 
-export interface SPButtonProps {
-  variant?: 'text' | 'outlined' | 'contained';
-  color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
-  size?: 'small' | 'medium' | 'large';
-  onClick?: () => void;
-  disabled?: boolean;
-  children: React.ReactNode;
-  className?: string;
-}
-
-const SPButton: React.FC<SPButtonProps> = ({
+const SPButton: React.FC<ButtonProps> = ({
   variant = 'contained',
   color = 'primary',
   size = 'medium',

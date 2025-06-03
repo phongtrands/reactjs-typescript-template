@@ -17,6 +17,9 @@
     "strict": true,
     "target": "es2022",
     "baseUrl": ".",
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react-jsx",
     "paths": {
       "@core/components": ["libs/core/components/src/index.ts"],
       "@core/config": ["libs/core/config/src/index.ts"],
