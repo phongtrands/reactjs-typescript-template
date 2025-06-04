@@ -1,3 +1,4 @@
+import { SxProps, Theme } from '@mui/material';
 import React from 'react';
 
 export interface ButtonProps {
@@ -8,4 +9,5 @@ export interface ButtonProps {
   disabled?: boolean;
   children: React.ReactNode;
   className?: string;
+  sx?: SxProps<Theme>;
 }

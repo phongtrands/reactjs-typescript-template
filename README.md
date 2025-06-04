@@ -46,44 +46,70 @@ Install `nx` extension for VSCode
 ## Structure
 
 apps/
-  └── sapfin/
+  └── sapfin/                             # SAPFIN Portal application
         └── src/
-              └── app/
-              └── assets/
-              └── components/
-              └── config/
-              └── pages/
-              └── routes/
-              └── services/
-              └── store/
-              └── types/
-              └── main.tsx
-              └── styles.scss/
-  └── epayment/
+            └── assets/                   # Static assets (images, fonts, etc.)
+            └── components/               # UI components used in SAPFIN
+                  └── Header.tsx
+                  └── Main.tsx
+            └── constants/                # Constant values used throughout SAPFIN
+            └── helpers/                  # Utility/helper functions for SAPFIN
+            └── pages/                    # Main page components (views) for SAPFIN
+                  └── HomePage.tsx
+            └── routes/                   # Route definitions for SAPFIN
+                  └── RouteApp.tsx
+            └── services/                 # Business logic/API services for SAPFIN
+            └── store/                    # State management (e.g., Redux) for SAPFIN
+            └── types/                    # TypeScript type/interface definitions for SAPFIN
+            └── App.tsx                   # Main App component (entry point)
+            └── main.tsx                  # Application bootstrap and rendering logic
+            └── styles.scss/              # Global SCSS styles for SAPFIN
+  └── epayment/                           # Epayment application
         └── src/
-              └── app/
-              └── assets/
-              └── components/
-              └── config/
-              └── pages/
-              └── routes/
-              └── services/
-              └── store/
-              └── types/
-              └── main.tsx
-              └── styles.scss/      
+            └── assets/                   # Static assets (images, fonts, etc.)
+            └── components/               # UI components used in Epayment
+                  └── exception-tab/
+                  └── matching-tab/
+                  └── summary-tab/
+                  └── Header.tsx
+                  └── Main.tsx
+            └── constants/                # Constant values used in Epayment
+            └── helpers/                  # Utility/helper functions for Epayment
+            └── pages/                    # Main page components (views) for Epayment
+                  └── HomePage.tsx
+            └── routes/                   # Route definitions for Epayment
+                  └── RouteApp.tsx
+            └── services/                 # Business logic/API services for Epayment
+            └── store/                    # State management (e.g., Redux) for Epayment
+            └── types/                    # TypeScript type/interface definitions for Epayment
+            └── App.tsx                   # Main App component (entry point)
+            └── main.tsx                  # Application bootstrap and rendering logic
+            └── styles.scss/              # Global SCSS styles for Epayment
 libs/
-  └── auth/
+  └── auth/                               # Shared library for authentication and login
         └── src/
-              └── lib/
-                    └── components/
-                    └── pages/
-                    └── services/
-                    └── store/
-                    └── types/
-              └── index.ts/     
+            └── components/               # Auth-related UI components
+            └── constants/                # Auth-related constant values
+            └── helpers/                  # Utility functions for authentication
+            └── pages/                    # Pages related to authentication (login, etc.)
+            └── services/                 # API services for authentication
+            └── store/                    # State management for auth
+            └── types/                    # TypeScript type/interface definitions for auth
+            └── index.ts/     
   └── core/            
-        └── services/ 
-        └── component/
-        └── types/
-        └── ultils/
+        └── services/                     # Reusable services (e.g., API logic)
+            └── store/                    # Shared state management
+        └── component/                    # Reusable UI components 
+            └── button/                   # Button components
+            └── calendar/                 # Calendar components
+            └── card/                     # Card components
+            └── dropdown/                 # Dropdown components
+            └── table/                    # Table components
+            └── tab/                      # Tab navigation components
+            └── textarea/                 # Textarea input components
+            └── typography/               # Typography/text components
+            └── ErrorBoundary.tsx         # Global error boundary component
+            └── PrivateRoute.tsx          # Component for protected/private routing
+            └── index.ts
+        └── types/                        # Shared TypeScript type/interface definitions                      
+        └── ultils/                       # Utility/helper functions shared across apps

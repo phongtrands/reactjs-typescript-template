@@ -1,7 +1,7 @@
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Box, Button, Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextareaAutosize, Typography } from '@mui/material';
-import { Table } from '@core/components';
+import { Box, Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent } from '@mui/material';
+import { Button, Table, TextArea, Typography } from '@core/components';
 import { ColumnConfig } from '@core/types';
 import React from 'react';
 
@@ -84,8 +84,8 @@ const Main = () => {
       <Paper elevation={2} sx={{ mt: 2, borderRadius: 2, p: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={7}>
-            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              Preview Folder
+            <Typography variant="subtitle1" fontWeight="bold" gutterBottom >
+                Preview Folder
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}>
@@ -126,19 +126,21 @@ const Main = () => {
               sx={{ mb: 1, border: 1, borderColor: 'grey.500' }}
               variant="contained"
               color="inherit"
-              startIcon={<ArrowForwardIosIcon />}
-            />
+            >
+              <ArrowForwardIosIcon />
+            </Button>
             <Button
               sx={{ mt: 1, border: 1, borderColor: 'grey.500' }}
               variant="contained"
               color="inherit"
-              startIcon={<ArrowBackIosNewIcon />}
-            />
+            >
+              <ArrowBackIosNewIcon />
+            </Button>
           </Grid>
 
           <Grid item xs={4}>
-            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              Upload Folder
+            <Typography variant="subtitle1" fontWeight="bold" gutterBottom >
+                Upload Folder
             </Typography>
             <Table<File>
               data={data}
@@ -165,15 +167,16 @@ const Main = () => {
         </Grid>
 
         <Box mt={3}>
-          <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+          <Typography variant="subtitle1" fontWeight="bold" gutterBottom >
             SAP Response
           </Typography>
-          <TextareaAutosize
-            style={{ width: '100%', padding: '8px' }}
+          <TextArea
+            value='qqqqqqqqqqqqqqqqqqqqqqqqq\nqqqqqqqqqqqqqqqqqqqqqqqqq'
+            onChange={() => { '';}}
             minRows={4}
             maxRows={4}
             placeholder="Maximum 4 rows"
-            defaultValue={'qqqqqqqqqqqqqqqqqqqqqqqqq\nqqqqqqqqqqqqqqqqqqqqqqqqq'}
+            width="100%"
           />
         </Box>
       </Paper>

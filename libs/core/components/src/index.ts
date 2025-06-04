@@ -1,1 +1,9 @@
-export * from './ui/index';
+export { default as Card } from './card/SPCard';
+export { default as Tabs } from './tabs/SPTabs';
+export { default as Dropdown } from './dropdown/SPDropdown';
+export { default as Calendar } from './calendar/SPCalendar';
+export { default as Button } from './button/SPButton';
+export { default as Table } from './tables/SPTable';
+export { default as PrivateRoute } from './privateRoute/PrivateRoute';
+export { default as TextArea } from './textarea/SPTextArea';
+export { default as Typography } from './typography/SPTypography';

@@ -1,6 +1,7 @@
+import { Typography } from '@core/components';
 import { useAppDispatch } from '@core/services';
 import { logout } from '@libs/auth';
-import { AppBar, Box, Typography, Toolbar, Link } from '@mui/material';
+import { AppBar, Box, Toolbar, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
@@ -39,8 +40,8 @@ const Header = () => {
               color: '#ffffff',
               fontWeight: 400,
             }}
+            value="Finance Interface"
           >
-            Finance Interface
           </Typography>
         </Toolbar>
       </AppBar>

@@ -5,3 +5,5 @@ export * from './card.ts';
 export * from './dropdown.ts';
 export * from './privateRoute.ts';
 export * from './tabs.ts';
+export * from './textArea.ts';
+export * from './typography.ts';

@@ -10,9 +10,18 @@ const SPButton: React.FC<ButtonProps> = ({
   disabled = false,
   children,
   className,
+  sx,
 }) => {
   return (
-    <Button className={className} variant={variant} color={color} size={size} onClick={onClick} disabled={disabled}>
+    <Button
+      className={className}
+      variant={variant}
+      color={color}
+      size={size}
+      onClick={onClick}
+      disabled={disabled}
+      sx={sx}
+    >
       {children}
     </Button>
   );
