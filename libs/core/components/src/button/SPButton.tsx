@@ -1,6 +1,5 @@
 import React from 'react';
-import Button from '@mui/material/Button';
-import { ButtonProps } from '@core/types';
+import Button, { ButtonProps } from '@mui/material/Button';
 
 const SPButton: React.FC<ButtonProps> = ({
   variant = 'contained',
@@ -11,6 +10,7 @@ const SPButton: React.FC<ButtonProps> = ({
   children,
   className,
   sx,
+  ...rest
 }) => {
   return (
     <Button
@@ -21,6 +21,7 @@ const SPButton: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       sx={sx}
+      {...rest}
     >
       {children}
     </Button>

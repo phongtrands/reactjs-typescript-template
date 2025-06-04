@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from '@core/components';
 import { ColumnConfig } from '@core/types';
 
-const TableTab: React.FC = () => {
+const HostFile: React.FC = () => {
   const columns: ColumnConfig<never>[] = [
     { headerName: 'MT940 File Name', field: 'fileName', align: 'left' },
     { headerName: 'MT940 File Date', field: 'fikleDate', align: 'left' },
@@ -19,4 +19,4 @@ const TableTab: React.FC = () => {
   );
 };
 
-export default TableTab;
+export default HostFile;

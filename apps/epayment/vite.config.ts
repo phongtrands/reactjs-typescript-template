@@ -20,6 +20,7 @@ export default defineConfig(() => ({
       '@core/services': resolve(__dirname, '../../libs/core/services/src/index.ts'),
       '@core/components': resolve(__dirname, '../../libs/core/components/src/index.ts'),
       '@libs/auth': resolve(__dirname, '../../libs/auth/src/index.ts'),
+      '@epayment/services/stores': resolve(__dirname, '../../apps/epayment/src/services/stores/index.ts'),
     },
   },
   // Uncomment this if you are using workers.

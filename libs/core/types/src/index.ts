@@ -1,5 +1,4 @@
 export * from './table.ts';
-export * from './button.ts';
 export * from './calendar.ts';
 export * from './card.ts';
 export * from './dropdown.ts';

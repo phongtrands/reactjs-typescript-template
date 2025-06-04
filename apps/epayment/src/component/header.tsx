@@ -9,7 +9,7 @@ const Header = () => {
             width: '75px',
             height: '75px',
           }}
-          src='logo.png'
+          src='image/logo.png'
           alt='Company Logo'
         />
       }
@@ -21,7 +21,7 @@ const Header = () => {
               width: '100px',
               height: '30px',
             }}
-            src='sap_logo.png'
+            src='image/sap_logo.png'
             alt='sap Logo'
           />
           <span style={{ display: 'flex' }}>SAP Portal</span>

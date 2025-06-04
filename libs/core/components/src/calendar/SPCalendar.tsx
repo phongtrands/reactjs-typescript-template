@@ -4,6 +4,7 @@ import { LocalizationProvider, DateCalendar } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { CalendarProps } from '@core/types';
 import SPButton from '../button/SPButton.tsx';
+import './SPCalendar.scss';
 
 const SPCalendar: React.FC<CalendarProps> = ({
   label,
@@ -42,10 +43,10 @@ const SPCalendar: React.FC<CalendarProps> = ({
   };
   const styles: SxProps = {
     position: 'absolute',
-    top: 60,
+    top: 40,
     right: 0,
     left: 0,
-    zIndex: 1,
+    zIndex: 9,
     border: '1px solid',
     p: 1,
     width: 'fit-content',
@@ -62,12 +63,12 @@ const SPCalendar: React.FC<CalendarProps> = ({
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Box display='flex' flexDirection='column'>
-        <InputLabel>{label}</InputLabel>
+        <InputLabel className='sp-inputLabel'>{label}</InputLabel>
         <ClickAwayListener onClickAway={handleClickAway}>
           <Box sx={{ position: 'relative' }}>
             <TextField
               onClick={handleClick}
-              className={className}
+              className={['sp-textField', className].filter(Boolean).join(' ')}
               value={fromDate && toDate ? `${fromDate.toLocaleDateString()} - ${toDate.toLocaleDateString()}` : ''}
             />
             {open && (

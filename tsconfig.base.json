@@ -26,7 +26,7 @@
       "@core/services": ["libs/core/services/src/index.ts"],
       "@core/types": ["libs/core/types/src/index.ts"],
       "@core/utils": ["libs/core/utils/src/index.ts"],
-      "@libs/auth": ["libs/auth/src/index.ts"]
+      "@libs/auth": ["libs/auth/src/index.ts"],
     }
   }
 }

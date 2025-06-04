@@ -1,22 +1,35 @@
 import React, { useState } from 'react';
 
-import TableTab from '../table/TableTab';
 import { Tabs } from '@core/components';
+import { useAppDispatch, useAppSelector } from '@core/services';
+import { changeTypeFile } from '../../../services/stores';
+import Mt940 from '../table/mt940';
+import HostFile from '../table/hostFile';
+import { TYPE_FILE } from '../../../config/config';
 
 const FileTab: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('mt940');
+  const epayment = useAppSelector((state) => state.epayment);
+  const [activeTab, setActiveTab] = useState(epayment?.typeFile || 'mt940');
+  const dispatch = useAppDispatch();
+
   const tabs = [
     {
       label: 'MT940',
       value: 'mt940',
-      content: <TableTab />,
-      onClick: () => setActiveTab('summary'),
+      content: <Mt940 />,
+      onClick: () => {
+        dispatch(changeTypeFile(TYPE_FILE.MT940));
+        setActiveTab('summary');
+      },
     },
     {
       label: 'Host File',
-      value: 'hotstFile',
-      content: <div>Host File</div>,
-      onClick: () => setActiveTab('hotstFile'),
+      value: 'hostFile',
+      content: <HostFile />,
+      onClick: () => {
+        dispatch(changeTypeFile(TYPE_FILE.HOST_FILE));
+        setActiveTab('hostFile');
+      },
     },
   ];
   return (

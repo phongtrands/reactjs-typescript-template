@@ -11,31 +11,24 @@ interface File {
 }
 
 const Main = () => {
-
-  const menuData = [
-          'BMCS',
-          'Menu2',
-          'Menu3',
-      ];
+  const menuData = ['BMCS', 'Menu2', 'Menu3'];
   const [value, setValue] = React.useState(menuData[0]);
-      const handleChange = (event: SelectChangeEvent) => {
-          setValue(event.target.value);
-        };
+  const handleChange = (event: SelectChangeEvent) => {
+    setValue(event.target.value);
+  };
 
   const data: File[] = [
-  { id: '1', filename: 'Row1' },
-  { id: '2', filename: 'Row2' },
-  { id: '3', filename: 'Row3' },
-  { id: '4', filename: 'Row4' },
-  { id: '5', filename: 'Row5' },
-  { id: '6', filename: 'Row6' },
-  { id: '7', filename: 'Row7' },
-  { id: '8', filename: 'Row8' },
+    { id: '1', filename: 'Row1' },
+    { id: '2', filename: 'Row2' },
+    { id: '3', filename: 'Row3' },
+    { id: '4', filename: 'Row4' },
+    { id: '5', filename: 'Row5' },
+    { id: '6', filename: 'Row6' },
+    { id: '7', filename: 'Row7' },
+    { id: '8', filename: 'Row8' },
   ];
 
-  const colum: ColumnConfig<File>[] = [
-    { headerName: 'File', field: 'filename', align: 'left', type: 'text' },
-  ];
+  const colum: ColumnConfig<File>[] = [{ headerName: 'File', field: 'filename', align: 'left', type: 'text' }];
 
   const columCheckbox: ColumnConfig<File>[] = [
     { headerName: 'File', field: 'filename', align: 'left', type: 'textCheckbox' },
@@ -43,43 +36,34 @@ const Main = () => {
 
   return (
     <Box p={3}>
-        <Box
+      <Box
         sx={{
-            bgcolor: '#f8f9fa',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
+          bgcolor: '#f8f9fa',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}
-        >
+      >
         <Box
-            sx={{
+          sx={{
             display: 'flex',
             alignItems: 'center',
             gap: 2,
             bgcolor: '#005b84',
             border: '1px solid black',
-            borderRadius: 1
-            }}
+            borderRadius: 1,
+          }}
         >
-            <InputLabel sx={{ fontWeight: 'bold', color: '#fff' }}>
-            Source
-            </InputLabel>
-            <Select
-            sx={{ bgcolor: '#fff' }}
-            value={value}
-            onChange={handleChange}
-            >
-                {menuData.map((item) => (
-                    <MenuItem
-                    key={item}
-                    value={item}
-                    >
-                    {item}
-                    </MenuItem>
-                ))}
-            </Select>
+          <InputLabel sx={{ fontWeight: 'bold', color: '#fff' }}>Source</InputLabel>
+          <Select sx={{ bgcolor: '#fff' }} value={value} onChange={handleChange}>
+            {menuData.map((item) => (
+              <MenuItem key={item} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
         </Box>
-        </Box>
+      </Box>
 
       <Paper elevation={2} sx={{ mt: 2, borderRadius: 2, p: 2 }}>
         <Grid container spacing={2}>
@@ -89,39 +73,23 @@ const Main = () => {
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Table<File>
-                  data={data}
-                  columns={colum}
-                  backgroundHeader='#0286c2'
-                />
+                <Table<File> data={data} columns={colum} backgroundHeader='#0286c2' />
               </Grid>
               <Grid item xs={6}>
-                <Table<File>
-                  data={data}
-                  columns={columCheckbox}
-                  backgroundHeader='#0286c2'
-                />
+                <Table<File> data={data} columns={columCheckbox} backgroundHeader='#0286c2' />
               </Grid>
             </Grid>
-            <Box display="flex" justifyContent="flex-end" mt={1}>
-              <Button
-                sx={{ border: 1, borderColor: 'grey.500', ml: 1 }}
-                variant="contained"
-                color="inherit"
-              >
+            <Box display='flex' justifyContent='flex-end' mt={1}>
+              <Button sx={{ border: 1, borderColor: 'grey.500', ml: 1 }} variant='contained' color='inherit'>
                 Reject
               </Button>
-              <Button
-                sx={{ border: 1, borderColor: 'grey.500', ml: 1 }}
-                variant="contained"
-                color="inherit"
-              >
+              <Button sx={{ border: 1, borderColor: 'grey.500', ml: 1 }} variant='contained' color='inherit'>
                 Download
               </Button>
             </Box>
           </Grid>
 
-          <Grid item xs={1} container direction="column" alignItems="center" justifyContent="center">
+          <Grid item xs={1} container direction='column' alignItems='center' justifyContent='center'>
             <Button
               sx={{ mb: 1, border: 1, borderColor: 'grey.500' }}
               variant="contained"
@@ -142,24 +110,12 @@ const Main = () => {
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom >
                 Upload Folder
             </Typography>
-            <Table<File>
-              data={data}
-              columns={colum}
-              backgroundHeader='#0286c2'
-            />
-            <Box display="flex" justifyContent="flex-end" mt={1}>
-              <Button
-                sx={{ border: 1, borderColor: 'grey.500', ml: 1 }}
-                variant="contained"
-                color="inherit"
-              >
+            <Table<File> data={data} columns={colum} backgroundHeader='#0286c2' />
+            <Box display='flex' justifyContent='flex-end' mt={1}>
+              <Button sx={{ border: 1, borderColor: 'grey.500', ml: 1 }} variant='contained' color='inherit'>
                 Test Run
               </Button>
-              <Button
-                sx={{ border: 1, borderColor: 'grey.500', ml: 1 }}
-                variant="contained"
-                color="inherit"
-              >
+              <Button sx={{ border: 1, borderColor: 'grey.500', ml: 1 }} variant='contained' color='inherit'>
                 Actual Run
               </Button>
             </Box>
