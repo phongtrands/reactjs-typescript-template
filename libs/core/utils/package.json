@@ -1,5 +1,5 @@
 {
-  "name": "@core/ultils",
+  "name": "@core/utils",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -15,10 +15,7 @@
     }
   },
   "nx": {
-    "name": "core/ultils"
+    "name": "core/utils"
   },
-  "dependencies": {
-    "axios": "^1.9.0",
-    "react-promise-tracker": "^2.1.1"
-  }
+  "dependencies": {}
 }

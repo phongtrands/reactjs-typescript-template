@@ -16,13 +16,13 @@
       "path": "./libs/core/types"
     },
     {
-      "path": "./libs/core/ultils"
-    },
-    {
       "path": "./libs/auth"
     },
     {
       "path": "./libs/core/components"
+    },
+    {
+      "path": "./libs/core/utils"
     }
   ]
 }
