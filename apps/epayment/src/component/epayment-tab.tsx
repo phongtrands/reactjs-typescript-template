@@ -4,16 +4,16 @@ import MatchingTab from './matching-tab/MatchingTab';
 import ExceptionsTab from './exceptions-tab/ExceptionsTab';
 import { Tabs } from '@core/components';
 import { useAppSelector } from '@core/services';
-import { TYPE_FILE } from '../config/config';
+import { EPAYMENT_TAB, TYPE_FILE } from '../config/config';
 
-const TabsEpayment = () => {
-  const [activeTab, setActiveTab] = useState('summary');
+const EpaymentTab = () => {
+  const [activeTab, setActiveTab] = useState(EPAYMENT_TAB.SUMMARY);
   const [hidden, setHidden] = useState('');
   const epayment = useAppSelector((state) => state.epayment);
 
   useEffect(() => {
     if (epayment?.typeFile) {
-      setHidden(epayment?.typeFile === TYPE_FILE.HOST_FILE ? 'matching' : '');
+      setHidden(epayment?.typeFile === TYPE_FILE.HOST_FILE ? EPAYMENT_TAB.MATCHING : '');
     }
   }, [epayment]);
 
@@ -26,28 +26,28 @@ const TabsEpayment = () => {
   const tabs = [
     {
       label: 'Summary',
-      value: 'summary',
+      value: EPAYMENT_TAB.SUMMARY,
       content: <SummaryTab />,
-      isHidden: isHidden('summary'),
-      onClick: () => setActiveTab('summary'),
+      isHidden: isHidden(EPAYMENT_TAB.SUMMARY),
+      onClick: () => setActiveTab(EPAYMENT_TAB.SUMMARY),
     },
     {
       label: 'Matching',
-      value: 'matching',
+      value: EPAYMENT_TAB.MATCHING,
       content: <MatchingTab />,
-      isHidden: isHidden('matching'),
-      onClick: () => setActiveTab('matching'),
+      isHidden: isHidden(EPAYMENT_TAB.MATCHING),
+      onClick: () => setActiveTab(EPAYMENT_TAB.MATCHING),
     },
     {
       label: 'Exception',
-      value: 'exception',
+      value: EPAYMENT_TAB.EXCEPTION,
       content: <ExceptionsTab />,
-      isHidden: isHidden('exception'),
-      onClick: () => setActiveTab('exception'),
+      isHidden: isHidden(EPAYMENT_TAB.EXCEPTION),
+      onClick: () => setActiveTab(EPAYMENT_TAB.EXCEPTION),
     },
   ];
 
   return <Tabs tabs={tabs} defaultTab={activeTab} />;
 };
 
-export default TabsEpayment;
+export default EpaymentTab;
