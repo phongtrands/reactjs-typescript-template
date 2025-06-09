@@ -1,6 +1,18 @@
-import { AppBar, Box, Typography, Toolbar, Link } from '@mui/material';
+import { AppBar, Box, Toolbar, Link } from '@mui/material';
+import { Typography } from '@core/components';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '@core/services';
+import { logout } from '@libs/auth';
 
 const Header = () => {
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    navigate('/', { replace: true });
+  };
 
   return (
     <Box component="header">
