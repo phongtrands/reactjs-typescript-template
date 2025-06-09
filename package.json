@@ -63,11 +63,11 @@
     "vitest": "^3.0.0"
   },
   "workspaces": [
-    "packages/*",
     "apps/*",
     "libs/shared/*",
     "libs/*",
-    "libs/core/*"
+    "libs/core/*",
+    "core/*"
   ],
   "dependencies": {
     "@emotion/react": "^11.14.0",

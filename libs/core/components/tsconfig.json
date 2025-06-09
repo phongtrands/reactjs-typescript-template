@@ -3,7 +3,7 @@
   "include": [],
   "references": [
     {
-      "path": "../services"
+      "path": "../helper"
     },
     {
       "path": "./tsconfig.lib.json"

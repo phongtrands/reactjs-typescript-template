@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAppSelector } from '@core/services';
+import { useAppSelector } from '@core/helper';
 
 interface PrivateRouteProps {
   appId?: string;

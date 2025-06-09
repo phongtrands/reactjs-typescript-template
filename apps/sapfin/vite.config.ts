@@ -17,7 +17,7 @@ export default defineConfig(() => ({
   plugins: [react()],
   resolve: {
     alias: {
-      '@core/services': resolve(__dirname, '../../libs/core/services/src/index.ts'),
+      '@core/helper': resolve(__dirname, '../../libs/core/helper/src/index.ts'),
       '@core/components': resolve(__dirname, '../../libs/core/components/src/index.ts'),
       '@core/types': resolve(__dirname, '../../libs/core/types/src/index.ts'),
       '@libs/auth': resolve(__dirname, '../../libs/auth/src/index.ts'),
