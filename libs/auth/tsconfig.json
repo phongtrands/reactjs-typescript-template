@@ -3,6 +3,12 @@
   "include": [],
   "references": [
     {
+      "path": "../core/components"
+    },
+    {
+      "path": "../core/services"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ],

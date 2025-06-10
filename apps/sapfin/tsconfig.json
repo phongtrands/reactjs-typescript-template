@@ -3,6 +3,9 @@
   "include": [],
   "references": [
     {
+      "path": "../../libs/core/types"
+    },
+    {
       "path": "../../libs/auth"
     },
     {
