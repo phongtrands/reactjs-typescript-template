@@ -35,7 +35,7 @@
       "path": "../../libs/auth/tsconfig.lib.json"
     },
     {
-      "path": "../../libs/core/services/tsconfig.lib.json"
+      "path": "../../libs/core/helper/tsconfig.lib.json"
     },
     {
       "path": "../../libs/core/components/tsconfig.lib.json"

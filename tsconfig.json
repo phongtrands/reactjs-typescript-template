@@ -10,9 +10,6 @@
       "path": "./apps/epayment"
     },
     {
-      "path": "./libs/core/services"
-    },
-    {
       "path": "./libs/core/types"
     },
     {
@@ -23,6 +20,9 @@
     },
     {
       "path": "./libs/core/utils"
+    },
+    {
+      "path": "./libs/core/helper"
     }
   ]
 }

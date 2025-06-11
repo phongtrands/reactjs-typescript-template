@@ -1,8 +1,9 @@
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import HomePage from '../pages/HomePage';
 import { LoginPage } from '@libs/auth';
 import { PrivateRoute } from '@core/components';
+
+import HomePage from '../pages/HomePage';
 
 export function AppRoutes() {
   return (

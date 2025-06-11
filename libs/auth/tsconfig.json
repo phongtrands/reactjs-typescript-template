@@ -6,7 +6,7 @@
       "path": "../core/components"
     },
     {
-      "path": "../core/services"
+      "path": "../core/helper"
     },
     {
       "path": "./tsconfig.lib.json"

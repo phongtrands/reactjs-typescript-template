@@ -9,7 +9,7 @@
       "path": "../../libs/auth"
     },
     {
-      "path": "../../libs/core/services"
+      "path": "../../libs/core/helper"
     },
     {
       "path": "../../libs/core/components"

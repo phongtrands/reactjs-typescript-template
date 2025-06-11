@@ -128,7 +128,7 @@ libs/
             └── store/                    # State management for auth
             └── index.ts/     
   └── core/            
-        └── services/                     # Reusable services (e.g., API logic)
+        └── helper/                       # Reusable services (e.g., API logic)
             └── store/                    # Shared state management
         └── component/                    # Reusable UI components 
             └── button/                   # Button components

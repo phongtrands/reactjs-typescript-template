@@ -29,7 +29,7 @@
       "path": "../core/components/tsconfig.lib.json"
     },
     {
-      "path": "../core/services/tsconfig.lib.json"
+      "path": "../core/helper/tsconfig.lib.json"
     }
   ]
 }

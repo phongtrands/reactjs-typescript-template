@@ -1,7 +1,7 @@
 import { Box, FormControlLabel, Paper, Switch, TextField } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '@core/services';
+import { useAppDispatch } from '@core/helper';
 import { login } from '../stores';
 import { Button, Typography } from '@core/components';
 

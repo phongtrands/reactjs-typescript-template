@@ -1,8 +1,8 @@
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Box, Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent } from '@mui/material';
+import { Box, Grid, Paper, type SelectChangeEvent } from '@mui/material';
 import { Button, Dropdown, Table, TextArea, Typography } from '@core/components';
-import { ColumnConfig } from '@core/types';
+import type { ColumnConfig } from '@core/types';
 import React from 'react';
 
 interface File {
@@ -49,28 +49,28 @@ const Main = () => {
         }}
       >
         <Dropdown
-            options={menuData}
-            label='Source'
-            value={value}
-            onChange={handleChange}
-            styleLabel={{ fontWeight: 'bold', color: '#fff' }}
-            styleSelect={{ bgcolor: '#fff' }}
-            styleBg={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2,
-              bgcolor: '#005b84',
-              border: '1px solid black',
-              borderRadius: 1,
-            }}
-          />
+          options={menuData}
+          label='Source'
+          value={value}
+          onChange={handleChange}
+          styleLabel={{ fontWeight: 'bold', color: '#fff' }}
+          styleSelect={{ bgcolor: '#fff' }}
+          styleBg={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            bgcolor: '#005b84',
+            border: '1px solid black',
+            borderRadius: 1,
+          }}
+        />
       </Box>
 
       <Paper elevation={2} sx={{ mt: 2, borderRadius: 2, p: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={7}>
-            <Typography variant="subtitle1" fontWeight="bold" gutterBottom >
-                Preview Folder
+            <Typography variant='subtitle1' fontWeight='bold' gutterBottom>
+              Preview Folder
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}>
@@ -91,25 +91,17 @@ const Main = () => {
           </Grid>
 
           <Grid item xs={1} container direction='column' alignItems='center' justifyContent='center'>
-            <Button
-              sx={{ mb: 1, border: 1, borderColor: 'grey.500' }}
-              variant="contained"
-              color="inherit"
-            >
+            <Button sx={{ mb: 1, border: 1, borderColor: 'grey.500' }} variant='contained' color='inherit'>
               <ArrowForwardIosIcon />
             </Button>
-            <Button
-              sx={{ mt: 1, border: 1, borderColor: 'grey.500' }}
-              variant="contained"
-              color="inherit"
-            >
+            <Button sx={{ mt: 1, border: 1, borderColor: 'grey.500' }} variant='contained' color='inherit'>
               <ArrowBackIosNewIcon />
             </Button>
           </Grid>
 
           <Grid item xs={4}>
-            <Typography variant="subtitle1" fontWeight="bold" gutterBottom >
-                Upload Folder
+            <Typography variant='subtitle1' fontWeight='bold' gutterBottom>
+              Upload Folder
             </Typography>
             <Table<File> data={data} columns={colum} backgroundHeader='#0286c2' />
             <Box display='flex' justifyContent='flex-end' mt={1}>
@@ -124,15 +116,15 @@ const Main = () => {
         </Grid>
 
         <Box mt={3}>
-          <Typography variant="subtitle1" fontWeight="bold" gutterBottom >
+          <Typography variant='subtitle1' fontWeight='bold' gutterBottom>
             SAP Response
           </Typography>
           <TextArea
             value='qqqqqqqqqqqqqqqqqqqqqqqqq\nqqqqqqqqqqqqqqqqqqqqqqqqq'
-            onChange={() => { '';}}
+            onChange={() => ''}
             minRows={4}
             maxRows={4}
-            placeholder="Maximum 4 rows"
+            placeholder='Maximum 4 rows'
             style={{ width: '100%' }}
           />
         </Box>

@@ -1,5 +1,5 @@
 {
-  "name": "@core/services",
+  "name": "@core/helper",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -15,10 +15,7 @@
     }
   },
   "nx": {
-    "name": "core/services"
+    "name": "core/helper"
   },
-  "dependencies": {
-    "react-redux": "^9.2.0",
-    "@reduxjs/toolkit": "^2.8.1"
-  }
+  "dependencies": {}
 }
