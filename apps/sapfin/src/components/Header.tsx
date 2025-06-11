@@ -1,10 +1,9 @@
 import { AppBar, Box, Typography, Toolbar, Link } from '@mui/material';
 
 const Header = () => {
-
   return (
-    <Box component="header">
-      <AppBar position="static" sx={{ backgroundColor: '#005B85' }}>
+    <Box component='header'>
+      <AppBar position='static' sx={{ backgroundColor: '#005B85' }}>
         <Toolbar
           sx={{
             position: 'relative',
@@ -20,7 +19,7 @@ const Header = () => {
           /> */}
 
           <Typography
-            variant="h4"
+            variant='h4'
             sx={{
               position: 'absolute',
               left: '50%',
@@ -44,25 +43,18 @@ const Header = () => {
           py: 0.5,
         }}
       >
-        <Typography
-          variant="body2"
-          sx={{ color: 'white', fontStyle: 'italic' }}
-        >
+        <Typography variant='body2' sx={{ color: 'white', fontStyle: 'italic' }}>
           * SAP Portal
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', color: 'white' }}>
-          <Typography variant="body2">Hello&nbsp;</Typography>
-          <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+          <Typography variant='body2'>Hello&nbsp;</Typography>
+          <Typography variant='body2' sx={{ fontWeight: 'bold' }}>
             dh_ldap
           </Typography>
-          <Typography variant="body2" sx={{ mx: 1 }}>
+          <Typography variant='body2' sx={{ mx: 1 }}>
             |
           </Typography>
-          <Link
-            href="#"
-            underline="hover"
-            sx={{ color: 'white', fontWeight: 'bold' }}
-          >
+          <Link href='#' underline='hover' sx={{ color: 'white', fontWeight: 'bold' }}>
             Logout
           </Link>
         </Box>

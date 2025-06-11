@@ -22,7 +22,7 @@
       "path": "./libs/core/utils"
     },
     {
-      "path": "./libs/core/helper"
+      "path": "./libs/core/helpers"
     }
   ]
 }

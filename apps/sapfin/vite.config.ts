@@ -1,7 +1,8 @@
 /// <reference types='vitest' />
+import { resolve } from 'path';
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
-import { resolve } from 'path';
 
 export default defineConfig(() => ({
   root: __dirname,
@@ -17,11 +18,11 @@ export default defineConfig(() => ({
   plugins: [react()],
   resolve: {
     alias: {
-      '@core/helper': resolve(__dirname, '../../libs/core/helper/src/index.ts'),
+      '@core/helpers': resolve(__dirname, '../../libs/core/helpers/src/index.ts'),
       '@core/components': resolve(__dirname, '../../libs/core/components/src/index.ts'),
       '@core/types': resolve(__dirname, '../../libs/core/types/src/index.ts'),
       '@libs/auth': resolve(__dirname, '../../libs/auth/src/index.ts'),
-    }
+    },
   },
   // Uncomment this if you are using workers.
   // worker: {

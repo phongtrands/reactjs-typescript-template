@@ -1,4 +1,5 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
+import axios from 'axios';
 import { trackPromise } from 'react-promise-tracker';
 
 const BASE_URL: string = import.meta.env.BASE_URL;

@@ -1,5 +1,5 @@
 {
-  "name": "@core/helper",
+  "name": "@core/helpers",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -15,7 +15,8 @@
     }
   },
   "nx": {
-    "name": "core/helper"
+    "name": "core/helpers",
+    "tags": ["scope:core"]
   },
   "dependencies": {}
 }

@@ -1,7 +1,7 @@
-# core/helper
+# core/helpers
 
 This library was generated with [Nx](https://nx.dev).
 
 ## Building
 
-Run `nx build core/helper` to build the library.
+Run `nx build core/helpers` to build the library.
