@@ -79,6 +79,18 @@ Install `nx` extension for VSCode
 
 ## Test
 
+1. Run all app
+
+```bash
+    npm run test
+```
+
+2. Run sapfin app
+
+```bash
+    npm run test:sapfin
+```
+
 ## Folder Structure of Project
 
 apps/

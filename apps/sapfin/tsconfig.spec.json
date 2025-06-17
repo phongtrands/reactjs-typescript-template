@@ -2,9 +2,12 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./out-tsc/jest",
-    "module": "commonjs",
     "moduleResolution": "node10",
-    "types": ["jest", "node"]
+    "types": ["jest", "node"],
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "esModuleInterop": true,
+    "isolatedModules": false
   },
-  "include": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts", "src/**/*.d.ts"]
+  "include": ["jest.config.ts", "**/*.ts", "**/*.tsx", "**/*.test.tsx", "**/*.spec.tsx"],
 }
