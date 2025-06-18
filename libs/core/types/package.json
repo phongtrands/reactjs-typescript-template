@@ -15,7 +15,8 @@
     }
   },
   "nx": {
-    "name": "core/types"
+    "name": "core/types",
+    "tags": ["scope:core"]
   },
   "dependencies": {}
 }

@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
+
 import LoadingFallback from './LoadingFallback';
 
 const HomePage = lazy(() => import('../pages/HomePages'));

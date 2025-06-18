@@ -23,6 +23,18 @@ export default [
               sourceTag: '*',
               onlyDependOnLibsWithTags: ['*'],
             },
+            {
+              sourceTag: 'scope:core',
+              onlyDependOnLibsWithTags: [],
+            },
+            {
+              sourceTag: 'scope:module',
+              onlyDependOnLibsWithTags: ['scope:core'],
+            },
+            {
+              sourceTag: 'scope:app',
+              onlyDependOnLibsWithTags: ['scope:module', 'scope:core'],
+            },
           ],
         },
       ],

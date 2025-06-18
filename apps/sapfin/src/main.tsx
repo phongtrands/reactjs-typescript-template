@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from '@core/helper';
+import { createStore } from '@core/helpers';
 import { authSlice } from '@libs/auth';
 
 import App from './App';

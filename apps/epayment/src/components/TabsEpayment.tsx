@@ -1,10 +1,5 @@
-
 const TabsEpayment = () => {
-
-  return (
-    <div>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default TabsEpayment;

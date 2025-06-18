@@ -1,7 +1,7 @@
 import { AppBar, Box, Toolbar } from '@mui/material';
 import { Button, Typography } from '@core/components';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '@core/helper';
+import { useAppDispatch } from '@core/helpers';
 import { logout } from '@libs/auth';
 
 const Header = () => {

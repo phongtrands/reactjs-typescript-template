@@ -6,7 +6,7 @@
       "path": "../types"
     },
     {
-      "path": "../helper"
+      "path": "../helpers"
     },
     {
       "path": "./tsconfig.lib.json"
