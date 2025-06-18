@@ -3,23 +3,64 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Box, Grid, Paper, type SelectChangeEvent } from '@mui/material';
 import { Button, Dropdown, Table, TextArea, Typography } from '@core/components';
 import type { ColumnConfig } from '@core/types';
-import React from 'react';
+import { useEffect, useState } from 'react';
+
+import { comminglingFiles, comminglingGuestFiles, mockupDataSource } from '../configs/mockupDataSource';
 
 interface File {
   id: string;
-  filename: string;
+  displayName?: string;
+  filename?: string;
 }
 
 const Main = () => {
-  const menuData = [
-    { value: 'BMCS', label: 'BMCS' },
-    { value: 'Menu2', label: 'Menu2' },
-    { value: 'Menu3', label: 'Menu3' },
-  ];
-  const [value, setValue] = React.useState(menuData[0].label);
+  const [sourceData, setSourceData] = useState<any[]>([]);
+  const [sourceDataDropdown, setSourceDataDropdown] = useState<any[]>([]);
+  const [selectedSourceData, setSelectedSourceData] = useState<string>('');
+  const [interfaces, setInterfaces] = useState<any[]>([]);
+  const [selectedInterface, setSelectedInterface] = useState<string>('');
+  const [files, setFiles] = useState<any[]>([]);
+
   const handleChange = (event: SelectChangeEvent) => {
-    setValue(event.target.value);
+    sourceData.forEach((item) => {
+      if (item.name === event.target.value) {
+        setInterfaces(item.interfaces);
+        setSelectedSourceData(event.target.value);
+      }
+    });
   };
+
+  const onClickRow = (event: SelectChangeEvent) => {
+    // Actual call API
+    setSelectedInterface(event.target.value);
+    if (event.target.value === 'Commingling') {
+      setFiles(comminglingFiles);
+    } else {
+      setFiles(comminglingGuestFiles);
+    }
+  };
+
+  useEffect(() => {
+    if (sourceData.length > 0) {
+      const initialSource = sourceData[0];
+      setInterfaces(initialSource.interfaces);
+      setSelectedSourceData(initialSource.name);
+    }
+  }, [sourceData]);
+
+  useEffect(() => {
+    const fetchDataSource = async () => {
+      // Replace with actual data fetching logic
+      const sourceDataDropdownTransfer = mockupDataSource.map((item) => ({
+        value: item.name,
+        label: item.displayName,
+      }));
+      setSourceDataDropdown(sourceDataDropdownTransfer);
+      setSourceData(mockupDataSource);
+    };
+
+    fetchDataSource();
+  }, []);
 
   const data: File[] = [
     { id: '1', filename: 'Row1' },
@@ -32,7 +73,7 @@ const Main = () => {
     { id: '8', filename: 'Row8' },
   ];
 
-  const colum: ColumnConfig<File>[] = [{ headerName: 'File', field: 'filename', align: 'left', type: 'text' }];
+  const colum: ColumnConfig<File>[] = [{ headerName: 'Interfaces', field: 'displayName', align: 'left', type: 'text' }];
 
   const columCheckbox: ColumnConfig<File>[] = [
     { headerName: 'File', field: 'filename', align: 'left', type: 'textCheckbox' },
@@ -49,9 +90,9 @@ const Main = () => {
         }}
       >
         <Dropdown
-          options={menuData}
           label='Source'
-          value={value}
+          options={sourceDataDropdown}
+          value={selectedSourceData || sourceDataDropdown[0]?.value}
           onChange={handleChange}
           styleLabel={{ fontWeight: 'bold', color: '#fff' }}
           styleSelect={{ bgcolor: '#fff' }}
@@ -74,7 +115,7 @@ const Main = () => {
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Table<File> data={data} columns={colum} backgroundHeader='#0286c2' />
+                <Table<File> data={interfaces} columns={colum} backgroundHeader='#0286c2' />
               </Grid>
               <Grid item xs={6}>
                 <Table<File> data={data} columns={columCheckbox} backgroundHeader='#0286c2' />
