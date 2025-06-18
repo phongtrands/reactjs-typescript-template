@@ -25,7 +25,7 @@ export default [
             },
             {
               sourceTag: 'scope:core',
-              onlyDependOnLibsWithTags: [],
+              onlyDependOnLibsWithTags: ['scope:core'],
             },
             {
               sourceTag: 'scope:module',

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '@core/helpers';
 import { logout } from '@libs/auth';
 
+import logo from '../assets/image/left-logo.png';
+
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -15,20 +17,15 @@ const Header = () => {
 
   return (
     <Box component='header'>
-      <AppBar position='static' sx={{ backgroundColor: '#005B85' }}>
+      <AppBar position='static' sx={{ backgroundColor: '#055f8e' }}>
         <Toolbar
           sx={{
             position: 'relative',
             minHeight: '60px',
-            px: 2,
           }}
+          disableGutters
         >
-          {/* <Box
-            component="img"
-            src=""
-            alt="Logo"
-            sx={{ width: 40, height: 40, mr: 2 }}
-          /> */}
+          <Box component='img' src={logo} alt='Logo' sx={{ width: 110, height: 85, mr: 2 }} />
 
           <Typography
             variant='h4'
@@ -47,7 +44,7 @@ const Header = () => {
 
       <Box
         sx={{
-          backgroundColor: '#0286c2',
+          backgroundColor: '#0885bb',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -55,15 +52,15 @@ const Header = () => {
           py: 0.5,
         }}
       >
-        <Typography variant='body2' sx={{ color: 'white', fontStyle: 'italic' }}>
+        <Typography variant='h6' sx={{ color: 'white' }}>
           * SAP Portal
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', color: 'white' }}>
-          <Typography variant='body2'>Hello&nbsp;</Typography>
-          <Typography variant='body2' sx={{ fontWeight: 'bold' }}>
+          <Typography variant='h6'>Hello&nbsp;</Typography>
+          <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
             dh_ldap
           </Typography>
-          <Typography variant='body2' sx={{ mx: 1 }}>
+          <Typography variant='h6' sx={{ mx: 1 }}>
             |
           </Typography>
           <Button
@@ -71,7 +68,7 @@ const Header = () => {
             sx={{ color: 'white', fontWeight: 'bold', textTransform: 'none' }}
             onClick={logoutHandler}
           >
-            Logout
+            <Typography variant='h6'>Logout</Typography>
           </Button>
         </Box>
       </Box>

@@ -13,8 +13,8 @@ const SPDropdown: React.FC<DropdownProps> = ({
   ...otherProps
 }) => {
   return (
-    <Box sx={styleBg}>
-      <InputLabel sx={styleLabel}>{label}</InputLabel>
+    <Box>
+      {label && <InputLabel sx={{ color: 'black !important' }}>{label}</InputLabel>}
       <Select sx={styleSelect} value={value} {...otherProps}>
         {options.map((option) => (
           <MenuItem key={option.value} value={option.value}>

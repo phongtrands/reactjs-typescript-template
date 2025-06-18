@@ -102,29 +102,24 @@ const Main = () => {
 
   return (
     <Box p={3}>
-      <Box
-        sx={{
-          bgcolor: '#f8f9fa',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
+      <Box display='flex'>
+        <Box
+          sx={{
+            backgroundColor: '#055f8e',
+            color: 'white',
+            px: 2,
+            py: 1,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Typography fontWeight='bold'>Source</Typography>
+        </Box>
         <Dropdown
-          label='Source'
           options={sourceOptions}
           value={selectedSource}
           onChange={handleSourceChange}
-          styleLabel={{ fontWeight: 'bold', color: '#fff' }}
-          styleSelect={{ bgcolor: '#fff' }}
-          styleBg={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            bgcolor: '#005b84',
-            border: '1px solid black',
-            borderRadius: 1,
-          }}
+          styleSelect={{ width: 160 }}
         />
       </Box>
 
@@ -141,7 +136,7 @@ const Main = () => {
                     data={interfaceList}
                     onRowClick={handleInterfaceClick}
                     columns={interfaceColumns}
-                    backgroundHeader='#0286c2'
+                    backgroundHeader='#0885bb'
                     defaultRowIdSelected={selectedInterface}
                   />
                 )}
@@ -151,7 +146,7 @@ const Main = () => {
                   data={fileList}
                   columns={fileColumns}
                   onCheckboxChange={onCheckboxChange}
-                  backgroundHeader='#0286c2'
+                  backgroundHeader='#0885bb'
                 />
               </Grid>
             </Grid>
@@ -190,7 +185,7 @@ const Main = () => {
             <Typography variant='subtitle1' fontWeight='bold' gutterBottom>
               Upload Folder
             </Typography>
-            <Table<File> data={uploadFolderFile} columns={uploadFolderColumns} backgroundHeader='#0286c2' />
+            <Table<File> data={uploadFolderFile} columns={uploadFolderColumns} backgroundHeader='#0885bb' />
             <Box display='flex' justifyContent='flex-end' mt={1}>
               <Button sx={commonButtonStyle} variant='contained' color='inherit'>
                 Test Run
@@ -201,18 +196,17 @@ const Main = () => {
             </Box>
           </Grid>
         </Grid>
-
         <Box mt={3}>
           <Typography variant='subtitle1' fontWeight='bold' gutterBottom>
             SAP Response
           </Typography>
           <TextArea
             value='qqqqqqqqqqqqqqqqqqqqqqqqq\nqqqqqqqqqqqqqqqqqqqqqqqqq'
-            onChange={() => ''}
-            minRows={4}
-            maxRows={4}
+            minRows={6}
+            maxRows={6}
             placeholder='Maximum 4 rows'
-            style={{ width: '100%' }}
+            style={{ width: '100%', resize: 'none' }}
+            disabled
           />
         </Box>
       </Paper>

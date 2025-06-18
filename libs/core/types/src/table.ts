@@ -23,6 +23,6 @@ export interface TableProps<T> {
   maxHeight?: number;
   minHeight?: number;
   backgroundHeader?: string;
-  searchColumn?: keyof T
+  searchColumn?: keyof T;
   onChange?: (event: ChangeEvent) => void;
 }
