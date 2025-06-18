@@ -30,9 +30,11 @@ function SPTable<T extends { id: string | number }>({
   searchColumn,
   onChange,
   onRowClick,
+  onCheckboxChange,
   defaultRowIdSelected = '',
 }: TableProps<T> & {
   onRowClick?: (row: T) => void;
+  onCheckboxChange?: (row: T, checked: boolean) => void;
   defaultRowIdSelected?: string | number;
 }) {
   const [page, setPage] = useState(1);
@@ -78,13 +80,17 @@ function SPTable<T extends { id: string | number }>({
             </IconButton>
           </>
         );
-      case 'textCheckbox':
+      case 'textCheckbox': {
+        const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+          onCheckboxChange?.(row, event.target.checked);
+        };
         return (
           <Box display='flex' alignItems='center' justifyContent='space-between' width='100%' sx={{ pr: 6 }}>
             {String(row[col.field])}
-            <Checkbox />
+            <Checkbox onChange={handleCheckboxChange} />
           </Box>
         );
+      }
       default:
         return null;
     }

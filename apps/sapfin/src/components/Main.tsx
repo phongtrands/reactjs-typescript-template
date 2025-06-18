@@ -20,6 +20,8 @@ const Main = () => {
   const [interfaceList, setInterfaceList] = useState<any[]>([]);
   const [selectedInterface, setSelectedInterface] = useState<number>(0);
   const [fileList, setFileList] = useState<any[]>([]);
+  const [checkedFileList, setCheckedFileList] = useState<any[]>([]);
+  const [uploadFolderFile, setUploadFolderFile] = useState<any[]>([]);
 
   useEffect(() => {
     const transformed = mockupDataSource.map((item) => ({
@@ -60,16 +62,29 @@ const Main = () => {
     setSelectedInterface(data.id);
   };
 
-  const previewData: File[] = [
-    { id: '1', fileName: 'Row1' },
-    { id: '2', fileName: 'Row2' },
-    { id: '3', fileName: 'Row3' },
-    { id: '4', fileName: 'Row4' },
-    { id: '5', fileName: 'Row5' },
-    { id: '6', fileName: 'Row6' },
-    { id: '7', fileName: 'Row7' },
-    { id: '8', fileName: 'Row8' },
-  ];
+  const onCheckboxChange = (file: File, checked: boolean) => {
+    if (checked) {
+      setCheckedFileList((prev) => [...prev, file]);
+    } else {
+      setCheckedFileList((prev) => prev.filter((f) => f.id !== file.id));
+    }
+  };
+
+  const onMoveToUploadFolder = () => {
+    if (Object.keys(uploadFolderFile).length === 0 && Object.keys(checkedFileList).length === 1) {
+      setUploadFolderFile(checkedFileList);
+      setFileList((prev) => prev.filter((f) => f.id !== checkedFileList[0].id));
+    }
+  };
+
+  const onMoveBack = () => {
+    if (Object.keys(uploadFolderFile).length === 1) {
+      const [file] = uploadFolderFile;
+      setFileList((prev) => [...prev, file]);
+      setCheckedFileList((prev) => prev.filter((f) => f.id !== file.id));
+      setUploadFolderFile([]);
+    }
+  };
 
   const interfaceColumns: ColumnConfig<File>[] = [
     { headerName: 'Interfaces', field: 'displayName', align: 'left', type: 'text' },
@@ -132,7 +147,12 @@ const Main = () => {
                 )}
               </Grid>
               <Grid item xs={6}>
-                <Table<File> data={fileList} columns={fileColumns} backgroundHeader='#0286c2' />
+                <Table<File>
+                  data={fileList}
+                  columns={fileColumns}
+                  onCheckboxChange={onCheckboxChange}
+                  backgroundHeader='#0286c2'
+                />
               </Grid>
             </Grid>
             <Box display='flex' justifyContent='flex-end' mt={1}>
@@ -146,10 +166,22 @@ const Main = () => {
           </Grid>
 
           <Grid item xs={1} container direction='column' alignItems='center' justifyContent='center'>
-            <Button sx={{ mb: 1, ...commonButtonStyle }} variant='contained' color='inherit'>
+            <Button
+              sx={{ mb: 1, ...commonButtonStyle }}
+              variant='contained'
+              color='inherit'
+              onClick={onMoveToUploadFolder}
+              disabled={!(Object.keys(uploadFolderFile).length === 0 && Object.keys(checkedFileList).length === 1)}
+            >
               <ArrowForwardIosIcon />
             </Button>
-            <Button sx={{ mt: 1, ...commonButtonStyle }} variant='contained' color='inherit'>
+            <Button
+              sx={{ mt: 1, ...commonButtonStyle }}
+              variant='contained'
+              color='inherit'
+              onClick={onMoveBack}
+              disabled={Object.keys(uploadFolderFile).length === 0}
+            >
               <ArrowBackIosNewIcon />
             </Button>
           </Grid>
@@ -158,7 +190,7 @@ const Main = () => {
             <Typography variant='subtitle1' fontWeight='bold' gutterBottom>
               Upload Folder
             </Typography>
-            <Table<File> data={previewData} columns={uploadFolderColumns} backgroundHeader='#0286c2' />
+            <Table<File> data={uploadFolderFile} columns={uploadFolderColumns} backgroundHeader='#0286c2' />
             <Box display='flex' justifyContent='flex-end' mt={1}>
               <Button sx={commonButtonStyle} variant='contained' color='inherit'>
                 Test Run
