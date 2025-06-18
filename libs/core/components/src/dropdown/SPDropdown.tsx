@@ -5,17 +5,17 @@ import type { DropdownProps } from '@core/types';
 const SPDropdown: React.FC<DropdownProps> = ({
   label,
   options,
-  value,
+  value = '',
   className,
-  styleSelect,
-  styleLabel,
-  styleBg,
+  styleSelect = {},
+  styleLabel = { color: 'black !important' },
+  styleBg = {},
   ...otherProps
 }) => {
   return (
-    <Box sx={styleBg ? styleBg : {}}>
-      <InputLabel sx={styleLabel ? styleLabel : { color: 'black !important' }}>{label}</InputLabel>
-      <Select sx={styleSelect ? styleSelect : {}} value={value || ''} {...otherProps}>
+    <Box sx={styleBg}>
+      <InputLabel sx={styleLabel}>{label}</InputLabel>
+      <Select sx={styleSelect} value={value} {...otherProps}>
         {options.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
