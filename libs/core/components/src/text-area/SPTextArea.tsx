@@ -1,14 +1,8 @@
-import { TextareaAutosize, TextareaAutosizeProps } from '@mui/material';
+import { TextareaAutosize, type TextareaAutosizeProps } from '@mui/material';
 import React from 'react';
 
-const SPTextArea: React.FC<TextareaAutosizeProps> = ({
-    ...rest
-}) => {
-  return (
-    <TextareaAutosize
-        {...rest}
-    />
-  );
+const SPTextArea: React.FC<TextareaAutosizeProps> = ({ ...rest }) => {
+  return <TextareaAutosize {...rest} />;
 };
 
 export default SPTextArea;

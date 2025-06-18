@@ -10,16 +10,18 @@ import { comminglingFiles, comminglingGuestFiles, mockupDataSource } from '../co
 interface File {
   id: string;
   displayName?: string;
-  filename?: string;
+  fileName?: string;
 }
 
 const Main = () => {
-  const [sourceList, setSourceList] = useState<any[]>([]);
+  const [sourceDataList, setSourceDataList] = useState<any[]>([]);
   const [sourceOptions, setSourceOptions] = useState<any[]>([]);
   const [selectedSource, setSelectedSource] = useState<string>('');
   const [interfaceList, setInterfaceList] = useState<any[]>([]);
-  const [selectedInterface, setSelectedInterface] = useState<string>('');
+  const [selectedInterface, setSelectedInterface] = useState<number>(0);
   const [fileList, setFileList] = useState<any[]>([]);
+  const [checkedFileList, setCheckedFileList] = useState<any[]>([]);
+  const [uploadFolderFile, setUploadFolderFile] = useState<any[]>([]);
 
   useEffect(() => {
     const transformed = mockupDataSource.map((item) => ({
@@ -27,45 +29,73 @@ const Main = () => {
       label: item.displayName,
     }));
     setSourceOptions(transformed);
-    setSourceList(mockupDataSource);
+    setSourceDataList(mockupDataSource);
     if (mockupDataSource.length > 0) {
       setSelectedSource(mockupDataSource[0].name);
       setInterfaceList(mockupDataSource[0].interfaces);
+      setSelectedInterface(mockupDataSource[0].interfaces[0]?.id);
     }
   }, []);
 
+  useEffect(() => {
+    const filesWithId = (file: any[]) => {
+      return file.map((item, index) => ({
+        ...item,
+        id: index + 1,
+      }));
+    };
+
+    setFileList(selectedInterface === 1 ? filesWithId(comminglingFiles) : filesWithId(comminglingGuestFiles));
+  }, [selectedInterface]);
+
   const handleSourceChange = (event: SelectChangeEvent) => {
     const selected = event.target.value;
-    const matched = sourceList.find((item) => item.name === selected);
+    const matched = sourceDataList.find((item) => item.name === selected);
     if (matched) {
       setSelectedSource(selected);
       setInterfaceList(matched.interfaces);
+      setSelectedInterface(matched.interfaces[0]?.id || '');
     }
   };
 
-  const handleInterfaceClick = (event: SelectChangeEvent) => {
-    const selected = event.target.value;
-    setSelectedInterface(selected);
-    setFileList(selected === 'Commingling' ? comminglingFiles : comminglingGuestFiles);
+  const handleInterfaceClick = (data: any) => {
+    setSelectedInterface(data.id);
   };
 
-  const previewData: File[] = [
-    { id: '1', filename: 'Row1' },
-    { id: '2', filename: 'Row2' },
-    { id: '3', filename: 'Row3' },
-    { id: '4', filename: 'Row4' },
-    { id: '5', filename: 'Row5' },
-    { id: '6', filename: 'Row6' },
-    { id: '7', filename: 'Row7' },
-    { id: '8', filename: 'Row8' },
-  ];
+  const onCheckboxChange = (file: File, checked: boolean) => {
+    if (checked) {
+      setCheckedFileList((prev) => [...prev, file]);
+    } else {
+      setCheckedFileList((prev) => prev.filter((f) => f.id !== file.id));
+    }
+  };
+
+  const onMoveToUploadFolder = () => {
+    if (Object.keys(uploadFolderFile).length === 0 && Object.keys(checkedFileList).length === 1) {
+      setUploadFolderFile(checkedFileList);
+      setFileList((prev) => prev.filter((f) => f.id !== checkedFileList[0].id));
+    }
+  };
+
+  const onMoveBack = () => {
+    if (Object.keys(uploadFolderFile).length === 1) {
+      const [file] = uploadFolderFile;
+      setFileList((prev) => [...prev, file]);
+      setCheckedFileList((prev) => prev.filter((f) => f.id !== file.id));
+      setUploadFolderFile([]);
+    }
+  };
 
   const interfaceColumns: ColumnConfig<File>[] = [
     { headerName: 'Interfaces', field: 'displayName', align: 'left', type: 'text' },
   ];
 
   const fileColumns: ColumnConfig<File>[] = [
-    { headerName: 'File', field: 'filename', align: 'left', type: 'textCheckbox' },
+    { headerName: 'File', field: 'fileName', align: 'left', type: 'textCheckbox' },
+  ];
+
+  const uploadFolderColumns: ColumnConfig<File>[] = [
+    { headerName: 'Interfaces', field: 'fileName', align: 'left', type: 'text' },
   ];
 
   const commonButtonStyle = { border: 1, borderColor: 'grey.500', ml: 1 };
@@ -106,10 +136,23 @@ const Main = () => {
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Table<File> data={interfaceList} columns={interfaceColumns} backgroundHeader='#0286c2' />
+                {selectedInterface !== 0 && (
+                  <Table<File>
+                    data={interfaceList}
+                    onRowClick={handleInterfaceClick}
+                    columns={interfaceColumns}
+                    backgroundHeader='#0286c2'
+                    defaultRowIdSelected={selectedInterface}
+                  />
+                )}
               </Grid>
               <Grid item xs={6}>
-                <Table<File> data={previewData} columns={fileColumns} backgroundHeader='#0286c2' />
+                <Table<File>
+                  data={fileList}
+                  columns={fileColumns}
+                  onCheckboxChange={onCheckboxChange}
+                  backgroundHeader='#0286c2'
+                />
               </Grid>
             </Grid>
             <Box display='flex' justifyContent='flex-end' mt={1}>
@@ -123,10 +166,22 @@ const Main = () => {
           </Grid>
 
           <Grid item xs={1} container direction='column' alignItems='center' justifyContent='center'>
-            <Button sx={{ mb: 1, ...commonButtonStyle }} variant='contained' color='inherit'>
+            <Button
+              sx={{ mb: 1, ...commonButtonStyle }}
+              variant='contained'
+              color='inherit'
+              onClick={onMoveToUploadFolder}
+              disabled={!(Object.keys(uploadFolderFile).length === 0 && Object.keys(checkedFileList).length === 1)}
+            >
               <ArrowForwardIosIcon />
             </Button>
-            <Button sx={{ mt: 1, ...commonButtonStyle }} variant='contained' color='inherit'>
+            <Button
+              sx={{ mt: 1, ...commonButtonStyle }}
+              variant='contained'
+              color='inherit'
+              onClick={onMoveBack}
+              disabled={Object.keys(uploadFolderFile).length === 0}
+            >
               <ArrowBackIosNewIcon />
             </Button>
           </Grid>
@@ -135,7 +190,7 @@ const Main = () => {
             <Typography variant='subtitle1' fontWeight='bold' gutterBottom>
               Upload Folder
             </Typography>
-            <Table<File> data={previewData} columns={interfaceColumns} backgroundHeader='#0286c2' />
+            <Table<File> data={uploadFolderFile} columns={uploadFolderColumns} backgroundHeader='#0286c2' />
             <Box display='flex' justifyContent='flex-end' mt={1}>
               <Button sx={commonButtonStyle} variant='contained' color='inherit'>
                 Test Run

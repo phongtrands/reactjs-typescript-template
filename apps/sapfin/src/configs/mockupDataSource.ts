@@ -263,32 +263,17 @@ export const comminglingFiles = [
   {
     sourceName: 'BMCS',
     interfaceName: 'Commingling',
+    fileName: 'Commingling_20181022(01).csv',
+  },
+  {
+    sourceName: 'BMCS',
+    interfaceName: 'Commingling',
     fileName: 'Commingling_20181022(02).csv',
   },
   {
     sourceName: 'BMCS',
     interfaceName: 'Commingling',
-    fileName: 'Commingling_20181022(05).csv',
-  },
-  {
-    sourceName: 'BMCS',
-    interfaceName: 'Commingling',
     fileName: 'Commingling_20181022(03).csv',
-  },
-  {
-    sourceName: 'BMCS',
-    interfaceName: 'Commingling',
-    fileName: 'Commingling_20240724(02).csv',
-  },
-  {
-    sourceName: 'BMCS',
-    interfaceName: 'Commingling',
-    fileName: 'Commingling_20181022(04).csv',
-  },
-  {
-    sourceName: 'BMCS',
-    interfaceName: 'Commingling',
-    fileName: 'Commingling_20240724(01).csv',
   },
 ];
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Button, { ButtonProps } from '@mui/material/Button';
+import Button, { type ButtonProps } from '@mui/material/Button';
 
 const SPButton: React.FC<ButtonProps> = ({
   variant = 'contained',
