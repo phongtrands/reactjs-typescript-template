@@ -1,27 +1,55 @@
+import { useEffect, useState } from 'react';
+import { Box, Grid, Paper, type SelectChangeEvent } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Box, Grid, Paper, type SelectChangeEvent } from '@mui/material';
 import { Button, Dropdown, Table, TextArea, Typography } from '@core/components';
 import type { ColumnConfig } from '@core/types';
-import React from 'react';
+
+import { comminglingFiles, comminglingGuestFiles, mockupDataSource } from '../configs/mockupDataSource';
 
 interface File {
   id: string;
-  filename: string;
+  displayName?: string;
+  filename?: string;
 }
 
 const Main = () => {
-  const menuData = [
-    { value: 'BMCS', label: 'BMCS' },
-    { value: 'Menu2', label: 'Menu2' },
-    { value: 'Menu3', label: 'Menu3' },
-  ];
-  const [value, setValue] = React.useState(menuData[0].label);
-  const handleChange = (event: SelectChangeEvent) => {
-    setValue(event.target.value);
+  const [sourceList, setSourceList] = useState<any[]>([]);
+  const [sourceOptions, setSourceOptions] = useState<any[]>([]);
+  const [selectedSource, setSelectedSource] = useState<string>('');
+  const [interfaceList, setInterfaceList] = useState<any[]>([]);
+  const [selectedInterface, setSelectedInterface] = useState<string>('');
+  const [fileList, setFileList] = useState<any[]>([]);
+
+  useEffect(() => {
+    const transformed = mockupDataSource.map((item) => ({
+      value: item.name,
+      label: item.displayName,
+    }));
+    setSourceOptions(transformed);
+    setSourceList(mockupDataSource);
+    if (mockupDataSource.length > 0) {
+      setSelectedSource(mockupDataSource[0].name);
+      setInterfaceList(mockupDataSource[0].interfaces);
+    }
+  }, []);
+
+  const handleSourceChange = (event: SelectChangeEvent) => {
+    const selected = event.target.value;
+    const matched = sourceList.find((item) => item.name === selected);
+    if (matched) {
+      setSelectedSource(selected);
+      setInterfaceList(matched.interfaces);
+    }
   };
 
-  const data: File[] = [
+  const handleInterfaceClick = (event: SelectChangeEvent) => {
+    const selected = event.target.value;
+    setSelectedInterface(selected);
+    setFileList(selected === 'Commingling' ? comminglingFiles : comminglingGuestFiles);
+  };
+
+  const previewData: File[] = [
     { id: '1', filename: 'Row1' },
     { id: '2', filename: 'Row2' },
     { id: '3', filename: 'Row3' },
@@ -32,11 +60,15 @@ const Main = () => {
     { id: '8', filename: 'Row8' },
   ];
 
-  const colum: ColumnConfig<File>[] = [{ headerName: 'File', field: 'filename', align: 'left', type: 'text' }];
+  const interfaceColumns: ColumnConfig<File>[] = [
+    { headerName: 'Interfaces', field: 'displayName', align: 'left', type: 'text' },
+  ];
 
-  const columCheckbox: ColumnConfig<File>[] = [
+  const fileColumns: ColumnConfig<File>[] = [
     { headerName: 'File', field: 'filename', align: 'left', type: 'textCheckbox' },
   ];
+
+  const commonButtonStyle = { border: 1, borderColor: 'grey.500', ml: 1 };
 
   return (
     <Box p={3}>
@@ -49,10 +81,10 @@ const Main = () => {
         }}
       >
         <Dropdown
-          options={menuData}
           label='Source'
-          value={value}
-          onChange={handleChange}
+          options={sourceOptions}
+          value={selectedSource}
+          onChange={handleSourceChange}
           styleLabel={{ fontWeight: 'bold', color: '#fff' }}
           styleSelect={{ bgcolor: '#fff' }}
           styleBg={{
@@ -74,27 +106,27 @@ const Main = () => {
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Table<File> data={data} columns={colum} backgroundHeader='#0286c2' />
+                <Table<File> data={interfaceList} columns={interfaceColumns} backgroundHeader='#0286c2' />
               </Grid>
               <Grid item xs={6}>
-                <Table<File> data={data} columns={columCheckbox} backgroundHeader='#0286c2' />
+                <Table<File> data={previewData} columns={fileColumns} backgroundHeader='#0286c2' />
               </Grid>
             </Grid>
             <Box display='flex' justifyContent='flex-end' mt={1}>
-              <Button sx={{ border: 1, borderColor: 'grey.500', ml: 1 }} variant='contained' color='inherit'>
+              <Button sx={commonButtonStyle} variant='contained' color='inherit'>
                 Reject
               </Button>
-              <Button sx={{ border: 1, borderColor: 'grey.500', ml: 1 }} variant='contained' color='inherit'>
+              <Button sx={commonButtonStyle} variant='contained' color='inherit'>
                 Download
               </Button>
             </Box>
           </Grid>
 
           <Grid item xs={1} container direction='column' alignItems='center' justifyContent='center'>
-            <Button sx={{ mb: 1, border: 1, borderColor: 'grey.500' }} variant='contained' color='inherit'>
+            <Button sx={{ mb: 1, ...commonButtonStyle }} variant='contained' color='inherit'>
               <ArrowForwardIosIcon />
             </Button>
-            <Button sx={{ mt: 1, border: 1, borderColor: 'grey.500' }} variant='contained' color='inherit'>
+            <Button sx={{ mt: 1, ...commonButtonStyle }} variant='contained' color='inherit'>
               <ArrowBackIosNewIcon />
             </Button>
           </Grid>
@@ -103,12 +135,12 @@ const Main = () => {
             <Typography variant='subtitle1' fontWeight='bold' gutterBottom>
               Upload Folder
             </Typography>
-            <Table<File> data={data} columns={colum} backgroundHeader='#0286c2' />
+            <Table<File> data={previewData} columns={interfaceColumns} backgroundHeader='#0286c2' />
             <Box display='flex' justifyContent='flex-end' mt={1}>
-              <Button sx={{ border: 1, borderColor: 'grey.500', ml: 1 }} variant='contained' color='inherit'>
+              <Button sx={commonButtonStyle} variant='contained' color='inherit'>
                 Test Run
               </Button>
-              <Button sx={{ border: 1, borderColor: 'grey.500', ml: 1 }} variant='contained' color='inherit'>
+              <Button sx={commonButtonStyle} variant='contained' color='inherit'>
                 Actual Run
               </Button>
             </Box>
