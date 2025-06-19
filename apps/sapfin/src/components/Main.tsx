@@ -46,6 +46,8 @@ const Main = () => {
     };
 
     setFileList(selectedInterface === 1 ? filesWithId(comminglingFiles) : filesWithId(comminglingGuestFiles));
+    setCheckedFileList([]);
+    setUploadFolderFile([]);
   }, [selectedInterface]);
 
   const handleSourceChange = (event: SelectChangeEvent) => {
@@ -55,6 +57,8 @@ const Main = () => {
       setSelectedSource(selected);
       setInterfaceList(matched.interfaces);
       setSelectedInterface(matched.interfaces[0]?.id || '');
+      setCheckedFileList([]);
+      setUploadFolderFile([]);
     }
   };
 
@@ -107,6 +111,7 @@ const Main = () => {
           sx={{
             backgroundColor: '#055f8e',
             color: 'white',
+            mr: 0.2,
             px: 2,
             py: 1,
             display: 'flex',

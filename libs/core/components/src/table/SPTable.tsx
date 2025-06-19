@@ -85,7 +85,7 @@ function SPTable<T extends { id: string | number }>({
           onCheckboxChange?.(row, event.target.checked);
         };
         return (
-          <Box display='flex' alignItems='center' justifyContent='space-between' width='100%' sx={{ pr: 6 }}>
+          <Box display='flex' alignItems='center' justifyContent='space-between' width='100%'>
             {String(row[col.field])}
             <Checkbox onChange={handleCheckboxChange} />
           </Box>
