@@ -18,5 +18,7 @@
     "name": "core/types",
     "tags": ["scope:core"]
   },
-  "dependencies": {}
+  "dependencies": {
+    "@mui/material": "^5.17.1"
+  }
 }

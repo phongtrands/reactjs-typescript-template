@@ -4,13 +4,7 @@ export interface ColumnConfig<T> {
   width?: number | string;
   align?: 'left' | 'center' | 'right';
   type?: string;
-}
-
-export interface ChangeEvent {
-  rowIndex: number;
-  rowId: number | string;
-  fieldName: string;
-  value: number | string;
+  iconType?: 'folder' | 'paper';
 }
 
 export interface TableProps<T> {
@@ -24,5 +18,8 @@ export interface TableProps<T> {
   minHeight?: number;
   backgroundHeader?: string;
   searchColumn?: keyof T;
-  onChange?: (event: ChangeEvent) => void;
+  onChange?: (row: any, fieldName: string, value: any, event: any) => void;
+  onSelectionChange?: (selected: (string | number)[]) => void;
+  selected?: (string | number)[];
+  selectable?: 'single' | 'multiple';
 }

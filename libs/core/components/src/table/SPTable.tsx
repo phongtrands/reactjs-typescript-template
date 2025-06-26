@@ -18,6 +18,8 @@ import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOu
 import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
 import type { ColumnConfig, TableProps } from '@core/types';
 import React, { useMemo, useState } from 'react';
+import FolderIcon from '@mui/icons-material/Folder';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 function SPTable<T extends { id: string | number }>({
   columns,
@@ -29,14 +31,10 @@ function SPTable<T extends { id: string | number }>({
   enableSearch = false,
   searchColumn,
   onChange,
-  onRowClick,
-  onCheckboxChange,
-  defaultRowIdSelected = '',
-}: TableProps<T> & {
-  onRowClick?: (row: T) => void;
-  onCheckboxChange?: (row: T, checked: boolean) => void;
-  defaultRowIdSelected?: string | number;
-}) {
+  selected = [],
+  selectable = 'single',
+  onSelectionChange,
+}: TableProps<T>) {
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState('');
 
@@ -47,14 +45,41 @@ function SPTable<T extends { id: string | number }>({
     setPage(1);
   };
 
+  const handleChange = (row: any, fieldName: string, value: any, event: any) => {
+    onChange?.(row, fieldName, value, event);
+  };
+
   const handleRowClick = (row: T) => {
-    onRowClick?.(row);
+    let newSelected = [row.id];
+    if (selectable === 'single') {
+      onSelectionChange?.(newSelected);
+    } else if (selectable === 'multiple') {
+      const isSelected = selected.includes(row.id);
+      newSelected = isSelected ? selected.filter((id) => id !== row.id) : [...selected, row.id];
+      onSelectionChange?.(newSelected);
+    }
   };
 
   const renderCellContent = (row: T, col: ColumnConfig<T>): React.ReactNode => {
+    let icons = null;
+    switch (col.iconType) {
+      case 'folder':
+        icons = <FolderIcon sx={{ color: '#fbc02d', pr: 1, fontSize: 32 }} />;
+        break;
+      case 'paper':
+        icons = <DescriptionIcon color='action' sx={{ pr: 1, fontSize: 32 }} />;
+        break;
+      default:
+        break;
+    }
     switch (col.type) {
       case 'text':
-        return String(row[col.field]);
+        return (
+          <Box display='flex' alignItems='center'>
+            {icons}
+            {String(row[col.field])}
+          </Box>
+        );
       case 'number':
         return Number(row[col.field]);
       case 'iconAction':
@@ -82,11 +107,14 @@ function SPTable<T extends { id: string | number }>({
         );
       case 'textCheckbox': {
         const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-          onCheckboxChange?.(row, event.target.checked);
+          handleChange?.(row, String(col.field), event.target.checked, event);
         };
         return (
           <Box display='flex' alignItems='center' justifyContent='space-between' width='100%'>
-            {String(row[col.field])}
+            <Box display='flex' alignItems='center'>
+              {icons}
+              {String(row[col.field])}
+            </Box>
             <Checkbox onChange={handleCheckboxChange} />
           </Box>
         );
@@ -148,15 +176,7 @@ function SPTable<T extends { id: string | number }>({
                   align={col.align || 'center'}
                   sx={{
                     width: col.width,
-                    color: 'black',
-                    fontWeight: 'bold',
                     backgroundColor: backgroundHeader || 'white',
-                    height: '6vh',
-                    lineHeight: '6vh',
-                    padding: 0,
-                    pl: 1,
-                    pr: 1,
-                    border: '1px solid #ddd',
                   }}
                 >
                   {col.headerName}
@@ -174,29 +194,18 @@ function SPTable<T extends { id: string | number }>({
               </TableRow>
             ) : (
               paginatedData.map((row) => {
-                const isSelected = String(defaultRowIdSelected) === String(row.id);
+                const isSelected = selected.includes(row.id);
                 return (
                   <TableRow
                     key={String(row.id)}
-                    hover
                     onClick={() => handleRowClick(row)}
                     sx={{
-                      backgroundColor: isSelected ? '#e3f2fd' : 'inherit',
+                      backgroundColor: isSelected ? '#b5dcfa' : 'inherit',
                       cursor: 'pointer',
                     }}
                   >
                     {columns.map((col) => (
-                      <TableCell
-                        key={String(col.field)}
-                        align={col.align || 'center'}
-                        sx={{
-                          padding: 0,
-                          pl: 1,
-                          height: '6vh',
-                          lineHeight: '6vh',
-                          border: '1px solid #ddd',
-                        }}
-                      >
+                      <TableCell key={String(col.field)} align={col.align || 'center'}>
                         {renderCellContent(row, col)}
                       </TableCell>
                     ))}

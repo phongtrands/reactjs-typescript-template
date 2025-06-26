@@ -1,6 +1,6 @@
 export const mockupDataSource = [
   {
-    id: 1,
+    id: '1',
     version: 0,
     createdAt: '2020-01-23T06:54:06.383+0000',
     createdBy: null,
@@ -10,7 +10,7 @@ export const mockupDataSource = [
     displayName: 'BMCS',
     interfaces: [
       {
-        id: 1,
+        id: '1',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -20,7 +20,7 @@ export const mockupDataSource = [
         displayName: 'Commingling',
       },
       {
-        id: 2,
+        id: '2',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -30,7 +30,7 @@ export const mockupDataSource = [
         displayName: 'Commingling as a Guest',
       },
       {
-        id: 3,
+        id: '3',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -40,7 +40,7 @@ export const mockupDataSource = [
         displayName: 'Expired Bet',
       },
       {
-        id: 4,
+        id: '4',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -50,7 +50,7 @@ export const mockupDataSource = [
         displayName: 'Paid Bet',
       },
       {
-        id: 6,
+        id: '6',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -60,7 +60,7 @@ export const mockupDataSource = [
         displayName: 'Tote Cheque',
       },
       {
-        id: 7,
+        id: '7',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -72,7 +72,7 @@ export const mockupDataSource = [
     ],
   },
   {
-    id: 12,
+    id: '12',
     version: 0,
     createdAt: '2022-12-22T09:25:06.273+0000',
     createdBy: null,
@@ -82,7 +82,7 @@ export const mockupDataSource = [
     displayName: 'CITI',
     interfaces: [
       {
-        id: 45,
+        id: '45',
         version: 0,
         createdAt: '2022-12-22T09:25:21.362+0000',
         createdBy: null,
@@ -92,7 +92,7 @@ export const mockupDataSource = [
         displayName: '0810972009 Citi test account',
       },
       {
-        id: 46,
+        id: '46',
         version: 0,
         createdAt: '2022-12-22T09:25:21.385+0000',
         createdBy: null,
@@ -104,7 +104,7 @@ export const mockupDataSource = [
     ],
   },
   {
-    id: 9,
+    id: '9',
     version: 0,
     createdAt: '2020-02-17T05:29:33.571+0000',
     createdBy: null,
@@ -114,7 +114,7 @@ export const mockupDataSource = [
     displayName: 'DBS',
     interfaces: [
       {
-        id: 38,
+        id: '38',
         version: 0,
         createdAt: '2020-03-05T07:12:52.534+0000',
         createdBy: null,
@@ -124,7 +124,7 @@ export const mockupDataSource = [
         displayName: '0039008414',
       },
       {
-        id: 39,
+        id: '39',
         version: 0,
         createdAt: '2020-04-06T06:38:25.083+0000',
         createdBy: null,
@@ -134,7 +134,7 @@ export const mockupDataSource = [
         displayName: '0039007442',
       },
       {
-        id: 42,
+        id: '42',
         version: 0,
         createdAt: '2020-06-22T17:01:29.788+0000',
         createdBy: null,
@@ -146,7 +146,7 @@ export const mockupDataSource = [
     ],
   },
   {
-    id: 6,
+    id: '6',
     version: 0,
     createdAt: '2020-01-23T06:54:06.383+0000',
     createdBy: null,
@@ -156,7 +156,7 @@ export const mockupDataSource = [
     displayName: 'ES',
     interfaces: [
       {
-        id: 17,
+        id: '17',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -166,7 +166,7 @@ export const mockupDataSource = [
         displayName: 'Daily Sales Information',
       },
       {
-        id: 18,
+        id: '18',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -176,7 +176,7 @@ export const mockupDataSource = [
         displayName: 'Branch Cash Settlement',
       },
       {
-        id: 21,
+        id: '21',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -186,7 +186,7 @@ export const mockupDataSource = [
         displayName: 'Retailer Settlement',
       },
       {
-        id: 22,
+        id: '22',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -196,7 +196,7 @@ export const mockupDataSource = [
         displayName: 'Sweep Retailer Settlement',
       },
       {
-        id: 23,
+        id: '23',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -206,7 +206,7 @@ export const mockupDataSource = [
         displayName: 'Consignee Settlement',
       },
       {
-        id: 24,
+        id: '24',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -216,7 +216,7 @@ export const mockupDataSource = [
         displayName: 'Draw Data Information',
       },
       {
-        id: 25,
+        id: '25',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -226,7 +226,7 @@ export const mockupDataSource = [
         displayName: 'Unclaimed Winnings',
       },
       {
-        id: 26,
+        id: '26',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -236,7 +236,7 @@ export const mockupDataSource = [
         displayName: 'Pseudo Br Draw Sales',
       },
       {
-        id: 27,
+        id: '27',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,
@@ -246,7 +246,7 @@ export const mockupDataSource = [
         displayName: 'Pseudo Br Winnings',
       },
       {
-        id: 28,
+        id: '28',
         version: 0,
         createdAt: '2020-01-23T06:54:06.383+0000',
         createdBy: null,

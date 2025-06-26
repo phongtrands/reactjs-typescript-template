@@ -1,29 +1,25 @@
 import { useEffect, useState } from 'react';
-import { Box, Grid, Paper, type SelectChangeEvent } from '@mui/material';
+import { Box, Grid, type SelectChangeEvent } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Button, Dropdown, Table, TextArea, Typography } from '@core/components';
 import type { ColumnConfig } from '@core/types';
-import { Block, Download, PlayArrow, RocketLaunch } from '@mui/icons-material';
+import { Download, PlayArrow, RocketLaunch } from '@mui/icons-material';
 import ClearIcon from '@mui/icons-material/Clear';
 
+import PageContainer from '../components/PageContainer';
 import { comminglingFiles, comminglingGuestFiles, mockupDataSource } from '../configs/mockupDataSource';
+import type { ComminglingFile, Interface, Source } from '../types/sapfin.type';
 
-interface File {
-  id: string;
-  displayName?: string;
-  fileName?: string;
-}
-
-const Main = () => {
-  const [sourceDataList, setSourceDataList] = useState<any[]>([]);
+const SapfinPage = () => {
+  const [sourceDataList, setSourceDataList] = useState<Source[]>([]);
   const [sourceOptions, setSourceOptions] = useState<any[]>([]);
   const [selectedSource, setSelectedSource] = useState<string>('');
-  const [interfaceList, setInterfaceList] = useState<any[]>([]);
-  const [selectedInterface, setSelectedInterface] = useState<number>(0);
-  const [fileList, setFileList] = useState<any[]>([]);
+  const [interfaceList, setInterfaceList] = useState<Interface[]>([]);
+  const [selectedInterface, setSelectedInterface] = useState<string[]>(['1']);
+  const [fileList, setFileList] = useState<ComminglingFile[]>([]);
   const [checkedFileList, setCheckedFileList] = useState<any[]>([]);
-  const [uploadFolderFile, setUploadFolderFile] = useState<any[]>([]);
+  const [uploadFolderFile, setUploadFolderFile] = useState<ComminglingFile[]>([]);
 
   useEffect(() => {
     const transformed = mockupDataSource.map((item) => ({
@@ -35,7 +31,7 @@ const Main = () => {
     if (mockupDataSource.length > 0) {
       setSelectedSource(mockupDataSource[0].name);
       setInterfaceList(mockupDataSource[0].interfaces);
-      setSelectedInterface(mockupDataSource[0].interfaces[0]?.id);
+      setSelectedInterface([mockupDataSource[0].interfaces[0]?.id]);
     }
   }, []);
 
@@ -47,7 +43,7 @@ const Main = () => {
       }));
     };
 
-    setFileList(selectedInterface === 1 ? filesWithId(comminglingFiles) : filesWithId(comminglingGuestFiles));
+    setFileList(selectedInterface[0] === '1' ? filesWithId(comminglingFiles) : filesWithId(comminglingGuestFiles));
     setCheckedFileList([]);
     setUploadFolderFile([]);
   }, [selectedInterface]);
@@ -58,7 +54,7 @@ const Main = () => {
     if (matched) {
       setSelectedSource(selected);
       setInterfaceList(matched.interfaces);
-      setSelectedInterface(matched.interfaces[0]?.id || '');
+      setSelectedInterface([matched.interfaces[0]?.id]);
       setCheckedFileList([]);
       setUploadFolderFile([]);
     }
@@ -68,7 +64,7 @@ const Main = () => {
     setSelectedInterface(data[0]);
   };
 
-  const onCheckboxChange = (file: any, fieldName: string, value: boolean, event: any ) => {
+  const onCheckboxChange = (file: any, fieldName: string, value: boolean, event: any) => {
     if (value) {
       setCheckedFileList((prev) => [...prev, file]);
     } else {
@@ -92,15 +88,15 @@ const Main = () => {
     }
   };
 
-  const interfaceColumns: ColumnConfig<File>[] = [
+  const interfaceColumns: ColumnConfig<Interface>[] = [
     { headerName: 'Interfaces', field: 'displayName', align: 'left', type: 'text', iconType: 'folder' },
   ];
 
-  const fileColumns: ColumnConfig<File>[] = [
+  const fileColumns: ColumnConfig<ComminglingFile>[] = [
     { headerName: 'File', field: 'fileName', align: 'left', type: 'textCheckbox', iconType: 'paper' },
   ];
 
-  const uploadFolderColumns: ColumnConfig<File>[] = [
+  const uploadFolderColumns: ColumnConfig<ComminglingFile>[] = [
     { headerName: 'Interfaces', field: 'fileName', align: 'left', type: 'text', iconType: 'paper' },
   ];
 
@@ -165,24 +161,18 @@ const Main = () => {
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              {selectedInterface !== 0 && (
-                <Table<File>
+              {selectedInterface.length !== 0 && (
+                <Table
                   data={interfaceList}
-                  // onRowClick={handleInterfaceClick}
                   columns={interfaceColumns}
                   backgroundHeader='#3f85ac'
-                  selected={[selectedInterface]}
+                  selected={selectedInterface}
                   onSelectionChange={handleInterfaceClick}
                 />
               )}
             </Grid>
             <Grid item xs={6}>
-              <Table<File>
-                data={fileList}
-                columns={fileColumns}
-                onChange={onCheckboxChange}
-                backgroundHeader='#3f85ac'
-              />
+              <Table data={fileList} columns={fileColumns} onChange={onCheckboxChange} backgroundHeader='#3f85ac' />
             </Grid>
           </Grid>
           <Box display='flex' justifyContent='flex-end' mt={1}>
@@ -228,7 +218,7 @@ const Main = () => {
           <Typography variant='h6' fontWeight='bold' gutterBottom>
             Upload Folder
           </Typography>
-          <Table<File> data={uploadFolderFile} columns={uploadFolderColumns} backgroundHeader='#3f85ac' />
+          <Table data={uploadFolderFile} columns={uploadFolderColumns} backgroundHeader='#3f85ac' />
           <Box display='flex' justifyContent='flex-end' mt={1}>
             <Button
               disabled={!enableLeftButton}
@@ -275,4 +265,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default PageContainer(SapfinPage);
