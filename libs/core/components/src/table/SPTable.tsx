@@ -80,8 +80,38 @@ function SPTable<T extends { id: string | number }>({
             {String(row[col.field])}
           </Box>
         );
+      case 'status-green':
+        return (
+          <Typography
+            component={'span'}
+            borderRadius={3}
+            sx={{ backgroundColor: 'rgb(220, 252, 231)', color: '#047857', py: 0.5, px: 1.5, fontWeight: 500 }}
+          >
+            {String(row[col.field])}
+          </Typography>
+        );
+      case 'status-yellow':
+        return (
+          <Typography
+            component={'span'}
+            borderRadius={3}
+            sx={{
+              backgroundColor: 'rgba(254, 249, 195, 1)',
+              color: 'rgba(133, 77, 14, 1)',
+              py: 0.5,
+              px: 1.5,
+              fontWeight: 500,
+            }}
+          >
+            {String(row[col.field])}
+          </Typography>
+        );
       case 'number':
-        return Number(row[col.field]);
+        return (
+          <Typography component={'span'} sx={{ fontWeight: 'bold' }}>
+            {Number(row[col.field])}
+          </Typography>
+        );
       case 'iconAction':
         return (
           <IconButton color='warning'>
@@ -161,10 +191,11 @@ function SPTable<T extends { id: string | number }>({
 
       <TableContainer
         sx={{
-          maxHeight: `${(rowsPerPage + 1) * 6}vh`,
-          minHeight: `${(rowsPerPage + 1) * 6}vh`,
+          maxHeight: `${(rowsPerPage + 1) * 6 + 1}vh`,
+          minHeight: `${(rowsPerPage + 1) * 6 + 1}vh`,
           overflowY: 'auto',
           border: '1px solid #ddd',
+          borderBottom: paginatedData.length > 0 ? 'none' : '',
         }}
       >
         <Table stickyHeader sx={{ borderCollapse: 'collapse' }}>
@@ -200,8 +231,11 @@ function SPTable<T extends { id: string | number }>({
                     key={String(row.id)}
                     onClick={() => handleRowClick(row)}
                     sx={{
-                      backgroundColor: isSelected ? '#b5dcfa' : 'inherit',
+                      backgroundColor: isSelected ? '#cee7fa' : 'inherit',
                       cursor: 'pointer',
+                      '&:hover': {
+                        backgroundColor: isSelected ? '' : '#f0f7ff',
+                      },
                     }}
                   >
                     {columns.map((col) => (

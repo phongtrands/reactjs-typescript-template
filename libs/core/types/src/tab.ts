@@ -12,4 +12,5 @@ export interface TabsProps extends Omit<MuiTabsProps, 'value' | 'onChange'> {
   defaultTab?: string;
   onTabChange?: (event: React.SyntheticEvent, value: string) => void;
   isNavigation?: boolean;
+  tabType?: string;
 }

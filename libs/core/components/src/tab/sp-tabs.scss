@@ -1,0 +1,15 @@
+.sp-tabs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-bottom: 1px solid #bdbdbd !important;
+    .Mui-selected {
+        background-color: #055f8e !important;
+        color: rgb(255, 255, 255) !important;
+        border: none !important;
+    }
+    .MuiButtonBase-root {
+        text-transform: none !important;
+        font-size: large;
+    }
+}

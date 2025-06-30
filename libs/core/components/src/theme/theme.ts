@@ -12,6 +12,7 @@ const theme = createTheme({
           fontFamily: 'Inter, "Segoe UI", sans-serif',
           padding: 0,
           paddingLeft: '0.5rem',
+          paddingRight: '0.5rem',
           height: '6vh',
           lineHeight: '6vh',
           border: '1px solid #ddd',
@@ -53,9 +54,9 @@ const theme = createTheme({
           '&:hover': {
             backgroundColor: '#107bb3',
           },
-          borderRadius: 1,
           fontWeight: '600',
           fontSize: '1rem',
+          borderRadius: '4px',
         },
       },
     },

@@ -121,7 +121,7 @@ const SapfinPage = () => {
           width: 'fit-content',
           px: 1.5,
           py: 1.5,
-          backgroundColor: '#3f85ac',
+          backgroundColor: 'white',
         }}
       >
         <Typography variant='body1' sx={{ mr: 2, fontWeight: 'bold' }}>
@@ -134,7 +134,6 @@ const SapfinPage = () => {
           onChange={handleSourceChange}
           styleSelect={{
             width: 160,
-            backgroundColor: 'rgb(248, 246, 246)',
             border: 'none',
             outline: 'none',
             padding: '0',
@@ -143,7 +142,6 @@ const SapfinPage = () => {
           }}
         />
       </Box>
-
       <Grid container sx={{ mt: 2, borderRadius: 2 }}>
         <Grid
           item
@@ -165,14 +163,14 @@ const SapfinPage = () => {
                 <Table
                   data={interfaceList}
                   columns={interfaceColumns}
-                  backgroundHeader='#3f85ac'
                   selected={selectedInterface}
                   onSelectionChange={handleInterfaceClick}
+                  backgroundHeader='#f2f2f2'
                 />
               )}
             </Grid>
             <Grid item xs={6}>
-              <Table data={fileList} columns={fileColumns} onChange={onCheckboxChange} backgroundHeader='#3f85ac' />
+              <Table data={fileList} columns={fileColumns} onChange={onCheckboxChange} backgroundHeader='#f2f2f2' />
             </Grid>
           </Grid>
           <Box display='flex' justifyContent='flex-end' mt={1}>
@@ -180,7 +178,7 @@ const SapfinPage = () => {
               disabled={!enableRightButton}
               sx={commonButtonStyle}
               variant='contained'
-              startIcon={<ClearIcon sx={{ color: enableRightButton ? 'red' : '#00000042' }} />}
+              startIcon={<ClearIcon sx={{ color: enableRightButton ? '#fff' : '#00000042' }} />}
             >
               Reject
             </Button>
@@ -218,13 +216,13 @@ const SapfinPage = () => {
           <Typography variant='h6' fontWeight='bold' gutterBottom>
             Upload Folder
           </Typography>
-          <Table data={uploadFolderFile} columns={uploadFolderColumns} backgroundHeader='#3f85ac' />
+          <Table data={uploadFolderFile} columns={uploadFolderColumns} backgroundHeader='#f2f2f2' />
           <Box display='flex' justifyContent='flex-end' mt={1}>
             <Button
               disabled={!enableLeftButton}
               sx={commonButtonStyle}
               variant='contained'
-              startIcon={<PlayArrow sx={{ color: enableLeftButton ? '#43a047' : '#00000042' }} />}
+              startIcon={<PlayArrow sx={{ color: enableLeftButton ? '#fff' : '#00000042' }} />}
             >
               Test Run
             </Button>
@@ -232,7 +230,7 @@ const SapfinPage = () => {
               disabled={!enableLeftButton}
               sx={commonButtonStyle}
               variant='contained'
-              startIcon={<RocketLaunch sx={{ color: enableLeftButton ? '#fb8c00' : '#00000042' }} />}
+              startIcon={<RocketLaunch sx={{ color: enableLeftButton ? '#fff' : '#00000042' }} />}
             >
               Actual Run
             </Button>

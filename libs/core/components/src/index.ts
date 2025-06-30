@@ -7,3 +7,4 @@ export { default as PrivateRoute } from './PrivateRoute';
 export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as Tab } from './tab/SPTab';
 export { default as theme } from './theme/theme';
+export { default as Calendar } from './calendar/SPCalendar';

@@ -1,14 +1,34 @@
-import { Box, Divider } from '@mui/material';
+import { Avatar, Box, Divider, Menu, MenuItem } from '@mui/material';
 import { Button, Typography } from '@core/components';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '@core/helpers';
 import { logout } from '@libs/auth';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import logo from '../assets/image/left-logo.png';
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const location = useLocation();
+  console.log('location', location);
+  const path = location.pathname;
+  const lastSegment = path.split('/').filter(Boolean).pop();
+
+  let bigTitle = 'SAPFIN';
+  let smallTitle = 'Finance Interface';
+  let destinationLink = 'http://localhost:4200/epayment';
+  let destinationName = 'EPAYMENT';
+
+  if (lastSegment === 'epayment') {
+    bigTitle = 'ePayment Recon';
+    smallTitle = 'Matching & Verification';
+    destinationLink = 'http://localhost:4200/sapfin';
+    destinationName = 'SAPFIN';
+  }
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -80,32 +100,75 @@ const Header = () => {
         justifyContent: 'space-between',
         px: 3,
         py: 2,
-        backgroundColor: '#055f8e',
+        // backgroundColor: '#055f8e',
+        background: 'linear-gradient(to right, #07699c, #055f8e)',
         color: '#fff',
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Box component='img' src={logo} alt='Logo' sx={{ width: 100, height: 75, mr: 2 }} />
-        <Typography variant='h4' sx={{ fontWeight: 600 }}>
-          Finance Interface
-        </Typography>
+        <Box>
+          <Typography variant='h4' sx={{ fontWeight: 600 }}>
+            {bigTitle}
+          </Typography>
+          <Typography variant='h6' sx={{ fontWeight: 400 }}>
+            {smallTitle}
+          </Typography>
+        </Box>
       </Box>
 
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography variant='h6' sx={{ mr: 2 }}>
-          Hello{' '}
-          <Box component='span' sx={{ fontWeight: 'bold' }}>
-            dh_ldap
-          </Box>
-        </Typography>
-        <Divider orientation='vertical' flexItem sx={{ borderColor: 'rgba(255,255,255,0.4)', mx: 2 }} />
+      <Box display='flex' alignItems='center' gap={2}>
         <Button
-          variant='text'
-          sx={{ color: 'white', fontWeight: 'bold', textTransform: 'none' }}
-          onClick={logoutHandler}
+          variant='contained'
+          sx={{
+            // backgroundColor: '#2563eb',
+            backgroundColor: 'white',
+            borderRadius: 2,
+            textTransform: 'none',
+            fontWeight: 600,
+            px: 2.5,
+            '&:hover': {
+              backgroundColor: '#0ea5e9',
+              boxShadow: 2,
+            },
+            color: '#055f8e',
+          }}
+          startIcon={<OpenInNewIcon />}
+          onClick={() => window.open(destinationLink, '_blank')}
         >
-          <Typography variant='h6'>Logout</Typography>
+          Go to {destinationName}
         </Button>
+
+        <Box
+          display='flex'
+          alignItems='center'
+          gap={1.5}
+          px={2}
+          py={1}
+          sx={{
+            backgroundColor: '#055f8e',
+            color: 'white',
+            cursor: 'pointer',
+          }}
+          // onClick={handleOpenMenu}
+        >
+          <Box>
+            <Typography fontWeight={600} fontSize='16px'>
+              dh_ldap
+            </Typography>
+          </Box>
+
+          <Avatar sx={{ width: 32, height: 32, bgcolor: 'white', color: '#055f8e' }}>
+            <AccountCircleIcon />
+          </Avatar>
+          <ArrowDropDownIcon />
+        </Box>
+
+        {/* Dropdown Menu (optional) */}
+        <Menu open={false}>
+          <MenuItem>Profile</MenuItem>
+          <MenuItem>Logout</MenuItem>
+        </Menu>
       </Box>
     </Box>
   );
