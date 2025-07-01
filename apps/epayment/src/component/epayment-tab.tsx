@@ -5,6 +5,7 @@ import ExceptionsTab from './exceptions-tab/ExceptionsTab';
 import { Tabs } from '@core/components';
 import { useAppSelector } from '@core/services';
 import { EPAYMENT_TAB, TYPE_FILE } from '../config/config';
+import { Box } from '@mui/material';
 
 const EpaymentTab = () => {
   const [activeTab, setActiveTab] = useState(EPAYMENT_TAB.SUMMARY);
@@ -47,7 +48,11 @@ const EpaymentTab = () => {
     },
   ];
 
-  return <Tabs tabs={tabs} defaultTab={activeTab} />;
+  return (
+    <Box p={3}>
+      <Tabs tabs={tabs} defaultTab={activeTab} />
+    </Box>
+  );
 };
 
 export default EpaymentTab;

@@ -43,8 +43,24 @@ function SPTable<T extends { id: string | number }>({
     switch (col.type) {
       case 'text':
         return String(row[col.field]);
+      case 'status-green':
+        return (
+          <Typography component={'span'} borderRadius={3} sx={{ backgroundColor: 'rgb(220, 252, 231)', color: '#047857', py: 0.5, px: 1.5, fontWeight: 500, }}>
+            {String(row[col.field])}
+          </Typography>
+        );
+        case 'status-yellow':
+        return (
+          <Typography component={'span'} borderRadius={3} sx={{ backgroundColor: 'rgba(254, 249, 195, 1)', color: 'rgba(133, 77, 14, 1)', py: 0.5, px: 1.5, fontWeight: 500, }}>
+            {String(row[col.field])}
+          </Typography>
+        );
       case 'number':
-        return Number(row[col.field]);
+        return (
+          <Typography component={'span'} sx={{ fontWeight: 'bold' }} >
+            {Number(row[col.field])}
+          </Typography>
+        )
       case 'iconAction':
         return (
             <IconButton color='warning'>
@@ -129,6 +145,7 @@ function SPTable<T extends { id: string | number }>({
         minHeight: `${(minHeight + 1) * 6}vh`,
         overflowY: 'auto',
         border: '1px solid #ddd',
+        borderRadius: 2,
         }}
       >
         <Table stickyHeader sx={{ borderCollapse: 'collapse' }}>
@@ -166,7 +183,11 @@ function SPTable<T extends { id: string | number }>({
               </TableRow>
             ) : (
               paginatedData.map((row) => (
-                <TableRow key={String(row.id)}>
+                <TableRow key={String(row.id)} sx={{
+                    '&:hover': {
+                      backgroundColor: '#f0f7ff',
+                    },
+                  }}>
                   {columns.map((col) => (
                     <TableCell
                       key={String(col.field)}

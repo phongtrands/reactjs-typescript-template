@@ -2,13 +2,23 @@ import { Box, IconButton, Paper, Typography } from '@mui/material';
 import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
 import { Table, Button } from '@core/components';
 import { ColumnConfig } from '@core/types';
+import { EPaymentData } from '../../config/mockData';
+
+interface Epayment {
+  id: number;
+  payment_method?: string;
+  statement_date?: string;
+  valuedate?: string;
+  amount?: number;
+
+}
 
 const MatchingTab: React.FC = () => {
 
-    const columns: ColumnConfig<never>[] = [
-        { headerName: 'Payment Method', field: 'paymentMethod', align: 'left', type: 'text' },
-        { headerName: 'Statement Date', field: 'statementDate', align: 'left', type: 'text' },
-        { headerName: 'Value Date', field: 'valueDate', align: 'left', type: 'text' },
+    const columns: ColumnConfig<Epayment>[] = [
+        { headerName: 'Payment Method', field: 'payment_method', align: 'left', type: 'text' },
+        { headerName: 'Statement Date', field: 'statement_date', align: 'left', type: 'text' },
+        { headerName: 'Value Date', field: 'valuedate', align: 'left', type: 'text' },
         { headerName: 'Amount', field: 'amount', align: 'right', type: 'number' },
     ];
   return (
@@ -39,11 +49,11 @@ const MatchingTab: React.FC = () => {
             </Box>
         </Box>
         <Box mt={3}>
-            <Table
+            <Table<Epayment>
             columns={columns}
-            data={[]}
+            data={EPaymentData}
             pagination
-            rowsPerPage={5}
+            rowsPerPage={3}
             minHeight={1}
             />
         </Box>
@@ -54,9 +64,9 @@ const MatchingTab: React.FC = () => {
             </Typography>
             <Table
             columns={columns}
-            data={[]}
+            data={EPaymentData}
             pagination
-            rowsPerPage={5}
+            rowsPerPage={3}
             minHeight={1}
             />
         </Box>

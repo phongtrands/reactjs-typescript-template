@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SelectChangeEvent } from '@mui/material';
+import { Box, SelectChangeEvent } from '@mui/material';
 import './search.scss';
 import { Button, Calendar, Dropdown } from '@core/components';
 import { useAppDispatch } from '@core/services';
@@ -47,7 +47,7 @@ const Search: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'end', gap: '80px' }}>
+    <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: '80px', py: 3 }}>
       <Dropdown
         className='sp-dropdown'
         label='Bank'
@@ -72,7 +72,7 @@ const Search: React.FC = () => {
       <Button className='sp-button' onClick={handleSearch} variant='outlined'>
         Search
       </Button>
-    </div>
+    </Box>
   );
 };
 

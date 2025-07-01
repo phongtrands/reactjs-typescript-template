@@ -7,3 +7,4 @@ export { default as Table } from './tables/SPTable';
 export { default as PrivateRoute } from './privateRoute/PrivateRoute';
 export { default as TextArea } from './textarea/SPTextArea';
 export { default as Typography } from './typography/SPTypography';
+export { default as theme }  from './theme/theme';

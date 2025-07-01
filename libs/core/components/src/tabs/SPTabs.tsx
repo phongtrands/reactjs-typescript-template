@@ -19,7 +19,7 @@ const SPTabs: React.FC<TabsProps> = ({ tabs, defaultTab, onTabChange, ...tabsPro
         {tabs.map(
           (tab) =>
             !tab.isHidden && (
-              <Tab key={tab.value} label={tab.label} value={tab.value} onClick={(e) => tab.onClick?.(e)} />
+              <Tab sx={{ width: 150 }} key={tab.value} label={tab.label} value={tab.value} onClick={(e) => tab.onClick?.(e)} />
             ),
         )}
       </Tabs>
