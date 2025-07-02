@@ -1,39 +1,27 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { InitialState } from './types';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-const initialState: InitialState = {
-  original: {
-    home: {
-      customer: '',
-      total: 0,
-    },
-    user: {
-      name: '',
-      role: '',
-    },
-  },
-  updated: {
-    home: {
-      customer: '',
-      total: 0,
-    },
-    user: {
-      name: '',
-      role: '',
-    },
-  },
-  token: '',
+interface AuthState {
+  token: string | null;
+}
+
+const initialState: AuthState = {
+  token: localStorage.getItem('token'),
 };
 
 const slice = createSlice({
-  name: 'slice',
+  name: 'sapfin',
   initialState,
   reducers: {
-    updateData: <T extends InitialState['updated']>(state: InitialState, action: PayloadAction<T>) => {
-      state.updated = action.payload;
+    login(state, action: PayloadAction<string>) {
+      state.token = action.payload;
+      localStorage.setItem('token', action.payload);
+    },
+    logout(state) {
+      state.token = null;
+      localStorage.removeItem('token');
     },
   },
 });
 
-export const { updateData } = slice.actions;
-export default slice.reducer;
+export default slice;
