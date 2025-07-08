@@ -1,30 +1,28 @@
 import { Avatar, Box, Menu, MenuItem } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import logo from '../../assets/image/left-logo.png';
-import { Button, Typography } from '..';
+import { Button, Typography } from '../../components';
 
 const Header = () => {
-  const navigate = useNavigate();
   // const dispatch = useAppDispatch();
 
   const location = useLocation();
-  console.log('location', location);
   const path = location.pathname;
   const lastSegment = path.split('/').filter(Boolean).pop();
 
   let bigTitle = 'SAPFIN';
   let smallTitle = 'Finance Interface';
-  let destinationLink = 'http://localhost:4200/epayment';
+  let destinationLink = 'http://localhost:3000/epayment';
   let destinationName = 'EPAYMENT';
 
   if (lastSegment === 'epayment') {
     bigTitle = 'ePayment Recon';
     smallTitle = 'Matching & Verification';
-    destinationLink = 'http://localhost:4200/sapfin';
+    destinationLink = 'http://localhost:3000/sapfin';
     destinationName = 'SAPFIN';
   }
 

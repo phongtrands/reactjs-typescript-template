@@ -1,10 +1,17 @@
-import { Outlet } from 'react-router-dom';
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
-const PrivateRoute = () => {
-  // const userRole: string | null = localStorage.getItem('userRole');
-  // if (!userRole || !allowedRoles.includes(userRole)) {
-  //   return <Navigate to='/login' replace />;
-  // }
+import { useAppSelector } from '~/redux/hook';
+
+interface PrivateRouteProps {
+  appId?: string;
+}
+
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ appId = '' }) => {
+  const token = useAppSelector((state) => state.sapfin.token);
+  if (!token) {
+    return <Navigate to={`/${appId}/login`} replace />;
+  }
   return <Outlet />;
 };
 

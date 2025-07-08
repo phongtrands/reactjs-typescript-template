@@ -1,3 +1,4 @@
+/* eslint-disable no-duplicate-imports */
 import type { TypedUseSelectorHook } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 

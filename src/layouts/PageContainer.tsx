@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-import { Header } from '~/components';
+import Header from './header/Header';
 
 const PageContainer = <P extends object>(ChildComponent: ComponentType<P>) => {
   const renderComponent: React.FC<P> = (props) => {

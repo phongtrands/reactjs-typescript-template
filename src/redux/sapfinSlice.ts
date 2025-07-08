@@ -1,3 +1,4 @@
+/* eslint-disable no-duplicate-imports */
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -9,7 +10,7 @@ const initialState: AuthState = {
   token: localStorage.getItem('token'),
 };
 
-const slice = createSlice({
+const sapfinSlice = createSlice({
   name: 'sapfin',
   initialState,
   reducers: {
@@ -24,4 +25,4 @@ const slice = createSlice({
   },
 });
 
-export default slice;
+export default sapfinSlice;

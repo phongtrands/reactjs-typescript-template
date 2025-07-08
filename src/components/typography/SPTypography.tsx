@@ -1,3 +1,4 @@
+/* eslint-disable no-duplicate-imports */
 import type { TypographyProps } from '@mui/material';
 import { Typography } from '@mui/material';
 import React from 'react';

@@ -1,3 +1,4 @@
+/* eslint-disable no-duplicate-imports */
 import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
 import { trackPromise } from 'react-promise-tracker';

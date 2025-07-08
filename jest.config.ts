@@ -3,11 +3,7 @@ import type { Config } from 'jest';
 const config: Config = {
   testEnvironment: 'jsdom',
   collectCoverage: true,
-  collectCoverageFrom: [
-    'src/**/*.{ts,tsx,js,jsx}',
-    '!**/node_modules/**',
-    '!**/dist/**',
-  ],
+  collectCoverageFrom: ['src/**/*.{ts,tsx,js,jsx}', '!**/node_modules/**', '!**/dist/**'],
   coverageDirectory: './coverage',
   coverageReporters: ['html', 'text', 'lcov', 'cobertura'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
