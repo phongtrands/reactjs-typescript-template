@@ -13,7 +13,7 @@ export const mt940Data = [
     id: 2,
     file_name: 'SINPOO01XXXX.CASP_MT940.D230928044744.txt',
     file_date: '2023-09-28',
-    matching_status: 'Matched',
+    matching_status: 'Ready',
     sapfin_status: 'Awaiting Confirmation',
     row_count: 71078,
     action: '',
@@ -259,5 +259,102 @@ export const ExceptionData = [
     valuedate: '2023-06-15',
     business_date: '',
     amount: 25.1,
+  },
+];
+
+export const ExceptionHostFileData = [
+  {
+    id: 1,
+    transaction_reference_id: 'SF143019',
+    source_system: 'SPA',
+    payment_method: 'FAST Collection',
+    dc_mark: 'C',
+    value_date: '',
+    business_date: '',
+    amount: -103.1,
+    transaction_status: '02-Failure',
+    transaction_flag: '04-Top-up',
+    bank_transfer_id: '',
+    bank_transaction_reference_id: '',
+    original_reference_id: '',
+  },
+  {
+    id: 2,
+    transaction_reference_id: 'SF143012',
+    source_system: 'SPA',
+    payment_method: 'FAST Collection',
+    dc_mark: 'C',
+    value_date: '2023-02-24',
+    business_date: '2023-02-24',
+    amount: -5.1,
+    transaction_status: '01-Success',
+    transaction_flag: '04-Top-up',
+    bank_transfer_id: '',
+    bank_transaction_reference_id: '',
+    original_reference_id: '',
+  },
+  {
+    id: 3,
+    transaction_reference_id: 'SF143011',
+    source_system: 'SPA',
+    payment_method: 'FAST Collection',
+    dc_mark: 'C',
+    value_date: '2023-02-24',
+    business_date: '2023-02-24',
+    amount: -5.1,
+    transaction_status: '01-Success',
+    transaction_flag: '04-Top-up',
+    bank_transfer_id: '',
+    bank_transaction_reference_id: '',
+    original_reference_id: '',
+  },
+  {
+    id: 4,
+    transaction_reference_id: 'SF143021',
+    source_system: 'SPA',
+    payment_method: 'FAST Collection',
+    dc_mark: 'C',
+    value_date: '2023-02-24',
+    business_date: '2023-02-24',
+    amount: -108.1,
+    transaction_status: '01-Success',
+    transaction_flag: '04-Top-up',
+    bank_transfer_id: '',
+    bank_transaction_reference_id: '',
+    original_reference_id: '',
+  },
+];
+
+export const bankData = [
+  {
+    bank_name: 'DBS',
+  },
+  {
+    bank_name: 'CITI',
+  },
+  {
+    bank_name: 'OCBC',
+  },
+  {
+    bank_name: 'UOB',
+  },
+];
+
+export const bankConfigData = [
+  {
+    bank_name: 'DBS',
+    csv_file_path_tmp: '/apps/pentaho_data/sap-portal/temp/DBS/',
+    csv_file_path_bank: '/apps/pentaho_data/sap-portal/output-csv/DBS/',
+    file_download_url: 'http://10.168.15.174:8081/api/v1/download',
+    sap_portal_url: 'http://10.168.15.174:8080/sap-portal/',
+  },
+];
+
+export const accountData = [
+  {
+    bankacct: '0039007442',
+  },
+  {
+    bankacct: '0720041291',
   },
 ];

@@ -1,31 +1,57 @@
 import React from 'react';
 
-// import { Mt940Columns } from '../../../config/table';
-
-import type { ColumnConfig } from '~/types';
 import { Table } from '~/components';
-import { hostFileData } from '~/configs/mockData';
-
-interface HostFile {
-  id: number;
-  file_name?: string;
-  file_recvd_date?: string;
-  sum?: number;
-  action?: string;
-  download?: string;
-}
+import { EPAYMENT_TAB, hostFileColumns } from '~/configs';
+import { changeTab, updateExceptions, updateMatching } from '~/redux';
+import { useAppDispatch, useAppSelector } from '~/redux/hook';
+import {
+  getExceptionHostFileTable,
+  getExceptionMT940Table,
+  getMatchingEpaymentTable,
+  getMatchingNonEpaymentTable,
+} from '~/services';
 
 const HostFile: React.FC = () => {
-  const hostFileColumns: ColumnConfig<HostFile>[] = [
-    { headerName: 'Host File Name', field: 'file_name', align: 'left', type: 'text' },
-    { headerName: 'Host File Receipt', field: 'file_recvd_date', align: 'center', type: 'text' },
-    { headerName: 'Count', field: 'sum', align: 'right', type: 'number' },
-    { headerName: 'Action', field: 'action', align: 'center', type: 'iconAction' },
-    { headerName: 'Download', field: 'download', align: 'center', type: 'iconDownload' },
-  ];
+  const dispatch = useAppDispatch();
+  const hostFileData = useAppSelector((state) => state.epayment.summary.hostFileTable);
+  const accountNo = useAppSelector((state) => state.epayment.summary.search.account);
+  const bankName = useAppSelector((state) => state.epayment.summary.search.bank.bank_name);
+
+  const handleAction = async (row: any, fieldName: string, event: any) => {
+    const [ePayment, nonEPayment, eMT940, eHostFile] = await Promise.all([
+      getMatchingEpaymentTable(row.file_name, accountNo),
+      getMatchingNonEpaymentTable(row.file_name, accountNo),
+      getExceptionMT940Table(row.file_name, accountNo),
+      getExceptionHostFileTable(row.file_name, accountNo),
+    ]);
+    dispatch(
+      updateMatching({
+        file: row.file_name,
+        accountNo: accountNo,
+        bank: bankName,
+        matching_epayment: ePayment,
+        matching_nonEpayment: nonEPayment,
+      }),
+      updateExceptions({
+        file: row.file_name,
+        accountNo: accountNo,
+        bank: bankName,
+        exceptionMT940: eMT940,
+        exceptionHostFile: eHostFile,
+      }),
+    );
+    dispatch(changeTab(EPAYMENT_TAB.EXCEPTION));
+  };
   return (
     <div>
-      <Table columns={hostFileColumns} data={hostFileData} enableSearch pagination backgroundHeader='#f2f2f2' />
+      <Table
+        columns={hostFileColumns}
+        data={hostFileData}
+        enableSearch
+        pagination
+        backgroundHeader='#f2f2f2'
+        onClick={handleAction}
+      />
     </div>
   );
 };

@@ -1,8 +1,4 @@
-/* eslint-disable import/order */
-import React from 'react';
-// import { useAppDispatch, useAppSelector } from '@core/services';
-
-// import { changeTypeFile } from '../../services/stores';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 
 import Mt940 from './table/MT940';
@@ -11,32 +7,32 @@ import Search from './search/Search';
 
 import { TYPE_FILE } from '~/configs/epayment.config';
 import { Tab } from '~/components';
+import { useAppDispatch, useAppSelector } from '~/redux/hook';
+import { changeTypeFile } from '~/redux';
 
 const SummaryTab: React.FC = () => {
-  // const typeFile = useAppSelector((state) => state.epayment?.typeFile);
-  // const [activeTab, setActiveTab] = useState(typeFile || TYPE_FILE.MT940);
-  // const dispatch = useAppDispatch();
+  const typeFile: string = useAppSelector((state) => state.epayment?.typeFile);
+  const [activeTab, setActiveTab] = useState<string>(typeFile || TYPE_FILE.MT940);
+  const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   setActiveTab(typeFile);
-  // }, [typeFile]);
+  useEffect(() => {
+    setActiveTab(typeFile || TYPE_FILE.MT940);
+  }, [typeFile]);
+
+  const onChange = (value: string) => {
+    dispatch(changeTypeFile(value));
+  };
 
   const tabs = [
     {
       label: 'MT940',
       value: TYPE_FILE.MT940,
       content: <Mt940 />,
-      // onClick: () => {
-      //   dispatch(changeTypeFile(TYPE_FILE.MT940));
-      // },
     },
     {
       label: 'Host File',
       value: TYPE_FILE.HOST_FILE,
       content: <HostFile />,
-      // onClick: () => {
-      //   dispatch(changeTypeFile(TYPE_FILE.HOST_FILE));
-      // },
     },
   ];
   return (
@@ -52,7 +48,7 @@ const SummaryTab: React.FC = () => {
           mt: 4,
         }}
       >
-        <Tab tabs={tabs} defaultTab={''} />
+        <Tab tabs={tabs} activeTab={activeTab} onTabChange={onChange} />
       </Box>
     </>
   );

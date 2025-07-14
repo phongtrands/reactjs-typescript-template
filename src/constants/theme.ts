@@ -24,17 +24,11 @@ const theme = createTheme({
         },
       },
     },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          fontFamily: 'Inter, "Segoe UI", sans-serif',
-        },
-      },
-    },
     MuiSelect: {
       styleOverrides: {
         select: {
           fontFamily: 'Inter, "Segoe UI", sans-serif',
+          padding: 8,
         },
       },
     },
@@ -57,6 +51,14 @@ const theme = createTheme({
           fontWeight: '600',
           fontSize: '1rem',
           borderRadius: '4px',
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: 'black !important',
+          fontFamily: 'Inter, "Segoe UI", sans-serif',
         },
       },
     },

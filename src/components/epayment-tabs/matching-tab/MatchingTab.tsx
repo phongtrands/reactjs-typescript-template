@@ -4,6 +4,9 @@ import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
 import type { ColumnConfig } from '~/types';
 import { Button, Table } from '~/components';
 import { EPaymentData } from '~/configs/mockData';
+import { EPAYMENT_TAB } from '~/configs';
+import { changeTab } from '~/redux';
+import { useAppDispatch } from '~/redux/hook';
 
 interface Epayment {
   id: number;
@@ -14,6 +17,7 @@ interface Epayment {
 }
 
 const MatchingTab: React.FC = () => {
+  const dispatch = useAppDispatch();
   const columns: ColumnConfig<Epayment>[] = [
     { headerName: 'Payment Method', field: 'payment_method', align: 'left', type: 'text' },
     { headerName: 'Statement Date', field: 'statement_date', align: 'left', type: 'text' },
@@ -110,7 +114,7 @@ const MatchingTab: React.FC = () => {
         </Box>
       </Box>
       <Box display='flex' justifyContent='flex-end' mt={2}>
-        <Button variant='contained' sx={{ width: 150 }}>
+        <Button variant='contained' sx={{ width: 150 }} onClick={() => dispatch(changeTab(EPAYMENT_TAB.SUMMARY))}>
           Back
         </Button>
         <Button variant='contained' sx={{ width: 150, ml: 3 }}>

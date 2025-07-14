@@ -35,6 +35,7 @@ function SPTable<T extends { id: string | number }>({
   selected = [],
   selectable = 'single',
   onSelectionChange,
+  onClick,
 }: TableProps<T>) {
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState('');
@@ -46,7 +47,7 @@ function SPTable<T extends { id: string | number }>({
     setPage(1);
   };
 
-  const handleChange = (row: any, fieldName: string, value: any, event: any) => {
+  const handleChange = (row: T, fieldName: string, value: any, event: any) => {
     onChange?.(row, fieldName, value, event);
   };
 
@@ -59,6 +60,46 @@ function SPTable<T extends { id: string | number }>({
       newSelected = isSelected ? selected.filter((id) => id !== row.id) : [...selected, row.id];
       onSelectionChange?.(newSelected);
     }
+  };
+
+  const handleIconclick = (row: T, fieldName: string, event: any) => {
+    onClick?.(row, fieldName, event);
+  };
+
+  const getBackgroundStatus = (value: string) => {
+    let backgroundStatus = {};
+    switch (value) {
+      case 'Matched':
+        backgroundStatus = {
+          backgroundColor: 'rgb(220, 252, 231)',
+          color: '#047857',
+          py: 0.5,
+          px: 1.5,
+          fontWeight: 500,
+        };
+        break;
+      case 'Awaiting Confirmation':
+        backgroundStatus = {
+          backgroundColor: 'rgba(254, 249, 195, 1)',
+          color: 'rgba(133, 77, 14, 1)',
+          py: 0.5,
+          px: 1.5,
+          fontWeight: 500,
+        };
+        break;
+      case 'Ready':
+        backgroundStatus = {
+          backgroundColor: 'rgba(213, 232, 255, 1)',
+          color: 'rgba(0, 75, 160, 1)',
+          py: 0.5,
+          px: 1.5,
+          fontWeight: 500,
+        };
+        break;
+      default:
+        break;
+    }
+    return backgroundStatus;
   };
 
   const renderCellContent = (row: T, col: ColumnConfig<T>): React.ReactNode => {
@@ -81,29 +122,9 @@ function SPTable<T extends { id: string | number }>({
             {String(row[col.field])}
           </Box>
         );
-      case 'status-green':
+      case 'status':
         return (
-          <Typography
-            component={'span'}
-            borderRadius={3}
-            sx={{ backgroundColor: 'rgb(220, 252, 231)', color: '#047857', py: 0.5, px: 1.5, fontWeight: 500 }}
-          >
-            {String(row[col.field])}
-          </Typography>
-        );
-      case 'status-yellow':
-        return (
-          <Typography
-            component={'span'}
-            borderRadius={3}
-            sx={{
-              backgroundColor: 'rgba(254, 249, 195, 1)',
-              color: 'rgba(133, 77, 14, 1)',
-              py: 0.5,
-              px: 1.5,
-              fontWeight: 500,
-            }}
-          >
+          <Typography component={'span'} borderRadius={3} sx={getBackgroundStatus(String(row[col.field]))}>
             {String(row[col.field])}
           </Typography>
         );
@@ -115,23 +136,44 @@ function SPTable<T extends { id: string | number }>({
         );
       case 'iconAction':
         return (
-          <IconButton color='warning'>
+          <IconButton
+            className='warningIcon'
+            color='warning'
+            onClick={(event) => {
+              handleIconclick(row, String(col.field), event);
+            }}
+          >
             <ArrowCircleRightOutlinedIcon />
           </IconButton>
         );
       case 'iconDownload':
         return (
-          <IconButton color='primary'>
+          <IconButton
+            color='primary'
+            onClick={(event) => {
+              handleIconclick(row, String(col.field), event);
+            }}
+          >
             <SaveAltOutlinedIcon />
           </IconButton>
         );
       case 'doubleAction':
         return (
           <>
-            <IconButton color='primary'>
+            <IconButton
+              color='primary'
+              onClick={(event) => {
+                handleIconclick(row, `${String(col.field)}_primary`, event);
+              }}
+            >
               <ArrowCircleRightOutlinedIcon />
             </IconButton>
-            <IconButton color='warning'>
+            <IconButton
+              color='warning'
+              onClick={(event) => {
+                handleIconclick(row, `${String(col.field)}_warning`, event);
+              }}
+            >
               <ArrowCircleRightOutlinedIcon />
             </IconButton>
           </>

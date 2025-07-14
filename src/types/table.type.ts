@@ -22,4 +22,5 @@ export interface TableProps<T> {
   onSelectionChange?: (selected: (string | number)[]) => void;
   selected?: (string | number)[];
   selectable?: 'single' | 'multiple';
+  onClick?: (row: any, fieldName: string, event: any) => void;
 }

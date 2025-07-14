@@ -4,6 +4,9 @@ import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
 import type { ColumnConfig } from '~/types';
 import { Button, Table } from '~/components';
 import { ExceptionData } from '~/configs/mockData';
+import { useAppDispatch } from '~/redux/hook';
+import { changeTab } from '~/redux';
+import { EPAYMENT_TAB } from '~/configs';
 
 interface Exceptions {
   id: number;
@@ -18,6 +21,7 @@ interface Exceptions {
 }
 
 const ExceptionsTab: React.FC = () => {
+  const dispatch = useAppDispatch();
   const columns: ColumnConfig<Exceptions>[] = [
     { headerName: 'Txn Reference Id', field: 'refer_account_owne', align: 'left', type: 'text' },
     { headerName: 'System', field: 'system', align: 'left', type: 'text' },
@@ -88,7 +92,7 @@ const ExceptionsTab: React.FC = () => {
         />
       </Box>
       <Box display='flex' justifyContent='flex-end' mt={2}>
-        <Button variant='contained' sx={{ width: 150 }}>
+        <Button variant='contained' sx={{ width: 150 }} onClick={() => dispatch(changeTab(EPAYMENT_TAB.SUMMARY))}>
           Back
         </Button>
       </Box>

@@ -6,14 +6,9 @@ import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 
 import type { TabsProps } from '~/types';
 
-const SPTabs: React.FC<TabsProps> = ({ tabs, defaultTab, onTabChange, ...tabsProps }) => {
-  const [activeTab, setActiveTab] = React.useState(defaultTab || tabs[0].value);
-
+const SPTabs: React.FC<TabsProps> = ({ tabs, activeTab, onTabChange, ...tabsProps }) => {
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setActiveTab(newValue);
-    if (onTabChange) {
-      onTabChange(event, newValue);
-    }
+    onTabChange(newValue, event);
   };
 
   const renderIcon = (icon: string) => {
