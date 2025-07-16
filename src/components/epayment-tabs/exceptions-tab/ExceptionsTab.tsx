@@ -1,37 +1,29 @@
 import { Box, Grid, Typography } from '@mui/material';
 import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
+import { enqueueSnackbar } from 'notistack';
 
-import type { ColumnConfig } from '~/types';
 import { Button, Table } from '~/components';
-import { ExceptionData } from '~/configs/mockData';
-import { useAppDispatch } from '~/redux/hook';
+import { useAppDispatch, useAppSelector } from '~/redux/hook';
 import { changeTab } from '~/redux';
-import { EPAYMENT_TAB } from '~/configs';
-
-interface Exceptions {
-  id: number;
-  refer_account_owne?: string;
-  system?: string;
-  payment_method?: string;
-  dc_mark?: string;
-  statement_date?: string;
-  valuedate?: string;
-  business_date?: string;
-  amount?: number;
-}
+import { EPAYMENT_TAB, exceptionsHostFileColumns, exceptionsMT940Columns } from '~/configs';
+import type { ExceptionsMT940 } from '~/types';
+import { exportCSVFile } from '~/services';
 
 const ExceptionsTab: React.FC = () => {
   const dispatch = useAppDispatch();
-  const columns: ColumnConfig<Exceptions>[] = [
-    { headerName: 'Txn Reference Id', field: 'refer_account_owne', align: 'left', type: 'text' },
-    { headerName: 'System', field: 'system', align: 'left', type: 'text' },
-    { headerName: 'Payment Menthod', field: 'payment_method', align: 'left', type: 'text' },
-    { headerName: 'Debit/Credit', field: 'dc_mark', align: 'left', type: 'text' },
-    { headerName: 'Statement Date', field: 'statement_date', align: 'left', type: 'text' },
-    { headerName: 'Value Date', field: 'valuedate', align: 'left', type: 'text' },
-    { headerName: 'Business Date', field: 'business_date', align: 'left', type: 'text' },
-    { headerName: 'Amount', field: 'amount', align: 'right', type: 'number' },
-  ];
+  const typeFile: string = useAppSelector((state) => state.epayment.typeFile);
+  const mt940Data: ExceptionsMT940[] = useAppSelector((state) => state.epayment.exceptions.exceptionMT940);
+  const hostFileData: ExceptionsMT940[] = useAppSelector((state) => state.epayment.exceptions.exceptionHostFile);
+  const fileName: string = useAppSelector((state) => state.epayment.exceptions.file);
+  const accountNo: string = useAppSelector((state) => state.epayment.exceptions.accountNo);
+  const bank: string = useAppSelector((state) => state.epayment.exceptions.bank);
+  const isMT940: boolean = typeFile === 'mt940';
+
+  const handleDowload = async (type: string) => {
+    const response = await exportCSVFile(fileName);
+    enqueueSnackbar('File download successfully ', { variant: 'success' });
+  };
+
   return (
     <Box mt={4}>
       <Box ml={3} sx={{ fontSize: '16px' }}>
@@ -41,7 +33,7 @@ const ExceptionsTab: React.FC = () => {
               File:{' '}
             </Typography>
             <Typography variant='body1' fontWeight='bold' component='span'>
-              SPA_20230224.txt
+              {fileName}
             </Typography>
           </Grid>
           <Grid item xs={3}>
@@ -49,7 +41,7 @@ const ExceptionsTab: React.FC = () => {
               Account No.:{' '}
             </Typography>
             <Typography variant='body1' fontWeight='bold' component='span'>
-              0039007442
+              {accountNo}
             </Typography>
           </Grid>
           <Grid item xs={3}>
@@ -57,7 +49,7 @@ const ExceptionsTab: React.FC = () => {
               Bank:{' '}
             </Typography>
             <Typography variant='body1' fontWeight='bold' component='span'>
-              DBS
+              {bank}
             </Typography>
           </Grid>
         </Grid>
@@ -74,22 +66,38 @@ const ExceptionsTab: React.FC = () => {
       >
         <Box display='flex' alignItems='center' justifyContent={'space-between'} mb={2}>
           <Typography variant='h5' fontWeight='bold' ml={3}>
-            MT940
+            {isMT940 ? 'MT940' : 'HostFile'}
           </Typography>
           <Box display='flex' alignItems='center'>
-            <Button variant='outlined' color='inherit' startIcon={<SaveAltOutlinedIcon />}>
+            <Button
+              variant='outlined'
+              color='inherit'
+              startIcon={<SaveAltOutlinedIcon />}
+              onClick={() => handleDowload('exception')}
+            >
               Download Report
             </Button>
           </Box>
         </Box>
-        <Table
-          columns={columns}
-          data={ExceptionData}
-          pagination
-          rowsPerPage={5}
-          minHeight={1}
-          backgroundHeader='#f2f2f2'
-        />
+        {isMT940 ? (
+          <Table
+            columns={exceptionsMT940Columns}
+            data={mt940Data}
+            pagination
+            rowsPerPage={5}
+            minHeight={1}
+            backgroundHeader='#f2f2f2'
+          />
+        ) : (
+          <Table
+            columns={exceptionsHostFileColumns}
+            data={hostFileData}
+            pagination
+            rowsPerPage={5}
+            minHeight={1}
+            backgroundHeader='#f2f2f2'
+          />
+        )}
       </Box>
       <Box display='flex' justifyContent='flex-end' mt={2}>
         <Button variant='contained' sx={{ width: 150 }} onClick={() => dispatch(changeTab(EPAYMENT_TAB.SUMMARY))}>

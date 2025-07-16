@@ -6,18 +6,18 @@ import { Box, Grid } from '@mui/material';
 import { Button, Calendar, Dropdown } from '~/components';
 import { useAppDispatch, useAppSelector } from '~/redux/hook';
 import { updateSearch, updateSummary } from '~/redux';
-import { getAccount, getBankConfig, getHostFileTable, getMT940Table } from '~/services';
-import type { Bank } from '~/types';
+import { getAccounts, getBankConfig, getHostFileTable, getMT940Table } from '~/services';
+import type { Accounts, Banks, Search } from '~/types';
 
 const Search: React.FC = () => {
   const dispatch = useAppDispatch();
-  const searchData = useAppSelector((state) => state.epayment.summary.search);
-  const bank: Bank = useAppSelector((state) => state.epayment.summary.search.bank);
-  const bankOption = useAppSelector((state) => state.epayment.summary.search.bankOption);
-  const account = useAppSelector((state) => state.epayment.summary.search.account);
-  const accountOption = useAppSelector((state) => state.epayment.summary.search.accountOption);
-  const fDate = useAppSelector((state) => state.epayment.summary.search.fromDate);
-  const tDate = useAppSelector((state) => state.epayment.summary.search.toDate);
+  const searchData: Search = useAppSelector((state) => state.epayment.summary.search);
+  const bank: Banks = useAppSelector((state) => state.epayment.summary.search.bank);
+  const bankOption: Banks[] = useAppSelector((state) => state.epayment.summary.search.bankOption);
+  const account: string = useAppSelector((state) => state.epayment.summary.search.accountNo);
+  const accountOption: Accounts[] = useAppSelector((state) => state.epayment.summary.search.accountOption);
+  const fDate: Date = useAppSelector((state) => state.epayment.summary.search.fromDate);
+  const tDate: Date = useAppSelector((state) => state.epayment.summary.search.toDate);
 
   const handleSearch = async () => {
     const [mt940Data, hostFileData] = await Promise.all([
@@ -35,13 +35,13 @@ const Search: React.FC = () => {
 
   const handleChangeBankDropdown = async (event: SelectChangeEvent) => {
     const { value } = event.target;
-    const [bankConfigs, accountdata] = await Promise.all([getBankConfig(value), getAccount(value)]);
+    const [bankConfigs, accountdata] = await Promise.all([getBankConfig(value), getAccounts(value)]);
     dispatch(
       updateSearch({
         ...searchData,
         bank: bankConfigs[0],
         accountOption: accountdata,
-        account: accountdata[0].bankacct,
+        accountNo: accountdata[0].bankacct,
       }),
     );
   };
@@ -51,7 +51,7 @@ const Search: React.FC = () => {
     dispatch(
       updateSearch({
         ...searchData,
-        account: value,
+        accountNo: value,
       }),
     );
   };

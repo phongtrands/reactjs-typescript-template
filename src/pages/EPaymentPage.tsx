@@ -16,6 +16,8 @@ const EPaymentPage = () => {
   const [hidden, setHidden] = useState('');
   const typeFile: string = useAppSelector((state) => state.epayment.typeFile);
   const tab: string = useAppSelector((state) => state.epayment.tab);
+  const matchingFileName: string = useAppSelector((state) => state.epayment.matching.file);
+  const exceptionFileName: string = useAppSelector((state) => state.epayment.exceptions.file);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +34,11 @@ const EPaymentPage = () => {
   }, [typeFile]);
 
   const onChange = (value: string) => {
+    if (['matching', 'exception'].includes(value)) {
+      if (!matchingFileName && !exceptionFileName) {
+        return;
+      }
+    }
     dispatch(changeTab(value));
   };
 

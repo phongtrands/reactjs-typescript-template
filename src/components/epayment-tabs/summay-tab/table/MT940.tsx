@@ -15,11 +15,11 @@ import type { MT940 } from '~/types';
 const Mt940: React.FC = () => {
   const dispatch = useAppDispatch();
   const mt940Data: MT940[] = useAppSelector((state) => state.epayment.summary.mt940Table);
-  const accountNo = useAppSelector((state) => state.epayment.summary.search.account);
-  const bankName = useAppSelector((state) => state.epayment.summary.search.bank.bank_name);
+  const accountNo: string = useAppSelector((state) => state.epayment.summary.search.accountNo);
+  const bankName: string = useAppSelector((state) => state.epayment.summary.search.bank.bank_name);
 
   const handleAction = async (row: any, fieldName: string, event: any) => {
-    let tab: string = EPAYMENT_TAB.MATCHING;
+    let tab = EPAYMENT_TAB.MATCHING;
     const [ePayment, nonEPayment, eMT940, eHostFile] = await Promise.all([
       getMatchingEpaymentTable(row.file_name, accountNo),
       getMatchingNonEpaymentTable(row.file_name, accountNo),
@@ -31,9 +31,11 @@ const Mt940: React.FC = () => {
         file: row.file_name,
         accountNo: accountNo,
         bank: bankName,
-        matching_epayment: ePayment,
-        matching_nonEpayment: nonEPayment,
+        matchingEPayment: ePayment,
+        matchingNonEPayment: nonEPayment,
       }),
+    );
+    dispatch(
       updateExceptions({
         file: row.file_name,
         accountNo: accountNo,

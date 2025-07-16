@@ -1,29 +1,41 @@
 import { Box, Divider, Grid, Typography } from '@mui/material';
 import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
+import { enqueueSnackbar } from 'notistack';
 
-import type { ColumnConfig } from '~/types';
 import { Button, Table } from '~/components';
-import { EPaymentData } from '~/configs/mockData';
-import { EPAYMENT_TAB } from '~/configs';
-import { changeTab } from '~/redux';
-import { useAppDispatch } from '~/redux/hook';
-
-interface Epayment {
-  id: number;
-  payment_method?: string;
-  statement_date?: string;
-  valuedate?: string;
-  amount?: number;
-}
+import { EPAYMENT_TAB, EPayMentColumns } from '~/configs';
+import { changeTab, openPopup } from '~/redux';
+import { useAppDispatch, useAppSelector } from '~/redux/hook';
+import type { EPayment } from '~/types';
+import { confirmFile, exportCSVFile } from '~/services';
 
 const MatchingTab: React.FC = () => {
   const dispatch = useAppDispatch();
-  const columns: ColumnConfig<Epayment>[] = [
-    { headerName: 'Payment Method', field: 'payment_method', align: 'left', type: 'text' },
-    { headerName: 'Statement Date', field: 'statement_date', align: 'left', type: 'text' },
-    { headerName: 'Value Date', field: 'valuedate', align: 'left', type: 'text' },
-    { headerName: 'Amount', field: 'amount', align: 'right', type: 'number' },
-  ];
+  const ePaymentData: EPayment[] = useAppSelector((state) => state.epayment.matching.matchingEPayment);
+  const nonEPaymentData: EPayment[] = useAppSelector((state) => state.epayment.matching.matchingNonEPayment);
+  const fileName: string = useAppSelector((state) => state.epayment.matching.file);
+  const accountNo: string = useAppSelector((state) => state.epayment.matching.accountNo);
+  const bank: string = useAppSelector((state) => state.epayment.matching.bank);
+
+  const onOkConfirm = async () => {
+    const response = await confirmFile();
+    enqueueSnackbar('File confirm successfully ', { variant: 'success' });
+  };
+
+  const handleConfirm = () => {
+    dispatch(
+      openPopup({
+        title: 'File Confirmation',
+        content: 'Press OK to confirm ?',
+        onOk: onOkConfirm,
+      }),
+    );
+  };
+
+  const handleDowload = async (type: string) => {
+    const response = await exportCSVFile(fileName);
+    enqueueSnackbar('File download successfully ', { variant: 'success' });
+  };
   return (
     <Box sx={{ mt: 3 }}>
       <Box ml={2} sx={{ fontSize: '16px' }}>
@@ -33,7 +45,7 @@ const MatchingTab: React.FC = () => {
               File:{' '}
             </Typography>
             <Typography variant='body1' fontWeight='bold' component='span'>
-              SPA_20230224.txt
+              {fileName}
             </Typography>
           </Grid>
           <Grid item xs={3}>
@@ -41,7 +53,7 @@ const MatchingTab: React.FC = () => {
               Account No.:{' '}
             </Typography>
             <Typography variant='body1' fontWeight='bold' component='span'>
-              0039007442
+              {accountNo}
             </Typography>
           </Grid>
           <Grid item xs={3}>
@@ -49,7 +61,7 @@ const MatchingTab: React.FC = () => {
               Bank:{' '}
             </Typography>
             <Typography variant='body1' fontWeight='bold' component='span'>
-              DBS
+              {bank}
             </Typography>
           </Grid>
         </Grid>
@@ -70,17 +82,32 @@ const MatchingTab: React.FC = () => {
           </Typography>
           <Box display='flex' gap={2}>
             <Box display='flex' alignItems='center'>
-              <Button variant='outlined' color='inherit' startIcon={<SaveAltOutlinedIcon />}>
+              <Button
+                variant='outlined'
+                color='inherit'
+                startIcon={<SaveAltOutlinedIcon />}
+                onClick={() => handleDowload('sapfin')}
+              >
                 Download SAPFIN
               </Button>
             </Box>
             <Box display='flex' alignItems='center'>
-              <Button variant='outlined' color='inherit' startIcon={<SaveAltOutlinedIcon />}>
+              <Button
+                variant='outlined'
+                color='inherit'
+                startIcon={<SaveAltOutlinedIcon />}
+                onClick={() => handleDowload('mt940')}
+              >
                 Download Report(MT940)
               </Button>
             </Box>
             <Box display='flex' alignItems='center'>
-              <Button variant='outlined' color='inherit' startIcon={<SaveAltOutlinedIcon />}>
+              <Button
+                variant='outlined'
+                color='inherit'
+                startIcon={<SaveAltOutlinedIcon />}
+                onClick={() => handleDowload('hostFile')}
+              >
                 Download Report(Host)
               </Button>
             </Box>
@@ -88,8 +115,8 @@ const MatchingTab: React.FC = () => {
         </Box>
         <Box mt={3} mb={2}>
           <Table
-            columns={columns}
-            data={EPaymentData}
+            columns={EPayMentColumns}
+            data={ePaymentData}
             pagination
             rowsPerPage={3}
             minHeight={1}
@@ -104,8 +131,8 @@ const MatchingTab: React.FC = () => {
             Non ePayment
           </Typography>
           <Table
-            columns={columns}
-            data={EPaymentData}
+            columns={EPayMentColumns}
+            data={nonEPaymentData}
             pagination
             rowsPerPage={3}
             minHeight={1}
@@ -117,7 +144,7 @@ const MatchingTab: React.FC = () => {
         <Button variant='contained' sx={{ width: 150 }} onClick={() => dispatch(changeTab(EPAYMENT_TAB.SUMMARY))}>
           Back
         </Button>
-        <Button variant='contained' sx={{ width: 150, ml: 3 }}>
+        <Button variant='contained' sx={{ width: 150, ml: 3 }} onClick={handleConfirm}>
           Confirm
         </Button>
       </Box>

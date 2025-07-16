@@ -20,7 +20,7 @@ export interface HostFile {
   download?: string;
 }
 
-export interface Epayment {
+export interface EPayment {
   id: number;
   payment_method?: string;
   statement_date?: string;
@@ -35,7 +35,7 @@ export interface ExceptionsMT940 {
   payment_method?: string;
   dc_mark?: string;
   statement_date?: string;
-  valuedate?: string;
+  value_date?: string;
   business_date?: string;
   amount?: number;
 }
@@ -56,7 +56,7 @@ export interface ExceptionsHostFile {
   original_reference_id?: string;
 }
 
-export interface Bank {
+export interface Banks {
   bank_name: string;
 }
 
@@ -68,15 +68,15 @@ export interface BankConfig {
   sap_portal_url?: string;
 }
 
-export interface Account {
+export interface Accounts {
   bankacct: string;
 }
 
 export interface Search {
   bank: BankConfig;
-  bankOption: Bank[];
-  account: string;
-  accountOption: Account[];
+  bankOption: Banks[];
+  accountNo: string;
+  accountOption: Accounts[];
   fromDate: Date;
   toDate: Date;
 }
@@ -91,8 +91,8 @@ export interface MatchingTab {
   file: string;
   accountNo: string;
   bank: string;
-  matching_epayment: Epayment[];
-  matching_nonEpayment: Epayment[];
+  matchingEPayment: EPayment[];
+  matchingNonEPayment: EPayment[];
 }
 
 export interface ExceptionsTab {

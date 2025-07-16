@@ -8,8 +8,6 @@ import logo from '../../assets/image/left-logo.png';
 import { Button, Typography } from '../../components';
 
 const Header = () => {
-  // const dispatch = useAppDispatch();
-
   const location = useLocation();
   const path = location.pathname;
   const lastSegment = path.split('/').filter(Boolean).pop();
@@ -26,69 +24,7 @@ const Header = () => {
     destinationName = 'SAPFIN';
   }
 
-  // const logoutHandler = () => {
-  //   dispatch(logout());
-  //   navigate('/', { replace: true });
-  // };
-
   return (
-    // <Box component='header'>
-    //   <AppBar position='static' sx={{ backgroundColor: '#055f8e' }}>
-    //     <Toolbar
-    //       sx={{
-    //         position: 'relative',
-    //         minHeight: '60px',
-    //       }}
-    //       disableGutters
-    //     >
-    //       <Box component='img' src={logo} alt='Logo' sx={{ width: 110, height: 85, mr: 2 }} />
-
-    //       <Typography
-    //         variant='h4'
-    //         sx={{
-    //           position: 'absolute',
-    //           left: '50%',
-    //           transform: 'translateX(-50%)',
-    //           color: '#ffffff',
-    //           fontWeight: 400,
-    //         }}
-    //       >
-    //         Finance Interface
-    //       </Typography>
-    //     </Toolbar>
-    //   </AppBar>
-
-    //   <Box
-    //     sx={{
-    //       backgroundColor: '#0885bb',
-    //       display: 'flex',
-    //       justifyContent: 'space-between',
-    //       alignItems: 'center',
-    //       px: 2,
-    //       py: 0.5,
-    //     }}
-    //   >
-    //     <Typography variant='h6' sx={{ color: 'white' }}>
-    //       * SAP Portal
-    //     </Typography>
-    //     <Box sx={{ display: 'flex', alignItems: 'center', color: 'white' }}>
-    //       <Typography variant='h6'>Hello&nbsp;</Typography>
-    //       <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
-    //         dh_ldap
-    //       </Typography>
-    //       <Typography variant='h6' sx={{ mx: 1 }}>
-    //         |
-    //       </Typography>
-    //       <Button
-    //         variant='text'
-    //         sx={{ color: 'white', fontWeight: 'bold', textTransform: 'none' }}
-    //         onClick={logoutHandler}
-    //       >
-    //         <Typography variant='h6'>Logout</Typography>
-    //       </Button>
-    //     </Box>
-    //   </Box>
-    // </Box>
     <Box
       sx={{
         display: 'flex',
@@ -96,7 +32,6 @@ const Header = () => {
         justifyContent: 'space-between',
         px: 3,
         py: 2,
-        // backgroundColor: '#055f8e',
         background: 'linear-gradient(to right, #07699c, #055f8e)',
         color: '#fff',
       }}
@@ -117,7 +52,6 @@ const Header = () => {
         <Button
           variant='contained'
           sx={{
-            // backgroundColor: '#2563eb',
             backgroundColor: 'white',
             borderRadius: 2,
             textTransform: 'none',
@@ -146,7 +80,6 @@ const Header = () => {
             color: 'white',
             cursor: 'pointer',
           }}
-          // onClick={handleOpenMenu}
         >
           <Box>
             <Typography fontWeight={600} fontSize='16px'>
@@ -159,8 +92,6 @@ const Header = () => {
           </Avatar>
           <ArrowDropDownIcon />
         </Box>
-
-        {/* Dropdown Menu (optional) */}
         <Menu open={false}>
           <MenuItem>Profile</MenuItem>
           <MenuItem>Logout</MenuItem>

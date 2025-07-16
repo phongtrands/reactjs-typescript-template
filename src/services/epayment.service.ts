@@ -10,10 +10,10 @@ import {
 } from '~/configs/mockData';
 import { API_URLS } from '~/constants';
 import type {
-  Account,
-  Bank,
+  Accounts,
   BankConfig,
-  Epayment,
+  Banks,
+  EPayment,
   ExceptionsHostFile,
   ExceptionsMT940,
   HostFile,
@@ -24,17 +24,17 @@ import { api } from '~/utils';
 const today = new Date();
 
 export const getSummaryData = async () => {
-  const bank = await getBank();
-  const bankConfig = await getBankConfig(bank[0].bank_name);
-  const account = await getAccount(bank[0].bank_name);
-  const mt940Table = await getMT940Table(bank[0].bank_name);
-  const hostFileTable = await getHostFileTable(bank[0].bank_name);
+  const banks = await getBanks();
+  const bankConfig = await getBankConfig(banks[0].bank_name);
+  const accounts = await getAccounts(banks[0].bank_name);
+  const mt940Table = await getMT940Table(banks[0].bank_name);
+  const hostFileTable = await getHostFileTable(banks[0].bank_name);
   const data = {
     search: {
       bank: bankConfig[0],
-      bankOption: bank,
-      account: account[0]?.bankacct || '',
-      accountOption: account,
+      bankOption: banks,
+      accountNo: accounts[0]?.bankacct || '',
+      accountOption: accounts,
       fromDate: today,
       toDate: today,
     },
@@ -93,9 +93,9 @@ export const getHostFileTable = async (
   }
 };
 
-export const getMatchingEpaymentTable = async (fileName: string, accountNo: string): Promise<Epayment[]> => {
+export const getMatchingEpaymentTable = async (fileName: string, accountNo: string): Promise<EPayment[]> => {
   try {
-    const response: Epayment[] = await api.get<Epayment[]>(API_URLS.MATCHING.EPAYMENTS, {
+    const response: EPayment[] = await api.get<EPayment[]>(API_URLS.MATCHING.EPAYMENTS, {
       file: fileName,
       account: accountNo,
     });
@@ -107,9 +107,9 @@ export const getMatchingEpaymentTable = async (fileName: string, accountNo: stri
   }
 };
 
-export const getMatchingNonEpaymentTable = async (fileName: string, accountNo: string): Promise<Epayment[]> => {
+export const getMatchingNonEpaymentTable = async (fileName: string, accountNo: string): Promise<EPayment[]> => {
   try {
-    const response: Epayment[] = await api.get<Epayment[]>(API_URLS.MATCHING.NON_EPAYMENTS, {
+    const response: EPayment[] = await api.get<EPayment[]>(API_URLS.MATCHING.NON_EPAYMENTS, {
       file: fileName,
       account: accountNo,
     });
@@ -149,9 +149,9 @@ export const getExceptionHostFileTable = async (fileName: string, accountNo: str
   }
 };
 
-export const getBank = async (): Promise<Bank[]> => {
+export const getBanks = async (): Promise<Banks[]> => {
   try {
-    const response: Bank[] = await api.get<Bank[]>(API_URLS.BANKS);
+    const response: Banks[] = await api.get<Banks[]>(API_URLS.BANKS);
     return response;
   } catch (error) {
     console.error(error);
@@ -181,9 +181,9 @@ export const getBankConfig = async (bankName: string = ''): Promise<BankConfig[]
   }
 };
 
-export const getAccount = async (bankName: string = ''): Promise<Account[]> => {
+export const getAccounts = async (bankName: string = ''): Promise<Accounts[]> => {
   try {
-    const response: Account[] = await api.get<Account[]>(API_URLS.ACCOUNTS);
+    const response: Accounts[] = await api.get<Accounts[]>(API_URLS.ACCOUNTS, { bankName });
     return response;
   } catch (error) {
     console.error(error);
@@ -196,6 +196,43 @@ export const getAccount = async (bankName: string = ''): Promise<Account[]> => {
     }
     return accountData;
 
+    // return [];
+  }
+};
+
+export const exportCSVFile = async (fileName: string) => {
+  try {
+    const response: [] = await api.get<[]>(API_URLS.EXPORTS.CSV, {});
+    return response;
+  } catch (error) {
+    console.error(error);
+    return [
+      {
+        success: 'success',
+      },
+    ];
+    // return [];
+  }
+};
+
+export const confirmFile = async () => {
+  try {
+    const response: [] = await api.post<[]>(API_URLS.CONFIRMATIONS.SAPFIN, {
+      sap_to_path: '/apps/pentaho_data/sap-portal/output-csv/DBS/0039007442/',
+      sap_file_name: 'DBS_0039007442_20230617',
+      sap_from_path: '/apps/pentaho_data/sap-portal/temp/DBS/',
+      param_account: '0039007442',
+      param_file: 'SINPOO01XXXX.CASP_MT940.D230617104353.txt',
+      sap_to_path_xml: '/apps/pentaho_data/sap-portal/output-xml/DBS/0039007442/',
+    });
+    return response;
+  } catch (error) {
+    console.error(error);
+    return [
+      {
+        success: 'success',
+      },
+    ];
     // return [];
   }
 };

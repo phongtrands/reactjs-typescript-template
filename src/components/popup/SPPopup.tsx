@@ -22,7 +22,7 @@ const SPPopup = () => {
         </Box>
       )}
       <DialogContent>{content}</DialogContent>
-      <DialogActions sx={{ justifyContent: 'flex-start' }}>
+      <DialogActions sx={{ justifyContent: 'flex-end' }}>
         <Button sx={{ width: 80 }} onClick={handleOk}>
           OK
         </Button>
