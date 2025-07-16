@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Tab } from '~/components';
 import ExceptionsTab from '~/components/epayment-tabs/exceptions-tab/ExceptionsTab';
 import MatchingTab from '~/components/epayment-tabs/matching-tab/MatchingTab';
-import SummaryTab from '~/components/epayment-tabs/summay-tab/SummaryTab';
+import SummaryTab from '~/components/epayment-tabs/summary-tab/SummaryTab';
 import { EPAYMENT_TAB, TYPE_FILE } from '~/configs/epayment.config';
 import PageContainer from '~/layouts/PageContainer';
 import { changeTab, updateSummary } from '~/redux';

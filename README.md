@@ -1,54 +1,87 @@
-# React + TypeScript + Vite
+## Tech stack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+| Tool / Library      | Version          |
+|---------------------|------------------|
+| **Node.js**         | >=22.0.0         |
+| **npm**             | >=10.x           |
+| **React**           | 19.1.0           |
+| **TypeScript**      | 5.7.3            |
+| **Redux**           | 9.2.0            |
+| **Redux Toolkit**   | 2.6.1            |
+| **React Router**    | 6.30.0           |
+| **Redux Thunk**     | 3.1.0            |
+| **Axios**           | 1.8.4            |
+| **MUI**             | v5               |
+| **Eslint**          | 9.22.0           |
+| **Prettier**        | 3.5.3            |
+| **Vite**            | 6.2.0            |
+| **Jest**            | 30.0.3           |
 
-Currently, two official plugins are available:
+## Install
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Create workspace
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+```bash
+    npx create-react-app sppl-web --template typescript
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Run App
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
+```bash
+    npm start
 ```
+
+## Build
+
+```bash
+    npm start
+```
+
+## Test
+
+```bash
+    npm run test
+```
+
+```bash
+    npm run test:debug
+```
+
+Folder Structure of Project
+
+src/ 
+  ├── _tests_/
+  ├──assets
+        ├──image/
+        └──styles/
+  ├──components
+        ├──button/
+        ├──calendar/
+        ├──dropdown/
+        ├──epayment-tabs/
+              ├──exceptions-tab/
+              ├──matching-tab/
+              └──summary-tab/
+                    ├──search/
+                    ├──table/
+                    └──SummaryTab.tsx
+        ├──popup/
+        ├──tab/
+        ├──table/
+        ├──text-area/
+        ├──typography/
+        ├──ErrorBoundary.tsx
+        ├──Loading.tsx
+        └──PrivateRoute.tsx
+  ├──config/
+  ├──constants/
+  ├──layouts/
+  ├──pages/
+  ├──redux/
+  ├──routes/
+  ├──translations/
+  ├──types/
+  ├──utils/
+  ├──App.tsx
+  └──main.tsx
+

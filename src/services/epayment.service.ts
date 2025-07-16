@@ -218,12 +218,12 @@ export const exportCSVFile = async (fileName: string) => {
 export const confirmFile = async () => {
   try {
     const response: [] = await api.post<[]>(API_URLS.CONFIRMATIONS.SAPFIN, {
-      sap_to_path: '/apps/pentaho_data/sap-portal/output-csv/DBS/0039007442/',
       sap_file_name: 'DBS_0039007442_20230617',
       sap_from_path: '/apps/pentaho_data/sap-portal/temp/DBS/',
+      sap_to_path: '/apps/pentaho_data/sap-portal/output-csv/DBS/0039007442/',
+      sap_to_path_xml: '/apps/pentaho_data/sap-portal/output-xml/DBS/0039007442/',
       param_account: '0039007442',
       param_file: 'SINPOO01XXXX.CASP_MT940.D230617104353.txt',
-      sap_to_path_xml: '/apps/pentaho_data/sap-portal/output-xml/DBS/0039007442/',
     });
     return response;
   } catch (error) {

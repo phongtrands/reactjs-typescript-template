@@ -18,17 +18,17 @@ const Mt940: React.FC = () => {
   const accountNo: string = useAppSelector((state) => state.epayment.summary.search.accountNo);
   const bankName: string = useAppSelector((state) => state.epayment.summary.search.bank.bank_name);
 
-  const handleAction = async (row: any, fieldName: string, event: any) => {
+  const handleAction = async (row: MT940, fieldName: string) => {
     let tab = EPAYMENT_TAB.MATCHING;
     const [ePayment, nonEPayment, eMT940, eHostFile] = await Promise.all([
-      getMatchingEpaymentTable(row.file_name, accountNo),
-      getMatchingNonEpaymentTable(row.file_name, accountNo),
-      getExceptionMT940Table(row.file_name, accountNo),
-      getExceptionHostFileTable(row.file_name, accountNo),
+      getMatchingEpaymentTable(row.file_name || '', accountNo),
+      getMatchingNonEpaymentTable(row.file_name || '', accountNo),
+      getExceptionMT940Table(row.file_name || '', accountNo),
+      getExceptionHostFileTable(row.file_name || '', accountNo),
     ]);
     dispatch(
       updateMatching({
-        file: row.file_name,
+        file: row.file_name || '',
         accountNo: accountNo,
         bank: bankName,
         matchingEPayment: ePayment,
@@ -37,7 +37,7 @@ const Mt940: React.FC = () => {
     );
     dispatch(
       updateExceptions({
-        file: row.file_name,
+        file: row.file_name || '',
         accountNo: accountNo,
         bank: bankName,
         exceptionMT940: eMT940,

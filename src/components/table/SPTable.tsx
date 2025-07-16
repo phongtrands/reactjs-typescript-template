@@ -47,7 +47,7 @@ function SPTable<T extends { id: string | number }>({
     setPage(1);
   };
 
-  const handleChange = (row: T, fieldName: string, value: any, event: any) => {
+  const handleChange = (row: T, fieldName: string, value: boolean, event: any) => {
     onChange?.(row, fieldName, value, event);
   };
 
@@ -62,7 +62,7 @@ function SPTable<T extends { id: string | number }>({
     }
   };
 
-  const handleIconclick = (row: T, fieldName: string, event: any) => {
+  const handleIconclick = (row: T, fieldName: string, event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(row, fieldName, event);
   };
 
