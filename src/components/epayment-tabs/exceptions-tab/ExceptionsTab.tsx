@@ -6,14 +6,14 @@ import { Button, Table } from '~/components';
 import { useAppDispatch, useAppSelector } from '~/redux/hook';
 import { changeTab } from '~/redux';
 import { EPAYMENT_TAB, exceptionsHostFileColumns, exceptionsMT940Columns } from '~/configs';
-import type { ExceptionsMT940 } from '~/types';
+import type { ExceptionsHostFile, ExceptionsMT940 } from '~/types';
 import { exportCSVFile } from '~/services';
 
 const ExceptionsTab: React.FC = () => {
   const dispatch = useAppDispatch();
   const typeFile: string = useAppSelector((state) => state.epayment.typeFile);
   const mt940Data: ExceptionsMT940[] = useAppSelector((state) => state.epayment.exceptions.exceptionMT940);
-  const hostFileData: ExceptionsMT940[] = useAppSelector((state) => state.epayment.exceptions.exceptionHostFile);
+  const hostFileData: ExceptionsHostFile[] = useAppSelector((state) => state.epayment.exceptions.exceptionHostFile);
   const fileName: string = useAppSelector((state) => state.epayment.exceptions.file);
   const accountNo: string = useAppSelector((state) => state.epayment.exceptions.accountNo);
   const bank: string = useAppSelector((state) => state.epayment.exceptions.bank);

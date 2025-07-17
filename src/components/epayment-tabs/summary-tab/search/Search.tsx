@@ -6,23 +6,23 @@ import { Box, Grid } from '@mui/material';
 import { Button, Calendar, Dropdown } from '~/components';
 import { useAppDispatch, useAppSelector } from '~/redux/hook';
 import { updateSearch, updateSummary } from '~/redux';
-import { getAccounts, getBankConfig, getHostFileTable, getMT940Table } from '~/services';
+import { getAccounts, getHostFileTable, getMT940Table } from '~/services';
 import type { Accounts, Banks, Search } from '~/types';
 
 const Search: React.FC = () => {
   const dispatch = useAppDispatch();
   const searchData: Search = useAppSelector((state) => state.epayment.summary.search);
-  const bank: Banks = useAppSelector((state) => state.epayment.summary.search.bank);
-  const bankOption: Banks[] = useAppSelector((state) => state.epayment.summary.search.bankOption);
-  const account: string = useAppSelector((state) => state.epayment.summary.search.accountNo);
-  const accountOption: Accounts[] = useAppSelector((state) => state.epayment.summary.search.accountOption);
+  const bankName: string = useAppSelector((state) => state.epayment.summary.search.bankName);
+  const banks: Banks[] = useAppSelector((state) => state.epayment.summary.search.banks);
+  const accountNo: string = useAppSelector((state) => state.epayment.summary.search.accountNo);
+  const accounts: Accounts[] = useAppSelector((state) => state.epayment.summary.search.accounts);
   const fDate: Date = useAppSelector((state) => state.epayment.summary.search.fromDate);
   const tDate: Date = useAppSelector((state) => state.epayment.summary.search.toDate);
 
   const handleSearch = async () => {
     const [mt940Data, hostFileData] = await Promise.all([
-      getMT940Table(bank.bank_name, account, fDate, tDate),
-      getHostFileTable(bank.bank_name, account, fDate, tDate),
+      getMT940Table(bankName, accountNo, fDate, tDate),
+      getHostFileTable(bankName, accountNo, fDate, tDate),
     ]);
     dispatch(
       updateSummary({
@@ -35,13 +35,13 @@ const Search: React.FC = () => {
 
   const handleChangeBankDropdown = async (event: SelectChangeEvent) => {
     const { value } = event.target;
-    const [bankConfigs, accountdata] = await Promise.all([getBankConfig(value), getAccounts(value)]);
+    const accounts = await getAccounts(value);
     dispatch(
       updateSearch({
         ...searchData,
-        bank: bankConfigs[0],
-        accountOption: accountdata,
-        accountNo: accountdata[0].bankacct,
+        bankName: value,
+        accounts: accounts,
+        accountNo: accounts[0].bankacct,
       }),
     );
   };
@@ -73,11 +73,11 @@ const Search: React.FC = () => {
           <Dropdown
             label='Bank'
             name='bank'
-            options={bankOption.map((item) => {
-              return { value: item.bank_name, label: item.bank_name };
+            options={banks.map((item) => {
+              return { value: item.bankName, label: item.bankName };
             })}
-            value={bank.bank_name || ''}
-            styleSelect={{ width: '70%' }}
+            value={bankName || ''}
+            styleSelect={{ width: '70%', backgroundColor: 'white' }}
             onChange={handleChangeBankDropdown}
           />
         </Grid>
@@ -85,11 +85,11 @@ const Search: React.FC = () => {
           <Dropdown
             label='Account No'
             name='accountNo'
-            options={accountOption.map((item) => {
+            options={accounts.map((item) => {
               return { value: item.bankacct, label: item.bankacct };
             })}
-            value={account || ''}
-            styleSelect={{ width: '70%' }}
+            value={accountNo || ''}
+            styleSelect={{ width: '70%', backgroundColor: 'white' }}
             onChange={handleChangeAccountDropdown}
           />
         </Grid>

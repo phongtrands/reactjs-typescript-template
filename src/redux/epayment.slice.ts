@@ -10,16 +10,10 @@ const initialState: EpaymentState = {
   tab: EPAYMENT_TAB.SUMMARY,
   summary: {
     search: {
-      bank: {
-        bank_name: '',
-        csv_file_path_tmp: '',
-        csv_file_path_bank: '',
-        file_download_url: '',
-        sap_portal_url: '',
-      },
-      bankOption: [],
+      bankName: '',
+      banks: [],
       accountNo: '',
-      accountOption: [],
+      accounts: [],
       fromDate: new Date(),
       toDate: new Date(),
     },

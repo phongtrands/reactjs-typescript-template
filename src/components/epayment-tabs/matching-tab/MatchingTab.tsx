@@ -98,7 +98,7 @@ const MatchingTab: React.FC = () => {
                 startIcon={<SaveAltOutlinedIcon />}
                 onClick={() => handleDowload('mt940')}
               >
-                Download Report(MT940)
+                Download Report (MT940)
               </Button>
             </Box>
             <Box display='flex' alignItems='center'>
@@ -108,7 +108,7 @@ const MatchingTab: React.FC = () => {
                 startIcon={<SaveAltOutlinedIcon />}
                 onClick={() => handleDowload('hostFile')}
               >
-                Download Report(Host)
+                Download Report (Host)
               </Button>
             </Box>
           </Box>

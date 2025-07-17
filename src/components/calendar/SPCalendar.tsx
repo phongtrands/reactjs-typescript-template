@@ -207,6 +207,7 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
           value={displayDate()}
           sx={{
             width: '70%',
+            backgroundColor: 'white',
             '& .MuiInputBase-input': {
               padding: 1,
             },

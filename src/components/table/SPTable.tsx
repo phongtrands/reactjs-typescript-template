@@ -143,7 +143,7 @@ function SPTable<T extends { id: string | number }>({
               handleIconclick(row, String(col.field), event);
             }}
           >
-            <ArrowCircleRightOutlinedIcon />
+            <ArrowCircleRightOutlinedIcon sx={{ fontSize: 31 }} />
           </IconButton>
         );
       case 'iconDownload':
@@ -154,7 +154,7 @@ function SPTable<T extends { id: string | number }>({
               handleIconclick(row, String(col.field), event);
             }}
           >
-            <SaveAltOutlinedIcon />
+            <SaveAltOutlinedIcon sx={{ fontSize: 31 }} />
           </IconButton>
         );
       case 'doubleAction':
@@ -165,16 +165,18 @@ function SPTable<T extends { id: string | number }>({
               onClick={(event) => {
                 handleIconclick(row, `${String(col.field)}_primary`, event);
               }}
+              sx={{ m: 0, p: 0, mr: 2 }}
             >
-              <ArrowCircleRightOutlinedIcon />
+              <ArrowCircleRightOutlinedIcon sx={{ fontSize: 31 }} />
             </IconButton>
             <IconButton
               color='warning'
               onClick={(event) => {
                 handleIconclick(row, `${String(col.field)}_warning`, event);
               }}
+              sx={{ m: 0, p: 0, ml: 2 }}
             >
-              <ArrowCircleRightOutlinedIcon />
+              <ArrowCircleRightOutlinedIcon sx={{ fontSize: 31 }} />
             </IconButton>
           </>
         );
@@ -303,8 +305,8 @@ function SPTable<T extends { id: string | number }>({
             renderItem={(item) => (
               <PaginationItem
                 components={{
-                  previous: () => <span style={{ padding: '0 8px' }}>Previous</span>,
-                  next: () => <span style={{ padding: '0 8px' }}>Next</span>,
+                  previous: () => <span style={{ padding: '0 8px', fontSize: '1rem', fontWeight: 500 }}>Previous</span>,
+                  next: () => <span style={{ padding: '0 8px', fontSize: '1rem', fontWeight: 500 }}>Next</span>,
                 }}
                 {...item}
                 sx={{ borderRadius: 0 }}

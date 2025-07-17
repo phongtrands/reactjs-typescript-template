@@ -1,2 +1,2 @@
 export * from './api';
-export * from './dataTransform';
+export * from './array_helpers.util';

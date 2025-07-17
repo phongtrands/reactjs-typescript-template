@@ -1,71 +1,67 @@
 import type { Search } from '@mui/icons-material';
 
 export interface MT940 {
-  id: number;
-  file_name?: string;
-  file_date?: string;
-  matching_status?: string;
-  sapfin_status?: string;
-  row_count?: number;
+  id: string;
+  filename: string;
+  fileDate: string;
+  sapfinStatus: string;
+  matchingStatus: string;
+  count: number;
   action?: string;
   download?: string;
 }
 
 export interface HostFile {
-  id: number;
-  file_name?: string;
-  file_recvd_date?: string;
-  sum?: number;
+  id: string;
+  filename: string;
+  fileReceivedDate: string;
+  count: number;
   action?: string;
   download?: string;
 }
 
 export interface EPayment {
-  id: number;
-  payment_method?: string;
-  statement_date?: string;
-  valuedate?: string;
-  amount?: number;
+  id: string;
+  paymentMethod: string;
+  statementDate: string;
+  valueDate: string;
+  count: number;
 }
 
 export interface ExceptionsMT940 {
-  id: number;
-  refer_account_owne?: string;
-  system?: string;
-  payment_method?: string;
-  dc_mark?: string;
-  statement_date?: string;
-  value_date?: string;
-  business_date?: string;
-  amount?: number;
+  id: string;
+  referAccountOwner: string;
+  sourceSystem: string;
+  paymentMethod: string;
+  dcMark: string;
+  statementDate: string;
+  valueDate: string;
+  businessDate: string;
+  amount: number;
 }
 
 export interface ExceptionsHostFile {
-  id: number;
-  transaction_reference_id?: string;
-  source_system?: string;
-  payment_method?: string;
-  dc_mark?: string;
-  value_date?: string;
-  business_date?: string;
-  amount?: number;
-  transaction_status?: string;
-  transaction_flag?: string;
-  bank_transfer_id?: string;
-  bank_transaction_reference_id?: string;
-  original_reference_id?: string;
+  id: string;
+  transactionReferenceId?: string;
+  sourceSystem: string;
+  paymentMethod: string;
+  dcMark: string;
+  valueDate: string;
+  businessDate: string;
+  amount: number;
+  transactionStatus: string;
+  transactionFlag: string;
+  bankTransferId: string;
+  bankTxnRefId: string;
+  originalRefId: string;
 }
 
 export interface Banks {
-  bank_name: string;
-}
-
-export interface BankConfig {
-  bank_name: string;
-  csv_file_path_tmp?: string;
-  csv_file_path_bank?: string;
-  file_download_url?: string;
-  sap_portal_url?: string;
+  bankName: string;
+  csvFilePathTmp: string;
+  csvFilePathBank: string;
+  fileDownloadUrl: string;
+  sapPortalUrl: string;
 }
 
 export interface Accounts {
@@ -73,10 +69,10 @@ export interface Accounts {
 }
 
 export interface Search {
-  bank: BankConfig;
-  bankOption: Banks[];
+  bankName: string;
+  banks: Banks[];
   accountNo: string;
-  accountOption: Accounts[];
+  accounts: Accounts[];
   fromDate: Date;
   toDate: Date;
 }

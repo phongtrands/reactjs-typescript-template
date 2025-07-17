@@ -3,6 +3,8 @@ import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'a
 import axios from 'axios';
 import { trackPromise } from 'react-promise-tracker';
 
+import { normalizeNulls } from './array_helpers.util';
+
 const BASE_URL: string = import.meta.env.BASE_URL;
 const DEF_HEADERS: object = {
   Accept: 'application/json',
@@ -45,7 +47,7 @@ const request = async <T>(
     const response = await (useTrackPromise
       ? trackPromise(axiosInstance.request<T>({ method, url, data, params, headers }))
       : axiosInstance.request<T>({ method, url, data, params, headers }));
-    return response.data;
+    return normalizeNulls(response.data);
   } catch (error) {
     console.error(`API Error [${method}] ${url}:`, error);
     throw error;

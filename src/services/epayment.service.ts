@@ -1,40 +1,33 @@
+import { format } from 'date-fns';
+
 import {
-  accountData,
-  bankConfigData,
-  bankData,
-  EPaymentData,
-  ExceptionData,
-  ExceptionHostFileData,
-  hostFileData,
-  mt940Data,
-} from '~/configs/mockData';
+  accountsMockData,
+  banksMockData,
+  EPaymentMockData,
+  exceptionHostFileMockData,
+  exceptionMT940MockData,
+  hostFileMockData,
+  mt940MockData,
+  nonEPaymentMockData,
+} from './../configs/mockData';
+
 import { API_URLS } from '~/constants';
-import type {
-  Accounts,
-  BankConfig,
-  Banks,
-  EPayment,
-  ExceptionsHostFile,
-  ExceptionsMT940,
-  HostFile,
-  MT940,
-} from '~/types';
-import { api } from '~/utils';
+import type { Accounts, Banks, EPayment, ExceptionsHostFile, ExceptionsMT940, HostFile, MT940 } from '~/types';
+import { addIdToArray, api } from '~/utils';
 
 const today = new Date();
 
 export const getSummaryData = async () => {
   const banks = await getBanks();
-  const bankConfig = await getBankConfig(banks[0].bank_name);
-  const accounts = await getAccounts(banks[0].bank_name);
-  const mt940Table = await getMT940Table(banks[0].bank_name);
-  const hostFileTable = await getHostFileTable(banks[0].bank_name);
+  const accounts = await getAccounts(banks[0].bankName);
+  const mt940Table = await getMT940Table(banks[0].bankName);
+  const hostFileTable = await getHostFileTable(banks[0].bankName);
   const data = {
     search: {
-      bank: bankConfig[0],
-      bankOption: banks,
+      bankName: banks[0]?.bankName || '',
+      banks: banks,
       accountNo: accounts[0]?.bankacct || '',
-      accountOption: accounts,
+      accounts: accounts,
       fromDate: today,
       toDate: today,
     },
@@ -54,16 +47,16 @@ export const getMT940Table = async (
     const response: MT940[] = await api.get<MT940[]>(API_URLS.MT940, {
       bank_name: bankName,
       bankacct: accountno,
-      from_date: fromDate,
-      to_date: toDate,
+      from_date: format(fromDate, 'yyyy-MM-dd'),
+      to_date: format(toDate, 'yyyy-MM-dd'),
     });
-    return response;
+    return addIdToArray(response, 'mt940');
   } catch (error) {
     if (!accountno) {
       console.error(error);
       return [];
     }
-    return mt940Data;
+    return addIdToArray(mt940MockData, 'mt940');
     // return [];
   }
 };
@@ -75,20 +68,19 @@ export const getHostFileTable = async (
   toDate: Date = today,
 ): Promise<HostFile[]> => {
   try {
-    // let response = hostFileData as HostFile[];
-    const response: MT940[] = await api.get<MT940[]>(API_URLS.MT940, {
+    const response: HostFile[] = await api.get<HostFile[]>(API_URLS.MT940, {
       bank_name: bankName,
       bankacct: accountno,
-      from_date: fromDate,
-      to_date: toDate,
+      from_date: format(fromDate, 'yyyy-MM-dd'),
+      to_date: format(toDate, 'yyyy-MM-dd'),
     });
-    return response;
+    return addIdToArray(response, 'host_file');
   } catch (error) {
     console.error(error);
     if (!accountno) {
       return [];
     }
-    return hostFileData;
+    return addIdToArray(hostFileMockData, 'host_file');
     // return [];
   }
 };
@@ -99,10 +91,10 @@ export const getMatchingEpaymentTable = async (fileName: string, accountNo: stri
       file: fileName,
       account: accountNo,
     });
-    return response;
+    return addIdToArray(response, 'matching_ePayment');
   } catch (error) {
     console.error(error);
-    return EPaymentData;
+    return addIdToArray(EPaymentMockData, 'matching_ePayment');
     // return [];
   }
 };
@@ -113,10 +105,10 @@ export const getMatchingNonEpaymentTable = async (fileName: string, accountNo: s
       file: fileName,
       account: accountNo,
     });
-    return response;
+    return addIdToArray(response, 'matching_non_ePayment');
   } catch (error) {
     console.error(error);
-    return EPaymentData;
+    return addIdToArray(nonEPaymentMockData, 'matching_non_ePayment');
     // return [];
   }
 };
@@ -127,10 +119,10 @@ export const getExceptionMT940Table = async (fileName: string, accountNo: string
       file: fileName,
       account: accountNo,
     });
-    return response;
+    return addIdToArray(response, 'exception_mt940');
   } catch (error) {
     console.error(error);
-    return ExceptionData;
+    return addIdToArray(exceptionMT940MockData, 'exception_mt940');
     // return [];
   }
 };
@@ -141,10 +133,10 @@ export const getExceptionHostFileTable = async (fileName: string, accountNo: str
       file: fileName,
       account: accountNo,
     });
-    return response;
+    return addIdToArray(response, 'exception_host_file');
   } catch (error) {
     console.error(error);
-    return ExceptionHostFileData;
+    return addIdToArray(exceptionHostFileMockData, 'exception_host_file');
     // return [];
   }
 };
@@ -155,29 +147,8 @@ export const getBanks = async (): Promise<Banks[]> => {
     return response;
   } catch (error) {
     console.error(error);
-    return bankData;
+    return banksMockData;
     // return [];
-  }
-};
-
-export const getBankConfig = async (bankName: string = ''): Promise<BankConfig[]> => {
-  try {
-    let response = bankConfigData as BankConfig[];
-    if (bankName === 'CITI') {
-      response = [
-        {
-          bank_name: 'CITI',
-          csv_file_path_tmp: '/apps/pentaho_data/sap-portal/temp/CITI/',
-          csv_file_path_bank: '/apps/pentaho_data/sap-portal/output-csv/CITI/',
-          file_download_url: 'http://10.168.15.174:8081/api/v1/download',
-          sap_portal_url: 'http://10.168.15.174:8080/sap-portal/',
-        },
-      ];
-    }
-    return response;
-  } catch (error) {
-    console.error(error);
-    return [];
   }
 };
 
@@ -194,7 +165,7 @@ export const getAccounts = async (bankName: string = ''): Promise<Accounts[]> =>
         },
       ];
     }
-    return accountData;
+    return accountsMockData;
 
     // return [];
   }

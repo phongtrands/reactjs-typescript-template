@@ -1,6 +1,6 @@
 import { comminglingFiles, comminglingGuestFiles, mockupDataSource } from '~/configs/mockupDataSource';
 import type { InterfaceFile, Source } from '~/types';
-import { addIdsToArray, api } from '~/utils';
+import { addIdToArray, api } from '~/utils';
 
 export const getDataSources = async (): Promise<Source[]> => {
   try {
@@ -22,7 +22,7 @@ export const getFiles = async (sourceName: string, interfaceName: string): Promi
     } else if (sourceName === 'BMCS' && interfaceName === 'Commingling') {
       response = comminglingFiles as InterfaceFile[];
     }
-    const newData = response.length > 0 ? addIdsToArray(response, 'file') : [];
+    const newData = response.length > 0 ? addIdToArray(response, 'file') : [];
     return newData;
   } catch (error) {
     console.error(error);
