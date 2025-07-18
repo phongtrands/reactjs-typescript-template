@@ -1,9 +1,20 @@
 /* eslint-disable no-duplicate-imports */
-import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
+import type {
+  AxiosInstance,
+  InternalAxiosRequestConfig,
+  AxiosResponse,
+  AxiosResponseHeaders,
+  RawAxiosResponseHeaders,
+} from 'axios';
 import axios from 'axios';
 import { trackPromise } from 'react-promise-tracker';
 
 import { normalizeNulls } from './array_helpers.util';
+
+interface ApiResponse<T> {
+  headers: AxiosResponseHeaders | Partial<RawAxiosResponseHeaders>;
+  data: T;
+}
 
 const BASE_URL: string = import.meta.env.BASE_URL;
 const DEF_HEADERS: object = {
@@ -42,12 +53,15 @@ const request = async <T>(
   params?: object,
   headers: object = DEF_HEADERS,
   useTrackPromise: boolean = true,
-): Promise<T> => {
+): Promise<ApiResponse<T>> => {
   try {
     const response = await (useTrackPromise
       ? trackPromise(axiosInstance.request<T>({ method, url, data, params, headers }))
       : axiosInstance.request<T>({ method, url, data, params, headers }));
-    return normalizeNulls(response.data);
+    return {
+      headers: response.headers,
+      data: normalizeNulls(response.data),
+    };
   } catch (error) {
     console.error(`API Error [${method}] ${url}:`, error);
     throw error;

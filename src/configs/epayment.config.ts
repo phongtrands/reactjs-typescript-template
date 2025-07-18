@@ -11,6 +11,15 @@ export enum EPAYMENT_TAB {
   EXCEPTION = 'exception',
 }
 
+export enum EXPORT_TYPE {
+  MT940_FILE = 'RECON_MT940_FILE',
+  HOST_FILE = 'RECON_HOST_FILE',
+  MATCHING_MT940_FILE = 'MATCHING_MT940_FILE',
+  MATCHING_HOST_FILE = 'MATCHING_HOST_FILE',
+  EXCEPTION_MT940_FILE = 'EXCEPTION_MT940_FILE',
+  EXCEPTION_HOST_FILE = 'EXCEPTION_HOST_FILE',
+}
+
 export const hostFileColumns: ColumnConfig<HostFile>[] = [
   { headerName: 'Host File Name', field: 'filename', align: 'left', type: 'text' },
   { headerName: 'Host File Receipt', field: 'fileReceivedDate', align: 'center', type: 'text' },

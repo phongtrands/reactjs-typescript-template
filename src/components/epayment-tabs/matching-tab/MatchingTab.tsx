@@ -3,7 +3,7 @@ import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
 import { enqueueSnackbar } from 'notistack';
 
 import { Button, Table } from '~/components';
-import { EPAYMENT_TAB, EPayMentColumns } from '~/configs';
+import { EPAYMENT_TAB, EPayMentColumns, EXPORT_TYPE } from '~/configs';
 import { changeTab, openPopup } from '~/redux';
 import { useAppDispatch, useAppSelector } from '~/redux/hook';
 import type { EPayment } from '~/types';
@@ -33,7 +33,8 @@ const MatchingTab: React.FC = () => {
   };
 
   const handleDowload = async (type: string) => {
-    const response = await exportCSVFile(fileName);
+    const response = await exportCSVFile(type, accountNo, fileName);
+    console.log(response);
     enqueueSnackbar('File download successfully ', { variant: 'success' });
   };
   return (
@@ -86,7 +87,7 @@ const MatchingTab: React.FC = () => {
                 variant='outlined'
                 color='inherit'
                 startIcon={<SaveAltOutlinedIcon />}
-                onClick={() => handleDowload('sapfin')}
+                // onClick={() => handleDowload('sapfin')}
               >
                 Download SAPFIN
               </Button>
@@ -96,7 +97,7 @@ const MatchingTab: React.FC = () => {
                 variant='outlined'
                 color='inherit'
                 startIcon={<SaveAltOutlinedIcon />}
-                onClick={() => handleDowload('mt940')}
+                onClick={() => handleDowload(EXPORT_TYPE.MATCHING_MT940_FILE)}
               >
                 Download Report (MT940)
               </Button>
@@ -106,7 +107,7 @@ const MatchingTab: React.FC = () => {
                 variant='outlined'
                 color='inherit'
                 startIcon={<SaveAltOutlinedIcon />}
-                onClick={() => handleDowload('hostFile')}
+                onClick={() => handleDowload(EXPORT_TYPE.MATCHING_HOST_FILE)}
               >
                 Download Report (Host)
               </Button>

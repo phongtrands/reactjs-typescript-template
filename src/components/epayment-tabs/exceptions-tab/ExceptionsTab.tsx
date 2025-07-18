@@ -5,7 +5,7 @@ import { enqueueSnackbar } from 'notistack';
 import { Button, Table } from '~/components';
 import { useAppDispatch, useAppSelector } from '~/redux/hook';
 import { changeTab } from '~/redux';
-import { EPAYMENT_TAB, exceptionsHostFileColumns, exceptionsMT940Columns } from '~/configs';
+import { EPAYMENT_TAB, exceptionsHostFileColumns, exceptionsMT940Columns, EXPORT_TYPE } from '~/configs';
 import type { ExceptionsHostFile, ExceptionsMT940 } from '~/types';
 import { exportCSVFile } from '~/services';
 
@@ -19,8 +19,10 @@ const ExceptionsTab: React.FC = () => {
   const bank: string = useAppSelector((state) => state.epayment.exceptions.bank);
   const isMT940: boolean = typeFile === 'mt940';
 
-  const handleDowload = async (type: string) => {
-    const response = await exportCSVFile(fileName);
+  const handleDowload = async () => {
+    const exportType: string = isMT940 ? EXPORT_TYPE.EXCEPTION_MT940_FILE : EXPORT_TYPE.EXCEPTION_HOST_FILE;
+    const response = await exportCSVFile(exportType, accountNo, fileName);
+    console.log(response);
     enqueueSnackbar('File download successfully ', { variant: 'success' });
   };
 
@@ -73,7 +75,7 @@ const ExceptionsTab: React.FC = () => {
               variant='outlined'
               color='inherit'
               startIcon={<SaveAltOutlinedIcon />}
-              onClick={() => handleDowload('exception')}
+              onClick={() => handleDowload()}
             >
               Download Report
             </Button>
