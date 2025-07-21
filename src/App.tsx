@@ -6,7 +6,7 @@ import { SnackbarProvider } from 'notistack';
 
 import AppRoutes from './routes/AppRoutes';
 import theme from './constants/theme';
-import SPPopup from './components/popup/SPPopup';
+import SPInformativeDialog from './components/popup/SPInformativeDialog';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         }}
       >
         <AppRoutes />
-        <SPPopup />
+        <SPInformativeDialog />
       </SnackbarProvider>
     </ThemeProvider>
   );

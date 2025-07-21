@@ -1,18 +1,14 @@
 /* eslint-disable no-duplicate-imports */
-import type {
-  AxiosInstance,
-  InternalAxiosRequestConfig,
-  AxiosResponse,
-  AxiosResponseHeaders,
-  RawAxiosResponseHeaders,
-} from 'axios';
+import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
 import { trackPromise } from 'react-promise-tracker';
 
 import { normalizeNulls } from './array_helpers.util';
 
-interface ApiResponse<T> {
-  headers: AxiosResponseHeaders | Partial<RawAxiosResponseHeaders>;
+interface DataWrapper<T> {
+  success: boolean;
+  code: number;
+  message: string;
   data: T;
 }
 
@@ -53,15 +49,12 @@ const request = async <T>(
   params?: object,
   headers: object = DEF_HEADERS,
   useTrackPromise: boolean = true,
-): Promise<ApiResponse<T>> => {
+): Promise<T> => {
   try {
     const response = await (useTrackPromise
-      ? trackPromise(axiosInstance.request<T>({ method, url, data, params, headers }))
-      : axiosInstance.request<T>({ method, url, data, params, headers }));
-    return {
-      headers: response.headers,
-      data: normalizeNulls(response.data),
-    };
+      ? trackPromise(axiosInstance.request<DataWrapper<T>>({ method, url, data, params, headers }))
+      : axiosInstance.request<DataWrapper<T>>({ method, url, data, params, headers }));
+    return normalizeNulls(response.data?.data);
   } catch (error) {
     console.error(`API Error [${method}] ${url}:`, error);
     throw error;

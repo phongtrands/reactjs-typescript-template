@@ -14,8 +14,21 @@ import {
 import { API_URLS } from '~/constants';
 import type { Accounts, Banks, EPayment, ExceptionsHostFile, ExceptionsMT940, HostFile, MT940 } from '~/types';
 import { addIdToArray, api } from '~/utils';
+import store from '~/redux/store';
+import { openPopup } from '~/redux';
 
 const today = new Date();
+
+const showError = (error: string) => {
+  const dispatch = store.dispatch;
+  dispatch(
+    openPopup({
+      type: 'error',
+      content: error,
+      onOk: () => {},
+    }),
+  );
+};
 
 export const getSummaryData = async () => {
   const banks = await getBanks();
@@ -45,17 +58,14 @@ export const getMT940Table = async (
 ): Promise<MT940[]> => {
   try {
     const response = await api.get<MT940[]>(API_URLS.MT940, {
-      bank_name: bankName,
-      bankacct: accountno,
-      from_date: format(fromDate, 'yyyy-MM-dd'),
-      to_date: format(toDate, 'yyyy-MM-dd'),
+      bankName: bankName,
+      bankAccountNo: accountno,
+      fromDate: format(fromDate, 'yyyy-MM-dd'),
+      toDate: format(toDate, 'yyyy-MM-dd'),
     });
-    return addIdToArray(response.data, 'mt940');
+    return addIdToArray(response, 'mt940');
   } catch (error) {
-    if (!accountno) {
-      console.error(error);
-      return [];
-    }
+    showError(String(error));
     return addIdToArray(mt940MockData, 'mt940');
     // return [];
   }
@@ -68,15 +78,15 @@ export const getHostFileTable = async (
   toDate: Date = today,
 ): Promise<HostFile[]> => {
   try {
-    const response = await api.get<HostFile[]>(API_URLS.MT940, {
-      bank_name: bankName,
-      bankacct: accountno,
-      from_date: format(fromDate, 'yyyy-MM-dd'),
-      to_date: format(toDate, 'yyyy-MM-dd'),
+    const response = await api.get<HostFile[]>(API_URLS.HOST_FILES, {
+      bankName: bankName,
+      bankAccountNo: accountno,
+      fromDate: format(fromDate, 'yyyy-MM-dd'),
+      toDate: format(toDate, 'yyyy-MM-dd'),
     });
-    return addIdToArray(response.data, 'host_file');
+    return addIdToArray(response, 'host_file');
   } catch (error) {
-    console.error(error);
+    showError(String(error));
     if (!accountno) {
       return [];
     }
@@ -91,9 +101,9 @@ export const getMatchingEpaymentTable = async (fileName: string, accountNo: stri
       file: fileName,
       account: accountNo,
     });
-    return addIdToArray(response.data, 'matching_ePayment');
+    return addIdToArray(response, 'matching_ePayment');
   } catch (error) {
-    console.error(error);
+    showError(String(error));
     return addIdToArray(EPaymentMockData, 'matching_ePayment');
     // return [];
   }
@@ -105,9 +115,9 @@ export const getMatchingNonEpaymentTable = async (fileName: string, accountNo: s
       file: fileName,
       account: accountNo,
     });
-    return addIdToArray(response.data, 'matching_non_ePayment');
+    return addIdToArray(response, 'matching_non_ePayment');
   } catch (error) {
-    console.error(error);
+    showError(String(error));
     return addIdToArray(nonEPaymentMockData, 'matching_non_ePayment');
     // return [];
   }
@@ -119,9 +129,9 @@ export const getExceptionMT940Table = async (fileName: string, accountNo: string
       file: fileName,
       account: accountNo,
     });
-    return addIdToArray(response.data, 'exception_mt940');
+    return addIdToArray(response, 'exception_mt940');
   } catch (error) {
-    console.error(error);
+    showError(String(error));
     return addIdToArray(exceptionMT940MockData, 'exception_mt940');
     // return [];
   }
@@ -133,9 +143,9 @@ export const getExceptionHostFileTable = async (fileName: string, accountNo: str
       file: fileName,
       account: accountNo,
     });
-    return addIdToArray(response.data, 'exception_host_file');
+    return addIdToArray(response, 'exception_host_file');
   } catch (error) {
-    console.error(error);
+    showError(String(error));
     return addIdToArray(exceptionHostFileMockData, 'exception_host_file');
     // return [];
   }
@@ -144,9 +154,9 @@ export const getExceptionHostFileTable = async (fileName: string, accountNo: str
 export const getBanks = async (): Promise<Banks[]> => {
   try {
     const response = await api.get<Banks[]>(API_URLS.BANKS);
-    return response.data;
+    return response;
   } catch (error) {
-    console.error(error);
+    showError(String(error));
     return banksMockData;
     // return [];
   }
@@ -155,9 +165,9 @@ export const getBanks = async (): Promise<Banks[]> => {
 export const getAccounts = async (bankName: string = ''): Promise<Accounts[]> => {
   try {
     const response = await api.get<Accounts[]>(API_URLS.ACCOUNTS, { bankName });
-    return response.data;
+    return response;
   } catch (error) {
-    console.error(error);
+    showError(String(error));
     if (bankName === 'CITI') {
       return [
         {
@@ -173,7 +183,7 @@ export const getAccounts = async (bankName: string = ''): Promise<Accounts[]> =>
 
 export const exportCSVFile = async (exportReportType: string, bankAccountNo: string, fileName: string) => {
   try {
-    const response = await api.get<string>(
+    const response: string = await api.get<string>(
       API_URLS.EXPORTS.CSV,
       {
         exportReportType: exportReportType,
@@ -184,21 +194,18 @@ export const exportCSVFile = async (exportReportType: string, bankAccountNo: str
         Accept: 'text/csv',
       },
     );
-    const contentDisposition = response.headers['content-disposition'];
-    const filename = contentDisposition?.match(/filename="?([^"]+)"?/)?.[1] || 'export.csv';
-    const blob = new Blob([response.data], { type: 'text/csv' });
+    const blob = new Blob([response], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
-
     const link = document.createElement('a');
     link.href = url;
-    link.download = filename;
+    link.download = `${exportReportType}_${fileName}`;
     document.body.appendChild(link);
     link.click();
     link.remove();
     window.URL.revokeObjectURL(url);
     return response;
   } catch (error) {
-    console.error(error);
+    showError(String(error));
     return [
       {
         success: 'success',
@@ -218,9 +225,9 @@ export const confirmFile = async () => {
       param_account: '0039007442',
       param_file: 'SINPOO01XXXX.CASP_MT940.D230617104353.txt',
     });
-    return response.data;
+    return response;
   } catch (error) {
-    console.error(error);
+    showError(String(error));
     return [
       {
         success: 'success',
