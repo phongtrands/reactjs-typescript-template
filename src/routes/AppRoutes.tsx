@@ -14,9 +14,11 @@ function AppRoutes() {
         <Suspense fallback={<div>Loading....</div>}>
           <Routes>
             <Route element={<PrivateRoute />}>
-              <Route path='/sapfin' element={<SapfinPage />} />
-              <Route path='/epayment' element={<EPaymentPage />} />
+              {/* <Route path='/sapfin' element={<SapfinPage />} />
+              <Route path='/epayment' element={<EPaymentPage />} /> */}
             </Route>
+            <Route path='/sapfin' element={<SapfinPage />} />
+            <Route path='/epayment' element={<EPaymentPage />} />
             <Route path='/' element={<div>Loading....</div>} />
             <Route path='/login' element={<div>Loading....</div>} />
           </Routes>

@@ -1,16 +1,5 @@
 import { format } from 'date-fns';
 
-import {
-  accountsMockData,
-  banksMockData,
-  EPaymentMockData,
-  exceptionHostFileMockData,
-  exceptionMT940MockData,
-  hostFileMockData,
-  mt940MockData,
-  nonEPaymentMockData,
-} from './../configs/mockData';
-
 import { API_URLS } from '~/constants';
 import type { Accounts, Banks, EPayment, ExceptionsHostFile, ExceptionsMT940, HostFile, MT940 } from '~/types';
 import { addIdToArray, api } from '~/utils';
@@ -32,21 +21,28 @@ const showError = (error: string) => {
 
 export const getSummaryData = async () => {
   const banks = await getBanks();
-  const accounts = await getAccounts(banks[0].bankName);
-  const mt940Table = await getMT940Table(banks[0].bankName);
-  const hostFileTable = await getHostFileTable(banks[0].bankName);
+  const firstBank = banks[0];
+  const bankName = firstBank?.bankName || '';
+
+  const [accounts, mt940Table, hostFileTable] = await Promise.all([
+    getAccounts(bankName),
+    getMT940Table(bankName),
+    getHostFileTable(bankName),
+  ]);
+
   const data = {
     search: {
-      bankName: banks[0]?.bankName || '',
-      banks: banks,
+      bankName,
+      banks,
       accountNo: accounts[0]?.bankacct || '',
-      accounts: accounts,
+      accounts,
       fromDate: today,
       toDate: today,
     },
-    mt940Table: mt940Table,
-    hostFileTable: hostFileTable,
+    mt940Table,
+    hostFileTable,
   };
+
   return data;
 };
 
@@ -66,8 +62,7 @@ export const getMT940Table = async (
     return addIdToArray(response, 'mt940');
   } catch (error) {
     showError(String(error));
-    return addIdToArray(mt940MockData, 'mt940');
-    // return [];
+    return [];
   }
 };
 
@@ -87,67 +82,62 @@ export const getHostFileTable = async (
     return addIdToArray(response, 'host_file');
   } catch (error) {
     showError(String(error));
-    if (!accountno) {
-      return [];
-    }
-    return addIdToArray(hostFileMockData, 'host_file');
-    // return [];
+    return [];
   }
 };
 
-export const getMatchingEpaymentTable = async (fileName: string, accountNo: string): Promise<EPayment[]> => {
+export const getMatchingEpaymentTable = async (fileName: string, bankAccountNo: string): Promise<EPayment[]> => {
   try {
     const response = await api.get<EPayment[]>(API_URLS.MATCHING.EPAYMENTS, {
-      file: fileName,
-      account: accountNo,
+      fileName,
+      bankAccountNo,
     });
     return addIdToArray(response, 'matching_ePayment');
   } catch (error) {
     showError(String(error));
-    return addIdToArray(EPaymentMockData, 'matching_ePayment');
-    // return [];
+    return [];
   }
 };
 
-export const getMatchingNonEpaymentTable = async (fileName: string, accountNo: string): Promise<EPayment[]> => {
+export const getMatchingNonEpaymentTable = async (fileName: string, bankAccountNo: string): Promise<EPayment[]> => {
   try {
     const response = await api.get<EPayment[]>(API_URLS.MATCHING.NON_EPAYMENTS, {
-      file: fileName,
-      account: accountNo,
+      fileName,
+      bankAccountNo,
     });
     return addIdToArray(response, 'matching_non_ePayment');
   } catch (error) {
     showError(String(error));
-    return addIdToArray(nonEPaymentMockData, 'matching_non_ePayment');
-    // return [];
+    return [];
   }
 };
 
-export const getExceptionMT940Table = async (fileName: string, accountNo: string): Promise<ExceptionsMT940[]> => {
+export const getExceptionMT940Table = async (fileName: string, bankAccountNo: string): Promise<ExceptionsMT940[]> => {
   try {
     const response = await api.get<ExceptionsMT940[]>(API_URLS.EXCEPTIONS.MT940, {
-      file: fileName,
-      account: accountNo,
+      fileName,
+      bankAccountNo,
     });
     return addIdToArray(response, 'exception_mt940');
   } catch (error) {
     showError(String(error));
-    return addIdToArray(exceptionMT940MockData, 'exception_mt940');
-    // return [];
+    return [];
   }
 };
 
-export const getExceptionHostFileTable = async (fileName: string, accountNo: string): Promise<ExceptionsHostFile[]> => {
+export const getExceptionHostFileTable = async (
+  fileName: string,
+  bankAccountNo: string,
+): Promise<ExceptionsHostFile[]> => {
   try {
     const response = await api.get<ExceptionsHostFile[]>(API_URLS.EXCEPTIONS.HOST_FILES, {
-      file: fileName,
-      account: accountNo,
+      fileName,
+      bankAccountNo,
     });
     return addIdToArray(response, 'exception_host_file');
   } catch (error) {
     showError(String(error));
-    return addIdToArray(exceptionHostFileMockData, 'exception_host_file');
-    // return [];
+    return [];
   }
 };
 
@@ -157,8 +147,7 @@ export const getBanks = async (): Promise<Banks[]> => {
     return response;
   } catch (error) {
     showError(String(error));
-    return banksMockData;
-    // return [];
+    return [];
   }
 };
 
@@ -168,34 +157,28 @@ export const getAccounts = async (bankName: string = ''): Promise<Accounts[]> =>
     return response;
   } catch (error) {
     showError(String(error));
-    if (bankName === 'CITI') {
-      return [
-        {
-          bankacct: '810972017',
-        },
-      ];
-    }
-    return accountsMockData;
-
-    // return [];
+    return [];
   }
 };
 
 export const exportCSVFile = async (exportReportType: string, bankAccountNo: string, fileName: string) => {
   try {
-    const response: string = await api.get<string>(
+    const response: Blob = await api.get<Blob>(
       API_URLS.EXPORTS.CSV,
       {
-        exportReportType: exportReportType,
-        bankAccountNo: bankAccountNo,
-        fileName: fileName,
+        exportReportType,
+        bankAccountNo,
+        fileName,
       },
       {
         Accept: 'text/csv',
+        responseType: 'blob',
       },
     );
+
     const blob = new Blob([response], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
+
     const link = document.createElement('a');
     link.href = url;
     link.download = `${exportReportType}_${fileName}`;
@@ -203,15 +186,11 @@ export const exportCSVFile = async (exportReportType: string, bankAccountNo: str
     link.click();
     link.remove();
     window.URL.revokeObjectURL(url);
-    return response;
+
+    return blob;
   } catch (error) {
     showError(String(error));
-    return [
-      {
-        success: 'success',
-      },
-    ];
-    // return [];
+    return null;
   }
 };
 
@@ -228,11 +207,6 @@ export const confirmFile = async () => {
     return response;
   } catch (error) {
     showError(String(error));
-    return [
-      {
-        success: 'success',
-      },
-    ];
-    // return [];
+    return [];
   }
 };

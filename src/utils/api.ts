@@ -12,7 +12,7 @@ interface DataWrapper<T> {
   data: T;
 }
 
-const BASE_URL: string = import.meta.env.BASE_URL;
+const BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
 const DEF_HEADERS: object = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
@@ -54,6 +54,11 @@ const request = async <T>(
     const response = await (useTrackPromise
       ? trackPromise(axiosInstance.request<DataWrapper<T>>({ method, url, data, params, headers }))
       : axiosInstance.request<DataWrapper<T>>({ method, url, data, params, headers }));
+
+    if (response.headers['content-type'] === 'text/csv') {
+      return response.data as T;
+    }
+
     return normalizeNulls(response.data?.data);
   } catch (error) {
     console.error(`API Error [${method}] ${url}:`, error);

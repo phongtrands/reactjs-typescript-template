@@ -34,7 +34,6 @@ const MatchingTab: React.FC = () => {
 
   const handleDowload = async (type: string) => {
     const response = await exportCSVFile(type, accountNo, fileName);
-    console.log(response);
     enqueueSnackbar('File download successfully ', { variant: 'success' });
   };
   return (
