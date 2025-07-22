@@ -8,6 +8,7 @@ export { default as Table } from './table/SPTable';
 export { default as Dropdown } from './dropdown/SPDropdown';
 export { default as Calendar } from './calendar/SPCalendar';
 export { default as Tab } from './tab/SPTab';
+export { default as Snackbar } from './snackbar/Snackbar';
 export * from './epayment-tabs/exceptions-tab/ExceptionsTab';
 export * from './epayment-tabs/matching-tab/MatchingTab';
 export * from './epayment-tabs/summary-tab/SummaryTab';

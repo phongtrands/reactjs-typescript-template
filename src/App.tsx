@@ -7,7 +7,7 @@ import { SnackbarProvider } from 'notistack';
 import AppRoutes from './routes/AppRoutes';
 import theme from './constants/theme';
 import SPInformativeDialog from './components/popup/SPInformativeDialog';
-import { Loading } from './components';
+import { Loading, Snackbar } from './components';
 
 function App() {
   return (
@@ -19,6 +19,12 @@ function App() {
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
+        }}
+        Components={{
+          success: Snackbar,
+          error: Snackbar,
+          warning: Snackbar,
+          info: Snackbar,
         }}
       >
         <AppRoutes />
