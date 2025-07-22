@@ -181,7 +181,8 @@ export const exportCSVFile = async (exportReportType: string, bankAccountNo: str
 
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${exportReportType}_${fileName}`;
+    const csvFileName = fileName.replace(/\.txt$/i, '.csv');
+    link.download = `${exportReportType}_${csvFileName}`;
     document.body.appendChild(link);
     link.click();
     link.remove();
