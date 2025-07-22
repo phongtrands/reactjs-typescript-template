@@ -1,53 +1,43 @@
+import { enqueueSnackbar } from 'notistack';
 import React from 'react';
 
 import { Table } from '~/components';
-import { EPAYMENT_TAB, mt940Columns } from '~/configs';
-import { changeTab, updateExceptions, updateMatching } from '~/redux';
+import { EPAYMENT_TAB, EXPORT_TYPE, mt940Columns } from '~/configs';
+import { changeSelectedFile, changeTab } from '~/redux';
 import { useAppDispatch, useAppSelector } from '~/redux/hook';
-import {
-  getExceptionHostFileTable,
-  getExceptionMT940Table,
-  getMatchingEpaymentTable,
-  getMatchingNonEpaymentTable,
-} from '~/services';
+import { exportCSVFile } from '~/services';
 import type { MT940 } from '~/types';
 
 const Mt940: React.FC = () => {
   const dispatch = useAppDispatch();
   const mt940Data: MT940[] = useAppSelector((state) => state.epayment.summary.mt940Table);
   const accountNo: string = useAppSelector((state) => state.epayment.summary.search.accountNo);
-  const bankName: string = useAppSelector((state) => state.epayment.summary.search.bankName);
 
   const handleAction = async (row: MT940, fieldName: string) => {
-    let tab = EPAYMENT_TAB.MATCHING;
-    const [ePayment, nonEPayment, eMT940, eHostFile] = await Promise.all([
-      getMatchingEpaymentTable(row.filename || '', accountNo),
-      getMatchingNonEpaymentTable(row.filename || '', accountNo),
-      getExceptionMT940Table(row.filename || '', accountNo),
-      getExceptionHostFileTable(row.filename || '', accountNo),
-    ]);
-    dispatch(
-      updateMatching({
-        file: row.filename || '',
-        accountNo: accountNo,
-        bank: bankName,
-        matchingEPayment: ePayment,
-        matchingNonEPayment: nonEPayment,
-      }),
-    );
-    dispatch(
-      updateExceptions({
-        file: row.filename || '',
-        accountNo: accountNo,
-        bank: bankName,
-        exceptionMT940: eMT940,
-        exceptionHostFile: eHostFile,
-      }),
-    );
-    if (fieldName === 'action_warning') {
-      tab = EPAYMENT_TAB.EXCEPTION;
+    switch (fieldName) {
+      case 'action_primary':
+        {
+          dispatch(changeSelectedFile(row.fileName || ''));
+          dispatch(changeTab(EPAYMENT_TAB.MATCHING));
+        }
+        break;
+      case 'action_warning':
+        {
+          dispatch(changeSelectedFile(row.fileName || ''));
+          dispatch(changeTab(EPAYMENT_TAB.EXCEPTION));
+        }
+        break;
+      case 'download':
+        {
+          const response = await exportCSVFile(EXPORT_TYPE.MATCHING_MT940_FILE, accountNo, row.fileName);
+          if (response) {
+            enqueueSnackbar('File download successfully ', { variant: 'success' });
+          }
+        }
+        break;
+      default:
+        break;
     }
-    dispatch(changeTab(tab));
   };
   return (
     <div>

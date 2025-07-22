@@ -1,49 +1,37 @@
+import { enqueueSnackbar } from 'notistack';
 import React from 'react';
 
 import { Table } from '~/components';
-import { EPAYMENT_TAB, hostFileColumns } from '~/configs';
-import { changeTab, updateExceptions, updateMatching } from '~/redux';
+import { EPAYMENT_TAB, EXPORT_TYPE, hostFileColumns } from '~/configs';
+import { changeSelectedFile, changeTab } from '~/redux';
 import { useAppDispatch, useAppSelector } from '~/redux/hook';
-import {
-  getExceptionHostFileTable,
-  getExceptionMT940Table,
-  getMatchingEpaymentTable,
-  getMatchingNonEpaymentTable,
-} from '~/services';
+import { exportCSVFile } from '~/services';
 import type { HostFile } from '~/types';
 
 const HostFile: React.FC = () => {
   const dispatch = useAppDispatch();
   const hostFileData: HostFile[] = useAppSelector((state) => state.epayment.summary.hostFileTable);
   const accountNo: string = useAppSelector((state) => state.epayment.summary.search.accountNo);
-  const bankName: string = useAppSelector((state) => state.epayment.summary.search.bankName);
 
-  const handleAction = async (row: HostFile) => {
-    const [ePayment, nonEPayment, eMT940, eHostFile] = await Promise.all([
-      getMatchingEpaymentTable(row?.filename || '', accountNo),
-      getMatchingNonEpaymentTable(row?.filename || '', accountNo),
-      getExceptionMT940Table(row.filename || '', accountNo),
-      getExceptionHostFileTable(row.filename || '', accountNo),
-    ]);
-    dispatch(
-      updateMatching({
-        file: row.filename || '',
-        accountNo: accountNo,
-        bank: bankName,
-        matchingEPayment: ePayment,
-        matchingNonEPayment: nonEPayment,
-      }),
-    );
-    dispatch(
-      updateExceptions({
-        file: row.filename || '',
-        accountNo: accountNo,
-        bank: bankName,
-        exceptionMT940: eMT940,
-        exceptionHostFile: eHostFile,
-      }),
-    );
-    dispatch(changeTab(EPAYMENT_TAB.EXCEPTION));
+  const handleAction = async (row: HostFile, fieldName: string) => {
+    switch (fieldName) {
+      case 'action':
+        {
+          dispatch(changeSelectedFile(row.fileName || ''));
+          dispatch(changeTab(EPAYMENT_TAB.EXCEPTION));
+        }
+        break;
+      case 'download':
+        {
+          const response = await exportCSVFile(EXPORT_TYPE.EXCEPTION_HOST_FILE, accountNo, row.fileName);
+          if (response) {
+            enqueueSnackbar('File download successfully ', { variant: 'success' });
+          }
+        }
+        break;
+      default:
+        break;
+    }
   };
   return (
     <div>

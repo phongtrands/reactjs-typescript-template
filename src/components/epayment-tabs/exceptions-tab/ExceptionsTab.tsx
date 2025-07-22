@@ -1,13 +1,14 @@
 import { Box, Grid, Typography } from '@mui/material';
 import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
 import { enqueueSnackbar } from 'notistack';
+import { useEffect } from 'react';
 
 import { Button, Table } from '~/components';
 import { useAppDispatch, useAppSelector } from '~/redux/hook';
-import { changeTab } from '~/redux';
+import { changeTab, updateExceptions } from '~/redux';
 import { EPAYMENT_TAB, exceptionsHostFileColumns, exceptionsMT940Columns, EXPORT_TYPE } from '~/configs';
-import type { ExceptionsHostFile, ExceptionsMT940 } from '~/types';
-import { exportCSVFile } from '~/services';
+import type { ExceptionsHostFile, ExceptionsMT940, Search } from '~/types';
+import { exportCSVFile, getExceptionHostFileTable, getExceptionMT940Table } from '~/services';
 
 const ExceptionsTab: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -17,13 +18,37 @@ const ExceptionsTab: React.FC = () => {
   const fileName: string = useAppSelector((state) => state.epayment.exceptions.file);
   const accountNo: string = useAppSelector((state) => state.epayment.exceptions.accountNo);
   const bank: string = useAppSelector((state) => state.epayment.exceptions.bank);
+  const selectedFile: string = useAppSelector((state) => state.epayment.selectedFile);
+  const searchData: Search = useAppSelector((state) => state.epayment.summary.search);
   const isMT940: boolean = typeFile === 'mt940';
+
+  useEffect(() => {
+    if (selectedFile !== fileName) {
+      const fetchData = async () => {
+        const [eMT940, eHostFile] = await Promise.all([
+          getExceptionMT940Table(selectedFile, searchData.accountNo),
+          getExceptionHostFileTable(selectedFile, searchData.accountNo),
+        ]);
+        dispatch(
+          updateExceptions({
+            file: selectedFile,
+            accountNo: searchData.accountNo,
+            bank: searchData.bankName,
+            exceptionMT940: eMT940,
+            exceptionHostFile: eHostFile,
+          }),
+        );
+      };
+      fetchData();
+    }
+  }, []);
 
   const handleDowload = async () => {
     const exportType: string = isMT940 ? EXPORT_TYPE.EXCEPTION_MT940_FILE : EXPORT_TYPE.EXCEPTION_HOST_FILE;
     const response = await exportCSVFile(exportType, accountNo, fileName);
-    console.log(response);
-    enqueueSnackbar('File download successfully ', { variant: 'success' });
+    if (response) {
+      enqueueSnackbar('File download successfully ', { variant: 'success' });
+    }
   };
 
   return (

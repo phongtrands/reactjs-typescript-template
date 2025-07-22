@@ -46,14 +46,14 @@ const SPInformativeDialog = () => {
       )}
       <DialogContent>{content}</DialogContent>
       <DialogActions sx={{ justifyContent: 'flex-end' }}>
+        <Button sx={{ width: 80 }} onClick={handleOk}>
+          OK
+        </Button>
         {!isError && (
-          <Button sx={{ width: 80 }} onClick={handleOk}>
-            OK
+          <Button sx={{ width: 80 }} onClick={() => dispatch(closePopup())}>
+            Cancel
           </Button>
         )}
-        <Button sx={{ width: 80 }} onClick={() => dispatch(closePopup())}>
-          Cancel
-        </Button>
       </DialogActions>
     </Dialog>
   );

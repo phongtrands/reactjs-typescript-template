@@ -8,6 +8,7 @@ import type { EpaymentState, ExceptionsTab, MatchingTab, Search, SummaryTab } fr
 const initialState: EpaymentState = {
   typeFile: TYPE_FILE.MT940,
   tab: EPAYMENT_TAB.SUMMARY,
+  selectedFile: '',
   summary: {
     search: {
       bankName: '',
@@ -42,6 +43,9 @@ const epaymentSlice = createSlice({
   reducers: {
     changeTypeFile(state, action: PayloadAction<string>) {
       state.typeFile = action.payload;
+    },
+    changeSelectedFile(state, action: PayloadAction<string>) {
+      state.selectedFile = action.payload;
     },
     changeTab(state, action: PayloadAction<string>) {
       state.tab = action.payload;

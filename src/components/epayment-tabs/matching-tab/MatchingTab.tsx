@@ -1,13 +1,14 @@
 import { Box, Divider, Grid, Typography } from '@mui/material';
 import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
 import { enqueueSnackbar } from 'notistack';
+import { useEffect } from 'react';
 
 import { Button, Table } from '~/components';
 import { EPAYMENT_TAB, EPayMentColumns, EXPORT_TYPE } from '~/configs';
-import { changeTab, openPopup } from '~/redux';
+import { changeTab, openPopup, updateMatching } from '~/redux';
 import { useAppDispatch, useAppSelector } from '~/redux/hook';
-import type { EPayment } from '~/types';
-import { confirmFile, exportCSVFile } from '~/services';
+import type { EPayment, Search } from '~/types';
+import { confirmFile, exportCSVFile, getMatchingEpaymentTable, getMatchingNonEpaymentTable } from '~/services';
 
 const MatchingTab: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -15,11 +16,36 @@ const MatchingTab: React.FC = () => {
   const nonEPaymentData: EPayment[] = useAppSelector((state) => state.epayment.matching.matchingNonEPayment);
   const fileName: string = useAppSelector((state) => state.epayment.matching.file);
   const accountNo: string = useAppSelector((state) => state.epayment.matching.accountNo);
-  const bank: string = useAppSelector((state) => state.epayment.matching.bank);
+  const bankName: string = useAppSelector((state) => state.epayment.matching.bank);
+  const selectedFile: string = useAppSelector((state) => state.epayment.selectedFile);
+  const searchData: Search = useAppSelector((state) => state.epayment.summary.search);
+
+  useEffect(() => {
+    if (selectedFile !== fileName) {
+      const fetchData = async () => {
+        const [ePayment, nonEPayment] = await Promise.all([
+          getMatchingEpaymentTable(selectedFile, searchData.accountNo),
+          getMatchingNonEpaymentTable(selectedFile, searchData.accountNo),
+        ]);
+        dispatch(
+          updateMatching({
+            file: selectedFile,
+            accountNo: searchData.accountNo,
+            bank: searchData.bankName,
+            matchingEPayment: ePayment,
+            matchingNonEPayment: nonEPayment,
+          }),
+        );
+      };
+      fetchData();
+    }
+  }, []);
 
   const onOkConfirm = async () => {
     const response = await confirmFile();
-    enqueueSnackbar('File confirm successfully ', { variant: 'success' });
+    if (response) {
+      enqueueSnackbar('File confirm successfully ', { variant: 'success' });
+    }
   };
 
   const handleConfirm = () => {
@@ -34,7 +60,9 @@ const MatchingTab: React.FC = () => {
 
   const handleDowload = async (type: string) => {
     const response = await exportCSVFile(type, accountNo, fileName);
-    enqueueSnackbar('File download successfully ', { variant: 'success' });
+    if (response) {
+      enqueueSnackbar('File download successfully ', { variant: 'success' });
+    }
   };
   return (
     <Box sx={{ mt: 3 }}>
@@ -61,7 +89,7 @@ const MatchingTab: React.FC = () => {
               Bank:{' '}
             </Typography>
             <Typography variant='body1' fontWeight='bold' component='span'>
-              {bank}
+              {bankName}
             </Typography>
           </Grid>
         </Grid>

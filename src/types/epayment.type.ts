@@ -2,7 +2,7 @@ import type { Search } from '@mui/icons-material';
 
 export interface MT940 {
   id: string;
-  filename: string;
+  fileName: string;
   fileDate: string;
   sapfinStatus: string;
   matchingStatus: string;
@@ -13,7 +13,7 @@ export interface MT940 {
 
 export interface HostFile {
   id: string;
-  filename: string;
+  fileName: string;
   fileReceivedDate: string;
   count: number;
   action?: string;
@@ -102,6 +102,7 @@ export interface ExceptionsTab {
 export interface EpaymentState {
   typeFile: string;
   tab: string;
+  selectedFile: string;
   summary: SummaryTab;
   matching: MatchingTab;
   exceptions: ExceptionsTab;

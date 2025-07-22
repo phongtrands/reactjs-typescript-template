@@ -21,7 +21,7 @@ export enum EXPORT_TYPE {
 }
 
 export const hostFileColumns: ColumnConfig<HostFile>[] = [
-  { headerName: 'Host File Name', field: 'filename', align: 'left', type: 'text' },
+  { headerName: 'Host File Name', field: 'fileName', align: 'left', type: 'text' },
   { headerName: 'Host File Receipt', field: 'fileReceivedDate', align: 'center', type: 'text' },
   { headerName: 'Count', field: 'count', align: 'right', type: 'number' },
   { headerName: 'Action', field: 'action', align: 'center', type: 'iconAction' },
@@ -29,7 +29,7 @@ export const hostFileColumns: ColumnConfig<HostFile>[] = [
 ];
 
 export const mt940Columns: ColumnConfig<MT940>[] = [
-  { headerName: 'MT940 File Name', field: 'filename', align: 'left', type: 'text' },
+  { headerName: 'MT940 File Name', field: 'fileName', align: 'left', type: 'text' },
   { headerName: 'MT940 File Date', field: 'fileDate', align: 'left', type: 'text' },
   { headerName: 'Match Status', field: 'matchingStatus', align: 'center', type: 'status' },
   { headerName: 'SAPFIN Status', field: 'sapfinStatus', align: 'center', type: 'status' },
