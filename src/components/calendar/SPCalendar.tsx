@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, InputLabel, List, ListItemButton, ListItemText, Menu, TextField } from '@mui/material';
 import { LocalizationProvider, DateCalendar } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import { subDays, format, subMonths, subYears, startOfMonth, endOfMonth, addYears, startOfYear } from 'date-fns';
+import {
+  subDays,
+  format,
+  subMonths,
+  subYears,
+  startOfMonth,
+  endOfMonth,
+  addYears,
+  startOfYear,
+  isSameDay,
+} from 'date-fns';
+import { enqueueSnackbar } from 'notistack';
 
 import { Button, Typography } from '..';
 
@@ -17,8 +28,25 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
   const [toDate, setToDate] = useState<Date | null>(defaultToDate);
   const [startDate, setStartDate] = useState<Date | null>(fromDate);
   const [endDate, setEndDate] = useState<Date | null>(fromDate);
+  const [value, setValue] = useState<string | null>('');
   const open = Boolean(anchorEl);
   const today = new Date();
+
+  const displayDate = () => {
+    let value = '';
+    if (fromDate && toDate) {
+      if (isSameDay(fromDate, toDate)) {
+        value = format(toDate, 'yyyy-MM-dd');
+      } else {
+        value = `${format(fromDate, 'yyyy-MM-dd')} / ${format(toDate, 'yyyy-MM-dd')}`;
+      }
+    }
+    return value;
+  };
+
+  useEffect(() => {
+    setValue(displayDate);
+  }, [fromDate, toDate]);
 
   const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -186,16 +214,66 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
     }
   };
 
-  const displayDate = () => {
-    let value = '';
-    if (fromDate && toDate) {
-      if (fromDate === toDate) {
-        value = format(toDate, 'yyyy-MM-dd');
-      } else {
-        value = `${format(fromDate, 'yyyy-MM-dd')} / ${format(toDate, 'yyyy-MM-dd')}`;
+  const inputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.trim();
+    setValue(value);
+  };
+
+  const onInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const rawValue = event.target.value.trim();
+
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    let fromStr = '';
+    let toStr = '';
+    if (rawValue.includes(' / ')) {
+      const parts = rawValue.split(' / ').map((s) => s.trim());
+      if (parts.length !== 2 || !dateRegex.test(parts[0]) || !dateRegex.test(parts[1])) {
+        enqueueSnackbar('Invalid format. Correct: YYYY-MM-DD / YYYY-MM-DD or YYYY-MM-DD', { variant: 'warning' });
+        setValue(displayDate);
+        return;
       }
+      [fromStr, toStr] = parts;
+    } else {
+      if (!dateRegex.test(rawValue)) {
+        enqueueSnackbar('Invalid format. Correct: YYYY-MM-DD / YYYY-MM-DD or YYYY-MM-DD', { variant: 'warning' });
+        setValue(displayDate);
+        return;
+      }
+      fromStr = toStr = rawValue;
     }
-    return value;
+    const fDate = new Date(fromStr);
+    const tDate = new Date(toStr);
+
+    const isValidDate = (date: Date) => !isNaN(date.getTime());
+    const isValidYear = (date: Date) => {
+      const year = date.getFullYear();
+      return year >= 1900 && year <= 2100;
+    };
+    if (!isValidDate(fDate) || !isValidDate(tDate)) {
+      enqueueSnackbar('Invalid date', { variant: 'warning' });
+      setValue(displayDate);
+      return;
+    }
+    if (!isValidYear(fDate) || !isValidYear(tDate)) {
+      enqueueSnackbar('Invalid year only accepts 1900 - 2100', { variant: 'warning' });
+      setValue(displayDate);
+      return;
+    }
+    if (fDate > tDate) {
+      enqueueSnackbar('Start date must be before or equal to end date', { variant: 'warning' });
+      setValue(displayDate);
+      return;
+    }
+    setFromDate(fDate);
+    setToDate(tDate);
+    onChange?.(fDate, tDate);
+  };
+
+  const onInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      const input = event.currentTarget.querySelector('input');
+      input?.blur();
+    }
   };
 
   return (
@@ -204,7 +282,7 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
         <InputLabel>{label}</InputLabel>
         <TextField
           onClick={handleOpenMenu}
-          value={displayDate()}
+          value={value}
           sx={{
             width: '70%',
             backgroundColor: 'white',
@@ -212,6 +290,9 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
               padding: 1,
             },
           }}
+          onChange={inputChange}
+          onBlur={onInputBlur}
+          onKeyDown={onInputKeyDown}
         />
 
         <Menu

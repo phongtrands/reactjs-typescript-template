@@ -53,7 +53,7 @@ const ExceptionsTab: React.FC = () => {
 
   return (
     <Box mt={4}>
-      <Box ml={3} sx={{ fontSize: '16px' }}>
+      <Box ml={2} sx={{ fontSize: '16px' }}>
         <Grid container spacing={4}>
           <Grid item xs={3} ml={1}>
             <Typography variant='body1' color='text.secondary' component='span'>
@@ -84,7 +84,7 @@ const ExceptionsTab: React.FC = () => {
       <Box
         sx={{
           p: 2,
-          mt: 3,
+          mt: 4,
           borderRadius: 2,
           backgroundColor: '#fff',
           border: '1px solid rgba(0, 0, 0, 0.12)',
