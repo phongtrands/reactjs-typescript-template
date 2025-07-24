@@ -1,14 +1,14 @@
 const API_V1_PREFIX = '/api/v1';
 
 export const API_URLS = {
-  MT940: `${API_V1_PREFIX}/mt940-file`,
-  HOST_FILES: `${API_V1_PREFIX}/host-file`,
-  BANKS: `${API_V1_PREFIX}/bank`,
-  ACCOUNTS: `${API_V1_PREFIX}/account`,
+  MT940: `${API_V1_PREFIX}/mt940-files`,
+  HOST_FILES: `${API_V1_PREFIX}/host-files`,
+  BANKS: `${API_V1_PREFIX}/banks`,
+  ACCOUNTS: `${API_V1_PREFIX}/accounts`,
 
   MATCHING: {
-    EPAYMENTS: `${API_V1_PREFIX}/matching-epayment`,
-    NON_EPAYMENTS: `${API_V1_PREFIX}/matching-non-epayment`,
+    EPAYMENTS: `${API_V1_PREFIX}/matching/epayments`,
+    NON_EPAYMENTS: `${API_V1_PREFIX}/matching/non-epayments`,
   },
 
   CONFIRMATIONS: {
@@ -16,11 +16,11 @@ export const API_URLS = {
   },
 
   EXCEPTIONS: {
-    MT940: `${API_V1_PREFIX}/exception-mt940`,
-    HOST_FILES: `${API_V1_PREFIX}/exception-host-file`,
+    MT940: `${API_V1_PREFIX}/exceptions/mt940`,
+    HOST_FILES: `${API_V1_PREFIX}/exceptions/host-files`,
   },
 
   EXPORTS: {
-    CSV: `${API_V1_PREFIX}/export-csv`,
+    CSV: `${API_V1_PREFIX}/exports/csv`,
   },
 };
