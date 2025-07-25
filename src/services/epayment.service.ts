@@ -1,7 +1,16 @@
 import { format } from 'date-fns';
 
 import { API_URLS } from '~/constants';
-import type { Accounts, Banks, EPayment, ExceptionsHostFile, ExceptionsMT940, HostFile, MT940 } from '~/types';
+import type {
+  Accounts,
+  Banks,
+  EPayment,
+  ExceptionsHostFile,
+  ExceptionsMT940,
+  ExportCSVFileType,
+  HostFile,
+  MT940,
+} from '~/types';
 import { addIdToArray, api } from '~/utils';
 import store from '~/redux/store';
 import { openPopup } from '~/redux';
@@ -24,17 +33,19 @@ export const getSummaryData = async () => {
   const firstBank = banks[0];
   const bankName = firstBank?.bankName || '';
 
-  const [accounts, mt940Table, hostFileTable] = await Promise.all([
-    getAccounts(bankName),
-    getMT940Table(bankName),
-    getHostFileTable(bankName),
+  const accounts = await getAccounts(bankName);
+  const firstAccountNo = accounts[0]?.bankacct || '';
+
+  const [mt940Table, hostFileTable] = await Promise.all([
+    getMT940Table(bankName, firstAccountNo),
+    getHostFileTable(bankName, firstAccountNo),
   ]);
 
   const data = {
     search: {
       bankName,
       banks,
-      accountNo: accounts[0]?.bankacct || '',
+      accountNo: firstAccountNo,
       accounts,
       fromDate: today,
       toDate: today,
@@ -47,15 +58,15 @@ export const getSummaryData = async () => {
 };
 
 export const getMT940Table = async (
-  bankName: string = '',
-  accountno: string = '',
+  bankName: string,
+  accountNo: string,
   fromDate: Date = today,
   toDate: Date = today,
 ): Promise<MT940[]> => {
   try {
     const response = await api.get<MT940[]>(API_URLS.MT940, {
-      bankName: bankName,
-      bankAccountNo: accountno,
+      bankName,
+      bankAccountNo: accountNo,
       fromDate: format(fromDate, 'yyyy-MM-dd'),
       toDate: format(toDate, 'yyyy-MM-dd'),
     });
@@ -67,15 +78,15 @@ export const getMT940Table = async (
 };
 
 export const getHostFileTable = async (
-  bankName: string = '',
-  accountno: string = '',
+  bankName: string,
+  accountNo: string,
   fromDate: Date = today,
   toDate: Date = today,
 ): Promise<HostFile[]> => {
   try {
     const response = await api.get<HostFile[]>(API_URLS.HOST_FILES, {
       bankName: bankName,
-      bankAccountNo: accountno,
+      bankAccountNo: accountNo,
       fromDate: format(fromDate, 'yyyy-MM-dd'),
       toDate: format(toDate, 'yyyy-MM-dd'),
     });
@@ -163,7 +174,7 @@ export const getAccounts = async (bankName: string = ''): Promise<Accounts[]> =>
 
 export const exportCSVFile = async (exportReportType: string, bankAccountNo: string, fileName: string) => {
   try {
-    const response: Blob = await api.get<Blob>(
+    const response: ExportCSVFileType = await api.get<ExportCSVFileType>(
       API_URLS.EXPORTS.CSV,
       {
         exportReportType,
@@ -172,15 +183,18 @@ export const exportCSVFile = async (exportReportType: string, bankAccountNo: str
       },
       {
         Accept: 'text/csv',
-        responseType: 'blob',
       },
+      'blob',
     );
 
-    const blob = new Blob([response], { type: 'text/csv' });
+    console.log('Export CSV File Response:', response.header);
+
+    const blob = new Blob([response.data], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
 
     const link = document.createElement('a');
     link.href = url;
+    // Need get fileName from response header
     const csvFileName = fileName.replace(/\.txt$/i, '.csv');
     link.download = `${exportReportType}_${csvFileName}`;
     document.body.appendChild(link);

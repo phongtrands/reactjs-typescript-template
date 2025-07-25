@@ -107,3 +107,8 @@ export interface EpaymentState {
   matching: MatchingTab;
   exceptions: ExceptionsTab;
 }
+
+export interface ExportCSVFileType {
+  header: string[];
+  data: Blob;
+}
