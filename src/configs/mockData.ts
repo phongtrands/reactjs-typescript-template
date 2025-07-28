@@ -741,6 +741,13 @@ export const exceptionHostFileMockData = [
 
 export const banksMockData = [
   {
+    bankName: 'DBS',
+    csvFilePathTmp: '/apps/pentaho_data/sap-portal/temp/DBS/',
+    csvFilePathBank: '/apps/pentaho_data/sap-portal/output-csv/DBS/',
+    fileDownloadUrl: 'http://10.168.15.174:8081/api/v1/download',
+    sapPortalUrl: 'http://10.168.15.174:8080/sap-portal/',
+  },
+  {
     bankName: 'OCBC',
     csvFilePathTmp: '/apps/pentaho_data/sap-portal/temp/OCBC/',
     csvFilePathBank: '/apps/pentaho_data/sap-portal/output-csv/OCBC/',
@@ -758,13 +765,6 @@ export const banksMockData = [
     bankName: 'CITI',
     csvFilePathTmp: '/apps/pentaho_data/sap-portal/temp/CITI/',
     csvFilePathBank: '/apps/pentaho_data/sap-portal/output-csv/CITI/',
-    fileDownloadUrl: 'http://10.168.15.174:8081/api/v1/download',
-    sapPortalUrl: 'http://10.168.15.174:8080/sap-portal/',
-  },
-  {
-    bankName: 'DBS',
-    csvFilePathTmp: '/apps/pentaho_data/sap-portal/temp/DBS/',
-    csvFilePathBank: '/apps/pentaho_data/sap-portal/output-csv/DBS/',
     fileDownloadUrl: 'http://10.168.15.174:8081/api/v1/download',
     sapPortalUrl: 'http://10.168.15.174:8080/sap-portal/',
   },

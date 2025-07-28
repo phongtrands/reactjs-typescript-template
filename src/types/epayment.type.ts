@@ -108,7 +108,12 @@ export interface EpaymentState {
   exceptions: ExceptionsTab;
 }
 
+export interface DownloadResponseHeaders {
+  'content-disposition': string;
+  [key: string]: string | undefined;
+}
+
 export interface ExportCSVFileType {
-  header: string[];
+  header: DownloadResponseHeaders;
   data: Blob;
 }

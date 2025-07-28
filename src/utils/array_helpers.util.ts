@@ -3,9 +3,9 @@ export const addIdToArray = <T extends object>(arr: T[] | null | undefined, name
     return [];
   }
 
-  return arr.map((item) => ({
+  return arr.map((item, index) => ({
     ...item,
-    id: `${name || 'item'}_${Math.floor(Math.random() * 1_000_000_000)}`,
+    id: `${name || 'item'}_${index + 1}`,
   }));
 };
 

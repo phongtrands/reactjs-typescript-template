@@ -1,8 +1,8 @@
 import epaymentSlice from './epayment.slice';
 import popupSlice from './popup.slice';
-import slice from './sapfin.slice';
+import authSlice from './auth.slice';
 
-export const { login, logout } = slice.actions;
+export const { login, logout } = authSlice.actions;
 export const { openPopup, closePopup } = popupSlice.actions;
 export const {
   changeTypeFile,

@@ -2,16 +2,22 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-interface AuthState {
-  token: string | null;
-}
+import type { AuthState } from '~/types';
 
 const initialState: AuthState = {
+  isAuthenticated: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    roles: '',
+    tenantId: '',
+  },
   token: localStorage.getItem('token'),
 };
 
-const sapfinSlice = createSlice({
-  name: 'sapfin',
+const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
     login(state, action: PayloadAction<string>) {
@@ -25,4 +31,4 @@ const sapfinSlice = createSlice({
   },
 });
 
-export default sapfinSlice;
+export default authSlice;

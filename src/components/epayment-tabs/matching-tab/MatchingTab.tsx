@@ -7,15 +7,23 @@ import { Button, Table } from '~/components';
 import { EPAYMENT_TAB, EPayMentColumns, EXPORT_TYPE } from '~/configs';
 import { changeTab, openPopup, updateMatching } from '~/redux';
 import { useAppDispatch, useAppSelector } from '~/redux/hook';
-import type { EPayment, Search } from '~/types';
-import { confirmFile, exportCSVFile, getMatchingEpaymentTable, getMatchingNonEpaymentTable } from '~/services';
+import type { Banks, EPayment, MT940, Search } from '~/types';
+import {
+  confirmFile,
+  exportCSVFile,
+  exportSapfinFile,
+  getMatchingEpaymentTable,
+  getMatchingNonEpaymentTable,
+} from '~/services';
 
 const MatchingTab: React.FC = () => {
   const dispatch = useAppDispatch();
+  const mt940data: MT940[] = useAppSelector((state) => state.epayment.summary.mt940Table);
   const ePaymentData: EPayment[] = useAppSelector((state) => state.epayment.matching.matchingEPayment);
   const nonEPaymentData: EPayment[] = useAppSelector((state) => state.epayment.matching.matchingNonEPayment);
   const fileName: string = useAppSelector((state) => state.epayment.matching.file);
   const accountNo: string = useAppSelector((state) => state.epayment.matching.accountNo);
+  const banks: Banks[] = useAppSelector((state) => state.epayment.summary.search.banks);
   const bankName: string = useAppSelector((state) => state.epayment.matching.bank);
   const selectedFile: string = useAppSelector((state) => state.epayment.selectedFile);
   const searchData: Search = useAppSelector((state) => state.epayment.summary.search);
@@ -64,6 +72,20 @@ const MatchingTab: React.FC = () => {
       enqueueSnackbar('File download successfully ', { variant: 'success' });
     }
   };
+
+  const handleSapfinDownload = async () => {
+    const bankInfo = banks.find((bank) => bank.bankName === bankName);
+    const fileStatus = mt940data.find((mt940) => mt940.fileName === fileName)?.sapfinStatus ?? '';
+    if (!bankInfo) {
+      enqueueSnackbar('Bank information not found.', { variant: 'error' });
+      return;
+    }
+    const response = await exportSapfinFile(bankInfo, fileName, accountNo, fileStatus);
+    if (response) {
+      enqueueSnackbar('File download successfully ', { variant: 'success' });
+    }
+  };
+
   return (
     <Box sx={{ mt: 4 }}>
       <Box ml={2} sx={{ fontSize: '16px' }}>
@@ -114,7 +136,7 @@ const MatchingTab: React.FC = () => {
                 variant='outlined'
                 color='inherit'
                 startIcon={<SaveAltOutlinedIcon />}
-                // onClick={() => handleDowload('sapfin')}
+                onClick={handleSapfinDownload}
               >
                 Download SAPFIN
               </Button>

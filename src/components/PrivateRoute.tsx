@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAppSelector } from '~/redux/hook';
 
 const PrivateRoute: React.FC = () => {
-  const token = useAppSelector((state) => state.sapfin.token);
+  const token = useAppSelector((state) => state.auth.token);
   if (!token) {
     return <Navigate to={'/login'} replace />;
   }

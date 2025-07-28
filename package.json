@@ -20,6 +20,8 @@
     "test:debug": "jest"
   },
   "dependencies": {
+    "@azure/msal-browser": "^4.16.0",
+    "@azure/msal-react": "^3.0.16",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^5.17.1",

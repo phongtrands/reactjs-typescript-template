@@ -6,6 +6,7 @@ import PrivateRoute from '~/components/PrivateRoute';
 
 const SapfinPage = lazy(() => import('~/pages/SapfinPage'));
 const EPaymentPage = lazy(() => import('~/pages/EPaymentPage'));
+const LoginPage = lazy(() => import('~/pages/LoginPage'));
 
 function AppRoutes() {
   return (
@@ -14,13 +15,11 @@ function AppRoutes() {
         <Suspense fallback={<div>Loading....</div>}>
           <Routes>
             <Route element={<PrivateRoute />}>
-              {/* <Route path='/sapfin' element={<SapfinPage />} />
-              <Route path='/epayment' element={<EPaymentPage />} /> */}
+              <Route path='/sapfin' element={<SapfinPage />} />
+              <Route path='/epayment' element={<EPaymentPage />} />
             </Route>
-            <Route path='/sapfin' element={<SapfinPage />} />
-            <Route path='/epayment' element={<EPaymentPage />} />
-            <Route path='/' element={<div>Loading....</div>} />
-            <Route path='/login' element={<div>Loading....</div>} />
+            <Route path='/' element={<LoginPage />} />
+            <Route path='/login' element={<LoginPage />} />
           </Routes>
         </Suspense>
       </ErrorBoundary>

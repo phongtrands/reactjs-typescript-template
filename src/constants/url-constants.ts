@@ -9,6 +9,7 @@ export const API_URLS = {
   MATCHING: {
     EPAYMENTS: `${API_V1_PREFIX}/matching/epayments`,
     NON_EPAYMENTS: `${API_V1_PREFIX}/matching/non-epayments`,
+    GET_CONTROL_ID: `${API_V1_PREFIX}/matching/get-control-id`,
   },
 
   CONFIRMATIONS: {
@@ -22,5 +23,6 @@ export const API_URLS = {
 
   EXPORTS: {
     CSV: `${API_V1_PREFIX}/exports/csv`,
+    SAPFIN: `${API_V1_PREFIX}/exports/sap-file`,
   },
 };

@@ -14,6 +14,7 @@ import type {
 import { addIdToArray, api } from '~/utils';
 import store from '~/redux/store';
 import { openPopup } from '~/redux';
+import { extractFileName, getFilePath } from '~/utils/epayment.util';
 
 const today = new Date();
 
@@ -187,16 +188,60 @@ export const exportCSVFile = async (exportReportType: string, bankAccountNo: str
       'blob',
     );
 
-    console.log('Export CSV File Response:', response.header);
+    const blob = new Blob([response.data], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    const exportFileName = extractFileName(response.header['content-disposition'], '.csv');
+    link.download = exportFileName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+
+    return blob;
+  } catch (error) {
+    showError(String(error));
+    return null;
+  }
+};
+const getControlId = async (bankName: string, bankAccountNo: string, fileName: string): Promise<string> => {
+  try {
+    const response = await api.get<string[]>(API_URLS.MATCHING.GET_CONTROL_ID, {
+      bankName,
+      bankAccountNo,
+      fileName,
+    });
+    return response[0] || '';
+  } catch (error) {
+    showError(String(error));
+    return '';
+  }
+};
+
+export const exportSapfinFile = async (bankInfo: Banks, filename: string, accountNo: string, fileSapStatus: string) => {
+  try {
+    const controlId: string = await getControlId(bankInfo.bankName, accountNo, filename);
+    const filePath: string = getFilePath(bankInfo, accountNo, filename, controlId, fileSapStatus);
+    const response: ExportCSVFileType = await api.get<ExportCSVFileType>(
+      API_URLS.EXPORTS.SAPFIN,
+      {
+        filePath,
+      },
+      {
+        Accept: 'text/csv',
+      },
+      'blob',
+    );
 
     const blob = new Blob([response.data], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
 
     const link = document.createElement('a');
     link.href = url;
-    // Need get fileName from response header
-    const csvFileName = fileName.replace(/\.txt$/i, '.csv');
-    link.download = `${exportReportType}_${csvFileName}`;
+    const exportFileName = extractFileName(response.header['content-disposition'], '.csv');
+    link.download = exportFileName;
     document.body.appendChild(link);
     link.click();
     link.remove();
