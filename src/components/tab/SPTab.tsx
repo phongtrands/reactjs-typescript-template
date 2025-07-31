@@ -52,6 +52,7 @@ const SPTabs: React.FC<TabsProps> = ({ tabs, activeTab, onTabChange, ...tabsProp
                 onClick={(e) => tab.onClick?.(e)}
                 icon={renderIcon(String(tab.icon))}
                 iconPosition='start'
+                data-testid={`tab-${tab.value}`}
               />
             ),
         )}

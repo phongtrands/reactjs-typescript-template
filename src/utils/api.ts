@@ -4,6 +4,7 @@ import axios from 'axios';
 import { trackPromise } from 'react-promise-tracker';
 
 import { normalizeNulls } from './array_helpers.util';
+import { API_BASE_URL } from '~/constants/env';
 
 interface DataWrapper<T> {
   success: boolean;
@@ -12,14 +13,14 @@ interface DataWrapper<T> {
   data: T;
 }
 
-const BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
+// const BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
 const DEF_HEADERS: object = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
 };
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: API_BASE_URL,
   headers: DEF_HEADERS,
 });
 

@@ -9,10 +9,16 @@ const config: Config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
   transform: {
-    '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
+    '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.app.json' }],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   transformIgnorePatterns: ['/node_modules/'],
+  moduleNameMapper: {
+    '^~/(.*)$': '<rootDir>/src/$1',
+    '\\.(css|scss|sass)$': 'identity-obj-proxy',
+    '\\.(png|jpg|jpeg|gif|svg)$': '<rootDir>/src/__mocks__/fileMock.ts',
+  },
+  preset: 'ts-jest',
 };
 
 export default config;

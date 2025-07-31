@@ -14,7 +14,13 @@ const SPDropdown: React.FC<DropdownProps> = ({
   return (
     <Box>
       {label && <InputLabel>{label}</InputLabel>}
-      <Select sx={styleSelect} value={value ?? ''} name={name ?? ''} {...otherProps}>
+      <Select
+        sx={styleSelect}
+        value={value ?? ''}
+        name={name ?? ''}
+        inputProps={{ 'data-testid': `${label}-dropdown` }}
+        {...otherProps}
+      >
         {options.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}

@@ -52,7 +52,7 @@ const LoginPage: React.FC = () => {
           <Typography variant='body1' mb={4}>
             Please login using your Microsoft account to continue
           </Typography>
-          <Button variant='contained' startIcon={<MicrosoftIcon />} onClick={handleLogin}>
+          <Button variant='contained' startIcon={<MicrosoftIcon />} onClick={handleLogin} data-testid='login-button'>
             Login with Microsoft
           </Button>
         </Paper>

@@ -11,6 +11,7 @@ import logo from '../../assets/image/left-logo.png';
 import { Button, Typography } from '../../components';
 
 import { logout } from '~/redux';
+import { API_BASE_URL } from '~/constants/env';
 
 const Header = () => {
   const { instance } = useMsal();
@@ -22,17 +23,17 @@ const Header = () => {
   const location = useLocation();
   const path = location.pathname;
   const lastSegment = path.split('/').filter(Boolean).pop();
-  const BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
+  // const BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
 
   let bigTitle = 'SAPFIN';
   let smallTitle = 'Finance Interface';
-  let destinationLink = `${BASE_URL}/epayment`;
+  let destinationLink = `${API_BASE_URL}/epayment`;
   let destinationName = 'EPAYMENT';
 
   if (lastSegment === 'epayment') {
     bigTitle = 'ePayment Recon';
     smallTitle = 'Matching & Verification';
-    destinationLink = `${BASE_URL}/sapfin`;
+    destinationLink = `${API_BASE_URL}/sapfin`;
     destinationName = 'SAPFIN';
   }
 
@@ -99,6 +100,7 @@ const Header = () => {
           }}
           startIcon={<OpenInNewIcon />}
           onClick={() => window.open(destinationLink, '_blank')}
+          data-testid='navigate-button'
         >
           Go to {destinationName}
         </Button>
@@ -119,7 +121,7 @@ const Header = () => {
             dh_ldap
           </Typography>
 
-          <IconButton onClick={handleClick} sx={{ p: 0, ml: 1 }} disableRipple>
+          <IconButton onClick={handleClick} sx={{ p: 0, ml: 1 }} disableRipple data-testid='menu-toggle-button'>
             <Avatar
               sx={{
                 width: 32,
@@ -135,7 +137,7 @@ const Header = () => {
         </Box>
 
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose} sx={{ mt: 1, ml: 1 }}>
-          <MenuItem sx={{ fontWeight: 600 }} onClick={handleLogout}>
+          <MenuItem sx={{ fontWeight: 600 }} onClick={handleLogout} data-testid='logout-button'>
             Logout
           </MenuItem>
         </Menu>
