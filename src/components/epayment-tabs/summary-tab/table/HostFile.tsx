@@ -23,7 +23,7 @@ const HostFile: React.FC = () => {
         break;
       case 'download':
         {
-          const response = await exportCSVFile(EXPORT_TYPE.EXCEPTION_HOST_FILE, accountNo, row.fileName);
+          const response = await exportCSVFile(EXPORT_TYPE.HOST_FILE, accountNo, row.fileName);
           if (response) {
             enqueueSnackbar('File download successfully ', { variant: 'success' });
           }

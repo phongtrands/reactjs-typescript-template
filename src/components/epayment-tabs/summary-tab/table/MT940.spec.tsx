@@ -7,10 +7,16 @@ import Mt940 from './MT940';
 import { accountsMockData, banksMockData, hostFileMockData, mt940MockData } from '~/configs/mockData';
 import { useAppSelector } from '~/redux/hook';
 import { addIdToArray } from '~/utils';
+import { exportCSVFile } from '~/services';
+
+jest.mock('~/services', () => ({
+  exportCSVFile: jest.fn(),
+}));
 
 const renderComponent = () => render(<Mt940 />);
 
 describe('MT940 Table Component', () => {
+  let mockDispatch: jest.Mock;
   const mockSummaryTabData = {
     epayment: {
       typeFile: 'mt940',
@@ -33,6 +39,8 @@ describe('MT940 Table Component', () => {
   };
   beforeEach(() => {
     (useAppSelector as jest.Mock).mockImplementation((selectorFn: any) => selectorFn(mockSummaryTabData));
+    mockDispatch = jest.fn();
+    (useDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch);
     cleanup();
   });
   afterEach(() => {
@@ -41,7 +49,33 @@ describe('MT940 Table Component', () => {
 
   test('Render MT940 Component', async () => {
     renderComponent();
-    const tabBtn = await screen.findByText('MT940 File Name');
-    expect(tabBtn).toBeInTheDocument();
+    const mt940Table = await screen.findByText('MT940 File Name');
+    expect(mt940Table).toBeInTheDocument();
+  });
+
+  test('Test click action navigation matching tab', async () => {
+    renderComponent();
+    const matchingAction = await screen.findByTestId('primary_item_1');
+    fireEvent.click(matchingAction);
+    expect(mockDispatch.mock.calls[1][0].payload).toBe('matching');
+  });
+
+  test('Test click action navigation exception tab', async () => {
+    renderComponent();
+    const matchingAction = await screen.findByTestId('warning_item_1');
+    fireEvent.click(matchingAction);
+    expect(mockDispatch.mock.calls[1][0].payload).toBe('exception');
+  });
+
+  test('Test click action download file', async () => {
+    (exportCSVFile as jest.Mock).mockResolvedValue('test.csv');
+    renderComponent();
+    const downloadBtn = await screen.findByTestId('download_item_1');
+    fireEvent.click(downloadBtn);
+    expect(exportCSVFile).toHaveBeenCalledWith(
+      'MT940_FILE',
+      mockSummaryTabData.epayment.summary.search.accountNo,
+      mockSummaryTabData.epayment.summary.mt940Table[0].fileName,
+    );
   });
 });

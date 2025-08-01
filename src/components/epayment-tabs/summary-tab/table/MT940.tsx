@@ -29,7 +29,7 @@ const Mt940: React.FC = () => {
         break;
       case 'download':
         {
-          const response = await exportCSVFile(EXPORT_TYPE.MATCHING_MT940_FILE, accountNo, row.fileName);
+          const response = await exportCSVFile(EXPORT_TYPE.MT940_FILE, accountNo, row.fileName);
           if (response) {
             enqueueSnackbar('File download successfully ', { variant: 'success' });
           }

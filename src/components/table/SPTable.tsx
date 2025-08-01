@@ -142,6 +142,7 @@ function SPTable<T extends { id: string | number }>({
             onClick={(event) => {
               handleIconclick(row, String(col.field), event);
             }}
+            data-testid={`warning_icon_${row.id}`}
           >
             <ArrowCircleRightOutlinedIcon sx={{ fontSize: 31 }} />
           </IconButton>
@@ -153,6 +154,7 @@ function SPTable<T extends { id: string | number }>({
             onClick={(event) => {
               handleIconclick(row, String(col.field), event);
             }}
+            data-testid={`download_${row.id}`}
           >
             <SaveAltOutlinedIcon sx={{ fontSize: 31 }} />
           </IconButton>
@@ -166,6 +168,7 @@ function SPTable<T extends { id: string | number }>({
                 handleIconclick(row, `${String(col.field)}_primary`, event);
               }}
               sx={{ m: 0, p: 0, mr: 2 }}
+              data-testid={`primary_${row.id}`}
             >
               <ArrowCircleRightOutlinedIcon sx={{ fontSize: 31 }} />
             </IconButton>
@@ -175,6 +178,7 @@ function SPTable<T extends { id: string | number }>({
                 handleIconclick(row, `${String(col.field)}_warning`, event);
               }}
               sx={{ m: 0, p: 0, ml: 2 }}
+              data-testid={`warning_${row.id}`}
             >
               <ArrowCircleRightOutlinedIcon sx={{ fontSize: 31 }} />
             </IconButton>
