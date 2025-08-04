@@ -246,7 +246,6 @@ export const exportSapfinFile = async (bankInfo: Banks, filename: string, accoun
     link.click();
     link.remove();
     window.URL.revokeObjectURL(url);
-
     return blob;
   } catch (error) {
     showError(String(error));

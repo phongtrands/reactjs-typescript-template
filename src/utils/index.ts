@@ -1,2 +1,2 @@
 export * from './api';
-export * from './array_helpers.util';
+export * from './array-helpers.util';

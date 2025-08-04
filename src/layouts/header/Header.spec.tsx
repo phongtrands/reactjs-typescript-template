@@ -12,6 +12,7 @@ const renderComponent = () => render(<Header />);
 
 describe('Header Component', () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     const mockInstance = {
       loginPopup: jest.fn().mockResolvedValue({
         accessToken: 'mock-access-token',
@@ -21,7 +22,6 @@ describe('Header Component', () => {
     (useMsal as jest.Mock).mockReturnValue({
       instance: mockInstance,
     });
-    cleanup();
   });
   test('Render Epayment Header', async () => {
     renderComponent();

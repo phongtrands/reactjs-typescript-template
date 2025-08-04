@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import type { CustomContentProps } from 'notistack';
 
 import Snackbar from './Snackbar';

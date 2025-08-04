@@ -3,7 +3,8 @@ import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'a
 import axios from 'axios';
 import { trackPromise } from 'react-promise-tracker';
 
-import { normalizeNulls } from './array_helpers.util';
+import { normalizeNulls } from './array-helpers.util';
+
 import { API_BASE_URL } from '~/constants/env';
 
 interface DataWrapper<T> {

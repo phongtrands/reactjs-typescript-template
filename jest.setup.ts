@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom';
 jest.mock('~/constants/env', () => ({
   API_BASE_URL: 'https://mock-api.example.com',
 }));
