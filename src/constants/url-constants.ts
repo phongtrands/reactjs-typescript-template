@@ -23,6 +23,6 @@ export const API_URLS = {
 
   EXPORTS: {
     CSV: `${API_V1_PREFIX}/exports/csv`,
-    SAPFIN: `${API_V1_PREFIX}/exports/sap-file`,
+    SAPFIN: `${API_V1_PREFIX}/adls/sap-file`,
   },
 };

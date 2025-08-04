@@ -35,7 +35,7 @@ export const getSummaryData = async () => {
   const bankName = firstBank?.bankName || '';
 
   const accounts = await getAccounts(bankName);
-  const firstAccountNo = accounts[0]?.bankacct || '';
+  const firstAccountNo = accounts[0]?.bankAccountNo || '';
 
   const [mt940Table, hostFileTable] = await Promise.all([
     getMT940Table(bankName, firstAccountNo),

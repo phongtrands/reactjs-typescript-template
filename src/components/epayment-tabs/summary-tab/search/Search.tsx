@@ -41,7 +41,7 @@ const Search: React.FC = () => {
         ...searchData,
         bankName: value,
         accounts: accounts,
-        accountNo: accounts[0].bankacct,
+        accountNo: accounts[0].bankAccountNo,
       }),
     );
   };
@@ -86,7 +86,7 @@ const Search: React.FC = () => {
             label='Account No'
             name='accountNo'
             options={accounts.map((item) => {
-              return { value: item.bankacct, label: item.bankacct };
+              return { value: item.bankAccountNo, label: item.bankAccountNo };
             })}
             value={accountNo || ''}
             styleSelect={{ width: '70%', backgroundColor: 'white' }}

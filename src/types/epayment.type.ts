@@ -65,7 +65,7 @@ export interface Banks {
 }
 
 export interface Accounts {
-  bankacct: string;
+  bankAccountNo: string;
 }
 
 export interface Search {

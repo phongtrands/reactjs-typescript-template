@@ -772,9 +772,9 @@ export const banksMockData = [
 
 export const accountsMockData = [
   {
-    bankacct: '0039007442',
+    bankAccountNo: '0039007442',
   },
   {
-    bankacct: '0720041291',
+    bankAccountNo: '0720041291',
   },
 ];

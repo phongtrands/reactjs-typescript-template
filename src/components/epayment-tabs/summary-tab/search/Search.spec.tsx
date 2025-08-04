@@ -71,7 +71,7 @@ describe('Search Component', () => {
   test('Test change Bank dropdown function', async () => {
     (getAccounts as jest.Mock).mockResolvedValue([
       {
-        bankacct: '123456789',
+        bankAccountNo: '123456789',
       },
     ]);
     renderComponent();
