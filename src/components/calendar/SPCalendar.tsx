@@ -216,12 +216,12 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
 
   const inputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trim();
+    console.log('value', value);
     setValue(value);
   };
 
   const onInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const rawValue = event.target.value.trim();
-
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     let fromStr = '';
     let toStr = '';
@@ -281,6 +281,7 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
       <Box>
         <InputLabel>{label}</InputLabel>
         <TextField
+          inputProps={{ 'data-testid': 'sp-calendar-input' }}
           onClick={handleOpenMenu}
           value={value}
           sx={{

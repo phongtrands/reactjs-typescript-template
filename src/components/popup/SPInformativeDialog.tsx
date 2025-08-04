@@ -12,10 +12,7 @@ const SPInformativeDialog = () => {
   const { open, content, onOk, type } = useAppSelector((state) => state.popup);
   let { title } = useAppSelector((state) => state.popup);
   const isError = type === 'error';
-
-  if (isError) {
-    title = 'Error';
-  }
+  title = isError ? 'Error' : title;
 
   const renderIcon = () => {
     let icon = <CheckCircleIcon color='success' />;

@@ -24,7 +24,7 @@ export const mt940MockData = [
     fileName: 'SINPOO01XXXX.CASP_MT940.D220419045527.txt',
     fileDate: '2022-04-19',
     sapfinStatus: 'Matched',
-    matchingStatus: 'Ready',
+    matchingStatus: 'Awaiting Confirmation',
     count: 67529,
   },
   {
