@@ -42,6 +42,19 @@ describe('SummaryTab Component', () => {
     expect(tabBtn).toBeInTheDocument();
   });
 
+  test('Render SummaryTab Component with typeFile null', async () => {
+    const newMockData = {
+      epayment: {
+        ...mockSummaryTabData.epayment,
+        typeFile: null,
+      },
+    };
+    (useAppSelector as jest.Mock).mockImplementation((selectorFn: any) => selectorFn(newMockData));
+    renderComponent();
+    const tabBtn = await screen.findByTestId('tab-mt940');
+    expect(tabBtn).toBeInTheDocument();
+  });
+
   test('Change Hostfile', async () => {
     const mockDispatch = jest.fn();
     (useDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch);

@@ -18,7 +18,6 @@ const Search: React.FC = () => {
   const accounts: Accounts[] = useAppSelector((state) => state.epayment.summary.search.accounts);
   const fDate: Date = useAppSelector((state) => state.epayment.summary.search.fromDate);
   const tDate: Date = useAppSelector((state) => state.epayment.summary.search.toDate);
-
   const handleSearch = async () => {
     const [mt940Data, hostFileData] = await Promise.all([
       getMT940Table(bankName, accountNo, fDate, tDate),
@@ -56,12 +55,12 @@ const Search: React.FC = () => {
     );
   };
 
-  const handleCalendar = (fromDate: Date | null, toDate: Date | null) => {
+  const handleCalendar = (fromDate: Date, toDate: Date) => {
     dispatch(
       updateSearch({
         ...searchData,
-        fromDate: fromDate || fDate,
-        toDate: toDate || tDate,
+        fromDate: fromDate,
+        toDate: toDate,
       }),
     );
   };

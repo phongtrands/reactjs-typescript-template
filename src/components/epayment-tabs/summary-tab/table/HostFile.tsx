@@ -17,7 +17,7 @@ const HostFile: React.FC = () => {
     switch (fieldName) {
       case 'action':
         {
-          dispatch(changeSelectedFile(row.fileName || ''));
+          dispatch(changeSelectedFile(row.fileName));
           dispatch(changeTab(EPAYMENT_TAB.EXCEPTION));
         }
         break;

@@ -1,7 +1,9 @@
 import '@testing-library/jest-dom';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { format, subDays } from 'date-fns';
 
-import Search from '~/components/epayment-tabs/summary-tab/search/Search';
+import Search from './Search';
+
 import { accountsMockData, banksMockData, hostFileMockData, mt940MockData } from '~/configs/mockData';
 import { useAppDispatch, useAppSelector } from '~/redux/hook';
 import { getAccounts, getHostFileTable, getMT940Table } from '~/services';
@@ -21,6 +23,7 @@ jest.mock('~/redux/hook', () => ({
 }));
 
 describe('Search Component', () => {
+  const today = new Date();
   const mockDispatch = jest.fn();
   (useAppDispatch as jest.Mock).mockReturnValue(mockDispatch);
   const mockSummaryTabData = {
@@ -69,6 +72,20 @@ describe('Search Component', () => {
   });
 
   test('Test change Bank dropdown function', async () => {
+    const newMockData = {
+      epayment: {
+        ...mockSummaryTabData.epayment,
+        summary: {
+          ...mockSummaryTabData.epayment.summary,
+          search: {
+            ...mockSummaryTabData.epayment.summary.search,
+            bankName: null,
+            accountNo: null,
+          },
+        },
+      },
+    };
+    (useAppSelector as jest.Mock).mockImplementation((selectorFn: any) => selectorFn(newMockData));
     (getAccounts as jest.Mock).mockResolvedValue([
       {
         bankAccountNo: '123456789',
@@ -91,5 +108,16 @@ describe('Search Component', () => {
     const option = await screen.findByText('0720041291');
     await fireEvent.click(option);
     expect(mockDispatch.mock.calls[0][0].payload.accountNo).toBe('0720041291');
+  });
+
+  test('Test change Bank Statement Date', async () => {
+    renderComponent();
+    const input = await screen.findAllByTestId('sp-calendar-input');
+    fireEvent.click(input[0]);
+    const dayOption = await screen.findByText('Last 7 days');
+    fireEvent.click(dayOption);
+    expect(format(mockDispatch.mock.calls[0][0].payload.fromDate, 'dd/MM/yyyy')).toBe(
+      format(subDays(today, 7), 'dd/MM/yyyy'),
+    );
   });
 });

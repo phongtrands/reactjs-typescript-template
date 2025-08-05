@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { useDispatch } from 'react-redux';
+import { enqueueSnackbar } from 'notistack';
 
 import MatchingTab from './MatchingTab';
 
@@ -30,10 +31,15 @@ jest.mock('~/services', () => ({
   getMatchingNonEpaymentTable: jest.fn(),
 }));
 
+jest.mock('notistack', () => ({
+  enqueueSnackbar: jest.fn(),
+}));
+
 const renderComponent = () => render(<MatchingTab />);
 
 describe('MatchingTab Component', () => {
   let mockDispatch: jest.Mock;
+  let mockEnqueue: jest.Mock;
   const mockMatchingTabData = {
     epayment: {
       typeFile: 'mt940',
@@ -65,6 +71,7 @@ describe('MatchingTab Component', () => {
     (useAppSelector as jest.Mock).mockImplementation((selectorFn: any) => selectorFn(mockMatchingTabData));
     mockDispatch = jest.fn();
     (useDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch);
+    mockEnqueue = enqueueSnackbar as jest.Mock;
     cleanup();
   });
   afterEach(() => {
@@ -107,6 +114,31 @@ describe('MatchingTab Component', () => {
     );
   });
 
+  test('Test download Sapfin File with exportSapfinFile return null', async () => {
+    (exportSapfinFile as jest.Mock).mockResolvedValue(null);
+    renderComponent();
+    const downloadSapfinBtn = await screen.findByText('Download SAPFIN');
+    fireEvent.click(downloadSapfinBtn);
+    expect(mockEnqueue).not.toHaveBeenCalled();
+  });
+
+  test('Test download Sapfin File with bankName does not exist ', async () => {
+    const newmockData = {
+      epayment: {
+        ...mockMatchingTabData.epayment,
+        matching: {
+          ...mockMatchingTabData.epayment.matching,
+          bank: '',
+        },
+      },
+    };
+    (useAppSelector as jest.Mock).mockImplementation((selectorFn: any) => selectorFn(newmockData));
+    renderComponent();
+    const downloadSapfinBtn = await screen.findByText('Download SAPFIN');
+    fireEvent.click(downloadSapfinBtn);
+    expect(enqueueSnackbar).toHaveBeenCalledWith('Bank information not found.', { variant: 'error' });
+  });
+
   test('Test download Report (MT940) File', async () => {
     (exportCSVFile as jest.Mock).mockResolvedValue('test.csv');
     renderComponent();
@@ -117,6 +149,14 @@ describe('MatchingTab Component', () => {
       mockMatchingTabData.epayment.matching.accountNo,
       mockMatchingTabData.epayment.matching.file,
     );
+  });
+
+  test('Test download Report (MT940) File with exportCSVFile return null', async () => {
+    (exportCSVFile as jest.Mock).mockResolvedValue(null);
+    renderComponent();
+    const downloadMT940Btn = await screen.findByText('Download Report (MT940)');
+    fireEvent.click(downloadMT940Btn);
+    expect(mockEnqueue).not.toHaveBeenCalled();
   });
 
   test('Test Download Report (Host) File', async () => {
@@ -146,5 +186,15 @@ describe('MatchingTab Component', () => {
     const onOk = mockDispatch.mock.calls[0][0].payload.onOk;
     onOk();
     expect(confirmFile).toHaveBeenCalled();
+  });
+
+  test('Test Confirm Button with confirmFile return null', async () => {
+    (confirmFile as jest.Mock).mockResolvedValue(null);
+    renderComponent();
+    const confirmBtn = await screen.findByText('Confirm');
+    fireEvent.click(confirmBtn);
+    const onOk = mockDispatch.mock.calls[0][0].payload.onOk;
+    onOk();
+    expect(mockEnqueue).not.toHaveBeenCalled();
   });
 });

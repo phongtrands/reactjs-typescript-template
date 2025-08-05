@@ -17,13 +17,13 @@ const Mt940: React.FC = () => {
     switch (fieldName) {
       case 'action_primary':
         {
-          dispatch(changeSelectedFile(row.fileName || ''));
+          dispatch(changeSelectedFile(row.fileName));
           dispatch(changeTab(EPAYMENT_TAB.MATCHING));
         }
         break;
       case 'action_warning':
         {
-          dispatch(changeSelectedFile(row.fileName || ''));
+          dispatch(changeSelectedFile(row.fileName));
           dispatch(changeTab(EPAYMENT_TAB.EXCEPTION));
         }
         break;

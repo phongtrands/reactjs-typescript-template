@@ -8,15 +8,21 @@ import { accountsMockData, banksMockData, hostFileMockData, mt940MockData } from
 import { useAppSelector } from '~/redux/hook';
 import { addIdToArray } from '~/utils';
 import { exportCSVFile } from '~/services';
+import { enqueueSnackbar } from 'notistack';
 
 jest.mock('~/services', () => ({
   exportCSVFile: jest.fn(),
+}));
+
+jest.mock('notistack', () => ({
+  enqueueSnackbar: jest.fn(),
 }));
 
 const renderComponent = () => render(<Mt940 />);
 
 describe('MT940 Table Component', () => {
   let mockDispatch: jest.Mock;
+  let mockEnqueue: jest.Mock;
   const mockSummaryTabData = {
     epayment: {
       typeFile: 'mt940',
@@ -41,6 +47,7 @@ describe('MT940 Table Component', () => {
     (useAppSelector as jest.Mock).mockImplementation((selectorFn: any) => selectorFn(mockSummaryTabData));
     mockDispatch = jest.fn();
     (useDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch);
+    mockEnqueue = enqueueSnackbar as jest.Mock;
     cleanup();
   });
   afterEach(() => {
@@ -77,5 +84,13 @@ describe('MT940 Table Component', () => {
       mockSummaryTabData.epayment.summary.search.accountNo,
       mockSummaryTabData.epayment.summary.mt940Table[0].fileName,
     );
+  });
+
+  test('Test click action download file with exportCSVFile return null', async () => {
+    (exportCSVFile as jest.Mock).mockResolvedValue(null);
+    renderComponent();
+    const downloadBtn = await screen.findByTestId('download_item_1');
+    fireEvent.click(downloadBtn);
+    expect(mockEnqueue).not.toHaveBeenCalled();
   });
 });

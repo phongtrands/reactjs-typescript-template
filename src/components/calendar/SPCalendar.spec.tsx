@@ -224,4 +224,19 @@ describe(' SPCalendar Component', () => {
     });
     expect(mockEnqueue.mock.calls[0][0]).toBe('Start date must be before or equal to end date');
   });
+
+  test('Test Cancel Button', async () => {
+    renderComponent(mockProp);
+    const input = await screen.findAllByTestId('sp-calendar-input');
+    fireEvent.click(input[0]);
+    const dayOption = await screen.findByText('All Dates After');
+    fireEvent.click(dayOption);
+    const day = await screen.findByRole('gridcell', { name: '15' });
+    fireEvent.click(day);
+    const cancleBtn = await screen.findByText('Cancel');
+    fireEvent.click(cancleBtn);
+    await act(async () => {
+      expect(day).not.toBeInTheDocument();
+    });
+  });
 });

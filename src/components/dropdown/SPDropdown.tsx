@@ -16,8 +16,8 @@ const SPDropdown: React.FC<DropdownProps> = ({
       {label && <InputLabel>{label}</InputLabel>}
       <Select
         sx={styleSelect}
-        value={value ?? ''}
-        name={name ?? ''}
+        value={value}
+        name={name}
         inputProps={{ 'data-testid': `${label}-dropdown` }}
         {...otherProps}
       >
