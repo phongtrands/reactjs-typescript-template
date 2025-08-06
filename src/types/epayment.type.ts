@@ -107,13 +107,3 @@ export interface EpaymentState {
   matching: MatchingTab;
   exceptions: ExceptionsTab;
 }
-
-export interface DownloadResponseHeaders {
-  'content-disposition': string;
-  [key: string]: string | undefined;
-}
-
-export interface ExportCSVFileType {
-  header: DownloadResponseHeaders;
-  data: Blob;
-}

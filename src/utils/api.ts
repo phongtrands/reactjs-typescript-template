@@ -75,7 +75,8 @@ const request = async <T>(
 const api = {
   get: <T>(path: string, params?: object, headers?: object, responseType: 'json' | 'blob' = 'json') =>
     request<T>('GET', path, undefined, params, headers, responseType),
-  post: <T>(path: string, body: object, headers?: object) => request<T>('POST', path, body, undefined, headers),
+  post: <T>(path: string, body: object, headers?: object, responseType: 'json' | 'blob' = 'json') =>
+    request<T>('POST', path, body, undefined, headers, responseType),
   put: <T>(path: string, body: object, headers?: object) => request<T>('PUT', path, body, undefined, headers),
   delete: <T>(path: string, headers?: object) => request<T>('DELETE', path, undefined, undefined, headers),
 };
@@ -83,7 +84,8 @@ const api = {
 const apiWithoutTrackLoading = {
   get: <T>(path: string, params?: object, headers?: object, responseType: 'json' | 'blob' = 'json') =>
     request<T>('GET', path, undefined, params, headers, responseType),
-  post: <T>(path: string, body: object, headers?: object) => request<T>('POST', path, body, undefined, headers),
+  post: <T>(path: string, body: object, headers?: object, responseType: 'json' | 'blob' = 'json') =>
+    request<T>('POST', path, body, undefined, headers, responseType),
   put: <T>(path: string, body: object, headers?: object) => request<T>('PUT', path, body, undefined, headers),
   delete: <T>(path: string, headers?: object) => request<T>('DELETE', path, undefined, undefined, headers),
 };

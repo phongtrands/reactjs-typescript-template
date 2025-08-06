@@ -65,7 +65,7 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
   const handleDone = () => {
     setFromDate(startDate);
     setToDate(endDate);
-    if (onChange) {
+    if (onChange && startDate && endDate) {
       onChange(startDate, endDate);
     }
     handleCloseMenu();
@@ -216,7 +216,6 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
 
   const inputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trim();
-    console.log('value', value);
     setValue(value);
   };
 

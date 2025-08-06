@@ -1,99 +1,122 @@
-import { comminglingFiles, comminglingGuestFiles, mockupDataSource } from '~/configs/mockupDataSource';
-import type { InterfaceFile, Source } from '~/types';
-import { addIdToArray, api } from '~/utils';
+import { API_URLS } from '~/constants';
+import { openPopup } from '~/redux';
+import store from '~/redux/store';
+import type { ExportFileType, InterfaceFile, ResponseAPIType, Source } from '~/types';
+import { api } from '~/utils';
+import { extractFileName } from '~/utils/epayment.util';
+
+const showError = (error: string) => {
+  const dispatch = store.dispatch;
+  dispatch(
+    openPopup({
+      type: 'error',
+      content: error,
+      onOk: () => {},
+    }),
+  );
+};
 
 export const getDataSources = async (): Promise<Source[]> => {
   try {
-    // const response = await api.get<Source[]>('/data-sources');
-    const response = mockupDataSource as Source[];
+    const response = await api.get<Source[]>(API_URLS.SAPFIN_PORTAL.DATA_SOURCES);
     return response;
   } catch (error) {
-    console.error(error);
+    showError(String(error));
     return [];
   }
 };
 
 export const getFiles = async (sourceName: string, interfaceName: string): Promise<InterfaceFile[]> => {
   try {
-    // const response = await api.get<InterfaceFile[]>(`data-sources/${sourceName}/${interfaceName}`);
-    let response: any[] = [];
-    if (sourceName === 'BMCS' && interfaceName === 'Commingling Guest') {
-      response = comminglingGuestFiles as InterfaceFile[];
-    } else if (sourceName === 'BMCS' && interfaceName === 'Commingling') {
-      response = comminglingFiles as InterfaceFile[];
-    }
-    const newData = response.length > 0 ? addIdToArray(response, 'file') : [];
-    return newData;
+    const response = await api.get<InterfaceFile[]>(
+      `${API_URLS.SAPFIN_PORTAL.DATA_SOURCES}/${sourceName}/${interfaceName}`,
+    );
+    return response;
   } catch (error) {
-    console.error(error);
+    showError(String(error));
     return [];
   }
 };
 
-export const rejectFile = async (files: InterfaceFile[]) => {
+export const rejectFile = async (files: InterfaceFile[]): Promise<boolean> => {
   try {
-    // const response = await api.post<InterfaceFile[]>('data-sources/rejects', { files });
-    const response = { took: 8, code: 'OK', message: 'Success', t: 1751618538837 };
-    return response;
+    const requestFiles = files.map(({ fileName, sourceName, interfaceName }) => ({
+      fileName,
+      sourceName,
+      interfaceName,
+    }));
+    await api.post(API_URLS.SAPFIN_PORTAL.REJECTS, requestFiles);
+    return true;
   } catch (error) {
-    console.error(error);
+    showError(String(error));
+    return false;
   }
 };
 
 export const downloadFile = async (files: InterfaceFile[]) => {
   try {
-    // const response = await api.post<InterfaceFile[]>('data-sources/downloads', { files });
-    const response = { took: 8, code: 'OK', message: 'Success', t: 1751618538837 };
-    return response;
+    const requestFiles = files.map(({ fileName, sourceName, interfaceName }) => ({
+      fileName,
+      sourceName,
+      interfaceName,
+    }));
+    const response: ExportFileType = await api.post<ExportFileType>(
+      API_URLS.SAPFIN_PORTAL.DOWNLOADS,
+      requestFiles,
+      {
+        Accept: 'text/csv',
+      },
+      'blob',
+    );
+    const blob = new Blob([response.data], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    const exportFileName = extractFileName(response.header['content-disposition']);
+    link.download = exportFileName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+
+    return blob;
   } catch (error) {
-    console.error(error);
+    showError(String(error));
+    return null;
   }
 };
 
-export const validations = async (files: InterfaceFile[]) => {
+export const validations = async (file: InterfaceFile): Promise<ResponseAPIType> => {
   try {
-    // const response = await api.post<InterfaceFile[]>('data-sources/validations', { files });
-    const response = {
-      took: 3802,
-      data: {
-        success: false,
-        notes: [
-          'Error in document: BKPFF $ 0M2DSC9',
-          'Posting period 007 2018 not open for variant 2000 and ledger 0L',
-          'Error in document: BKPFF $ 0M2DSC9',
-          'Posting period 007 2018 not open for variant 2000 and ledger 0L',
-          'Error in document: BKPFF $ 0M2DSC9',
-          'Posting period 007 2018 not open for variant 2000 and ledger 0L',
-        ],
-      },
-      t: 1751620882313,
-    };
+    const response: ResponseAPIType = await api.post<ResponseAPIType>(API_URLS.SAPFIN_PORTAL.VALIDATE, {
+      fileNames: file.fileName,
+      sourceName: file.sourceName,
+      interfaceName: file.interfaceName,
+    });
     return response;
   } catch (error) {
-    console.error(error);
+    showError(String(error));
+    return {
+      success: false,
+      notes: [],
+    };
   }
 };
 
-export const loadings = async (files: InterfaceFile[]) => {
+export const loadings = async (file: InterfaceFile): Promise<ResponseAPIType> => {
   try {
-    // const response = await api.post<InterfaceFile[]>('data-sources/loadings', { files });
-    const response = {
-      took: 3802,
-      data: {
-        success: false,
-        notes: [
-          'Error in document: BKPFF $ 0M2DSC9',
-          'Posting period 007 2018 not open for variant 2000 and ledger 0L',
-          'Error in document: BKPFF $ 0M2DSC9',
-          'Posting period 007 2018 not open for variant 2000 and ledger 0L',
-          'Error in document: BKPFF $ 0M2DSC9',
-          'Posting period 007 2018 not open for variant 2000 and ledger 0L',
-        ],
-      },
-      t: 1751620882313,
-    };
+    const response: ResponseAPIType = await api.post<ResponseAPIType>(API_URLS.SAPFIN_PORTAL.LOADINGS, {
+      fileNames: file.fileName,
+      sourceName: file.sourceName,
+      interfaceName: file.interfaceName,
+    });
     return response;
   } catch (error) {
-    console.error(error);
+    showError(String(error));
+    return {
+      success: false,
+      notes: [],
+    };
   }
 };

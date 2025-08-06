@@ -8,25 +8,28 @@ import { Download, PlayArrow, RocketLaunch } from '@mui/icons-material';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useSnackbar } from 'notistack';
 
-import type { ColumnConfig, InterfaceFile, Interface, Source } from '~/types';
+import type { InterfaceFile, Interface, Source, ResponseAPIType, SourceOptionsType } from '~/types';
 import PageContainer from '~/layouts/PageContainer';
 import { Button, Dropdown, Table, TextArea, Typography } from '~/components';
 import { useAppDispatch } from '~/redux/hook';
 import { openPopup } from '~/redux';
-import { getDataSources, getFiles, rejectFile } from '~/services';
+import { downloadFile, getDataSources, getFiles, loadings, rejectFile, validations } from '~/services';
+import { arrayToMultilineString } from '~/utils';
+import { fileColumns, interfaceColumns, uploadFolderColumns } from '~/configs';
 
 const SapfinPage = () => {
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
   const [sourceDataList, setSourceDataList] = useState<Source[]>([]);
-  const [sourceOptions, setSourceOptions] = useState<any[]>([]);
+  const [sourceOptions, setSourceOptions] = useState<SourceOptionsType[]>([]);
   const [selectedSource, setSelectedSource] = useState<string>('');
   const [interfaceList, setInterfaceList] = useState<Interface[]>([]);
   const [selectedInterface, setSelectedInterface] = useState<string[]>(['1']);
   const [fileList, setFileList] = useState<InterfaceFile[]>([]);
-  const [checkedFileList, setCheckedFileList] = useState<any[]>([]);
+  const [checkedFileList, setCheckedFileList] = useState<InterfaceFile[]>([]);
   const [uploadFolderFile, setUploadFolderFile] = useState<InterfaceFile[]>([]);
+  const [sapResponse, setSAPResponse] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,7 +81,7 @@ const SapfinPage = () => {
     }
   };
 
-  const onCheckboxChange = (file: any, fieldName: string, value: boolean, event: any) => {
+  const onCheckboxChange = (file: InterfaceFile, value: boolean) => {
     if (value) {
       setCheckedFileList((prev) => [...prev, file]);
     } else {
@@ -104,12 +107,22 @@ const SapfinPage = () => {
   };
 
   const handleOnOkReject = async () => {
-    await rejectFile(checkedFileList).then((data) => {
+    const success: boolean = await rejectFile(checkedFileList);
+    if (success) {
       const newFileList = fileList.filter((a) => !checkedFileList.some((b) => b.id === a.id));
       setFileList(newFileList);
       setCheckedFileList([]);
+      const matched = sourceDataList.find((item) => item.name === selectedSource);
+      if (matched) {
+        await getFiles(matched.name, matched.interfaces[0]?.name).then((file) => {
+          setFileList(file);
+        });
+      }
       enqueueSnackbar('Reject data successfully', { variant: 'success' });
-    });
+      return;
+    }
+    enqueueSnackbar('Reject data failed', { variant: 'error' });
+    return;
   };
 
   const handleReject = async () => {
@@ -122,40 +135,51 @@ const SapfinPage = () => {
     );
   };
 
-  const handleDownload = () => {
-    const message = 'Download data successfully';
-    enqueueSnackbar(message, { variant: 'success' });
+  const handleDownload = async () => {
+    const response = await downloadFile(checkedFileList);
+    if (response) {
+      enqueueSnackbar('Download data successfully', { variant: 'success' });
+      return;
+    }
+    enqueueSnackbar('Download data failed', { variant: 'error' });
+    return;
   };
 
-  const handleTestRun = () => {
-    const message = 'Test run successfully';
-    enqueueSnackbar(message, { variant: 'success' });
+  const handleTestRun = async () => {
+    const { success, notes }: ResponseAPIType = await validations(uploadFolderFile[0]);
+    if (notes.length > 0) {
+      setSAPResponse(arrayToMultilineString(notes));
+    }
+    if (success) {
+      enqueueSnackbar('Test run data completed with no error', { variant: 'success' });
+    } else {
+      enqueueSnackbar('Test run data completed with error', { variant: 'warning' });
+    }
+    return;
+  };
+
+  const handleOnOkActualRun = async () => {
+    const { success, notes }: ResponseAPIType = await loadings(uploadFolderFile[0]);
+    if (notes.length > 0) {
+      setSAPResponse(arrayToMultilineString(notes));
+    }
+    if (success) {
+      enqueueSnackbar('Actual run data completed with no error', { variant: 'success' });
+    } else {
+      enqueueSnackbar('Actual run data completed with error', { variant: 'warning' });
+    }
+    return;
   };
 
   const handleActualRun = () => {
-    const message = 'Actual run successfully';
     dispatch(
       openPopup({
         title: 'File Run Confirmation',
         content: 'Do you want to actual run these files ?',
-        onOk: () => {
-          enqueueSnackbar(message, { variant: 'success' });
-        },
+        onOk: handleOnOkActualRun,
       }),
     );
   };
-
-  const interfaceColumns: ColumnConfig<Interface>[] = [
-    { headerName: 'Interfaces', field: 'displayName', align: 'left', type: 'text', iconType: 'folder' },
-  ];
-
-  const fileColumns: ColumnConfig<InterfaceFile>[] = [
-    { headerName: 'File', field: 'fileName', align: 'left', type: 'textCheckbox', iconType: 'paper' },
-  ];
-
-  const uploadFolderColumns: ColumnConfig<InterfaceFile>[] = [
-    { headerName: 'Interfaces', field: 'fileName', align: 'left', type: 'text', iconType: 'paper' },
-  ];
 
   const enableRightButton = Object.keys(uploadFolderFile).length === 0 && Object.keys(checkedFileList).length === 1;
   const enableLeftButton = Object.keys(uploadFolderFile).length === 1;
@@ -312,14 +336,7 @@ const SapfinPage = () => {
         <Typography variant='subtitle1' fontWeight='bold' gutterBottom>
           SAP Response
         </Typography>
-        <TextArea
-          value='qqqqqqqqqqqqqqqqqqqqqqqqq\nqqqqqqqqqqqqqqqqqqqqqqqqq'
-          minRows={6}
-          maxRows={6}
-          placeholder='Maximum 4 rows'
-          style={{ width: '100%', resize: 'none' }}
-          disabled
-        />
+        <TextArea value={sapResponse} minRows={6} maxRows={6} style={{ width: '100%', resize: 'none' }} disabled />
       </Box>
     </Box>
   );

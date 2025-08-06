@@ -18,7 +18,7 @@ export interface TableProps<T> {
   minHeight?: number;
   backgroundHeader?: string;
   searchColumn?: keyof T;
-  onChange?: (row: any, fieldName: string, value: any, event: any) => void;
+  onChange?: (row: any, value: any, fieldName: string, event: any) => void;
   onSelectionChange?: (selected: (string | number)[]) => void;
   selected?: (string | number)[];
   selectable?: 'single' | 'multiple';

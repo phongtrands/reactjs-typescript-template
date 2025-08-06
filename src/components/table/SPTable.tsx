@@ -48,7 +48,7 @@ function SPTable<T extends { id: string | number }>({
   };
 
   const handleChange = (row: T, fieldName: string, value: boolean, event: any) => {
-    onChange?.(row, fieldName, value, event);
+    onChange?.(row, value, fieldName, event);
   };
 
   const handleRowClick = (row: T) => {

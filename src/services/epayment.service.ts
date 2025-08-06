@@ -7,7 +7,7 @@ import type {
   EPayment,
   ExceptionsHostFile,
   ExceptionsMT940,
-  ExportCSVFileType,
+  ExportFileType,
   HostFile,
   MT940,
 } from '~/types';
@@ -175,7 +175,7 @@ export const getAccounts = async (bankName: string = ''): Promise<Accounts[]> =>
 
 export const exportCSVFile = async (exportReportType: string, bankAccountNo: string, fileName: string) => {
   try {
-    const response: ExportCSVFileType = await api.get<ExportCSVFileType>(
+    const response: ExportFileType = await api.get<ExportFileType>(
       API_URLS.EXPORTS.CSV,
       {
         exportReportType,
@@ -224,7 +224,7 @@ export const exportSapfinFile = async (bankInfo: Banks, filename: string, accoun
   try {
     const controlId: string = await getControlId(bankInfo.bankName, accountNo, filename);
     const filePath: string = getFilePath(bankInfo, accountNo, filename, controlId, fileSapStatus);
-    const response: ExportCSVFileType = await api.get<ExportCSVFileType>(
+    const response: ExportFileType = await api.get<ExportFileType>(
       API_URLS.EXPORTS.SAPFIN,
       {
         filePath,

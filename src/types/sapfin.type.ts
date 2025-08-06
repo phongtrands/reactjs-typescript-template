@@ -27,3 +27,13 @@ export interface Source {
   displayName: string;
   interfaces: Interface[];
 }
+
+export interface SourceOptionsType {
+  value: string;
+  label: string;
+}
+
+export interface ResponseAPIType {
+  success: boolean;
+  notes: string[];
+}

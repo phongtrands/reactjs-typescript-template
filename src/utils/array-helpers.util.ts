@@ -24,3 +24,7 @@ export const normalizeNulls = <T>(arr: T): T => {
   }
   return arr;
 };
+
+export const arrayToMultilineString = (arr: string[]): string => {
+  return arr.join('\n');
+};

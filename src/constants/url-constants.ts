@@ -25,4 +25,12 @@ export const API_URLS = {
     CSV: `${API_V1_PREFIX}/exports/csv`,
     SAPFIN: `${API_V1_PREFIX}/adls/sap-file`,
   },
+
+  SAPFIN_PORTAL: {
+    DATA_SOURCES: '/data-sources',
+    VALIDATE: '/data-sources/validations',
+    LOADINGS: '/data-sources/loadings',
+    DOWNLOADS: '/data-sources/downloads',
+    REJECTS: '/data-sources/rejects',
+  },
 };
