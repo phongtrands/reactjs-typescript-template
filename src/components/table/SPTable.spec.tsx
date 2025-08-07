@@ -119,7 +119,7 @@ describe('SPTable', () => {
     render(<SPTable columns={columns} data={mockData} onChange={onChange} />);
     const checkbox = screen.getAllByRole('checkbox')[0];
     fireEvent.click(checkbox);
-    expect(onChange).toHaveBeenCalledWith(mockData[0], 'check', true, expect.anything());
+    expect(onChange).toHaveBeenCalledWith(mockData[0], true, 'check', expect.anything());
   });
 
   it('renders pagination and navigates', () => {

@@ -50,10 +50,18 @@ const MatchingTab: React.FC = () => {
   }, []);
 
   const onOkConfirm = async () => {
-    const response = await confirmFile();
-    if (response) {
-      enqueueSnackbar('File confirm successfully ', { variant: 'success' });
+    const bank = banks.find((item) => item.bankName === bankName);
+    if (!bank) {
+      enqueueSnackbar('Bank information not found.', { variant: 'error' });
+      return;
     }
+    const sapFromPath: string = bank.csvFilePathTmp;
+    const sapToPath: string = `${bank.csvFilePathBank}${accountNo}`;
+    const response: string = await confirmFile(sapFromPath, sapToPath, accountNo, fileName);
+    if (response) {
+      enqueueSnackbar(response, { variant: 'success' });
+    }
+    return;
   };
 
   const handleConfirm = () => {
@@ -71,6 +79,7 @@ const MatchingTab: React.FC = () => {
     if (response) {
       enqueueSnackbar('File download successfully ', { variant: 'success' });
     }
+    return;
   };
 
   const handleSapfinDownload = async () => {
@@ -84,6 +93,7 @@ const MatchingTab: React.FC = () => {
     if (response) {
       enqueueSnackbar('File download successfully ', { variant: 'success' });
     }
+    return;
   };
 
   return (

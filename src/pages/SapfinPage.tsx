@@ -6,7 +6,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Download, PlayArrow, RocketLaunch } from '@mui/icons-material';
 import ClearIcon from '@mui/icons-material/Clear';
-import { useSnackbar } from 'notistack';
+import { enqueueSnackbar } from 'notistack';
 
 import type { InterfaceFile, Interface, Source, ResponseAPIType, SourceOptionsType } from '~/types';
 import PageContainer from '~/layouts/PageContainer';
@@ -19,7 +19,6 @@ import { fileColumns, interfaceColumns, uploadFolderColumns } from '~/configs';
 
 const SapfinPage = () => {
   const dispatch = useAppDispatch();
-  const { enqueueSnackbar } = useSnackbar();
 
   const [sourceDataList, setSourceDataList] = useState<Source[]>([]);
   const [sourceOptions, setSourceOptions] = useState<SourceOptionsType[]>([]);
@@ -278,10 +277,22 @@ const SapfinPage = () => {
         </Grid>
 
         <Grid item xs={1} container direction='column' alignItems='center' justifyContent='center'>
-          <Button sx={{ mb: 1 }} variant='contained' onClick={onMoveToUploadFolder} disabled={!enableRightButton}>
+          <Button
+            data-testid='move-to-upload'
+            sx={{ mb: 1 }}
+            variant='contained'
+            onClick={onMoveToUploadFolder}
+            disabled={!enableRightButton}
+          >
             <ArrowForwardIosIcon />
           </Button>
-          <Button sx={{ mt: 1 }} variant='contained' onClick={onMoveBack} disabled={!enableLeftButton}>
+          <Button
+            data-testid='move-back'
+            sx={{ mt: 1 }}
+            variant='contained'
+            onClick={onMoveBack}
+            disabled={!enableLeftButton}
+          >
             <ArrowBackIosNewIcon />
           </Button>
         </Grid>
