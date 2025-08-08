@@ -208,14 +208,24 @@ describe('Epayment service', () => {
   });
 
   it('should confirm file', async () => {
-    mockApiPost.mockResolvedValueOnce([{ ok: true }]);
-    const res = (await confirmFile()) as Array<{ ok: boolean }>;
-    expect(res[0].ok).toBe(true);
+    mockApiPost.mockResolvedValueOnce(['CSV and XML files are submitted to SAPFIN']);
+    const res = (await confirmFile(
+      '/apps/pentaho_data/sap-portal/temp/DBS/',
+      '/apps/pentaho_data/sap-portal/output-csv/DBS/0039007442/',
+      '0039007442',
+      'SINPOO01XXXX.CASP_MT940.D220419045527.txt',
+    )) as unknown as Array<string>;
+    expect(res[0]).toBe('CSV and XML files are submitted to SAPFIN');
   });
 
   it('should handle error confirm file', async () => {
     mockApiPost.mockRejectedValueOnce(new Error('error'));
-    const res = await confirmFile();
-    expect(res).toEqual([]);
+    const res = await confirmFile(
+      '/apps/pentaho_data/sap-portal/temp/DBS/',
+      '/apps/pentaho_data/sap-portal/output-csv/DBS/0039007442/',
+      '0039007442',
+      'SINPOO01XXXX.CASP_MT940.D220419045527.txt',
+    );
+    expect(res).toEqual('');
   });
 });
