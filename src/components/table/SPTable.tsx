@@ -13,6 +13,7 @@ import {
   Checkbox,
   Pagination,
   PaginationItem,
+  SxProps,
 } from '@mui/material';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
@@ -21,6 +22,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import DescriptionIcon from '@mui/icons-material/Description';
 
 import type { ColumnConfig, TableProps } from '~/types';
+import { STATUS_STYLES } from '~/constants';
 
 function SPTable<T extends { id: string | number }>({
   columns,
@@ -47,10 +49,6 @@ function SPTable<T extends { id: string | number }>({
     setPage(1);
   };
 
-  const handleChange = (row: T, fieldName: string, value: boolean, event: any) => {
-    onChange?.(row, value, fieldName, event);
-  };
-
   const handleRowClick = (row: T) => {
     let newSelected = [row.id];
     if (selectable === 'single') {
@@ -62,58 +60,27 @@ function SPTable<T extends { id: string | number }>({
     }
   };
 
-  const handleIconclick = (row: T, fieldName: string, event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleIconClick = (row: T, fieldName: string, event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(row, fieldName, event);
   };
 
-  const getBackgroundStatus = (value: string) => {
-    let backgroundStatus = {};
-    switch (value) {
-      case 'Matched':
-        backgroundStatus = {
-          backgroundColor: 'rgb(220, 252, 231)',
-          color: '#047857',
-          py: 0.5,
-          px: 1.5,
-          fontWeight: 500,
-        };
-        break;
-      case 'Awaiting Confirmation':
-        backgroundStatus = {
-          backgroundColor: 'rgba(254, 249, 195, 1)',
-          color: 'rgba(133, 77, 14, 1)',
-          py: 0.5,
-          px: 1.5,
-          fontWeight: 500,
-        };
-        break;
-      case 'Ready':
-        backgroundStatus = {
-          backgroundColor: 'rgba(213, 232, 255, 1)',
-          color: 'rgba(0, 75, 160, 1)',
-          py: 0.5,
-          px: 1.5,
-          fontWeight: 500,
-        };
-        break;
+  const getBackgroundStatus = (value: string): SxProps => {
+    return STATUS_STYLES[value] || {};
+  };
+
+  const getIcon = (iconType?: string) => {
+    switch (iconType) {
+      case 'folder':
+        return <FolderIcon sx={{ color: '#fbc02d', pr: 1, fontSize: 32 }} />;
+      case 'paper':
+        return <DescriptionIcon color='action' sx={{ pr: 1, fontSize: 32 }} />;
       default:
-        break;
+        return null;
     }
-    return backgroundStatus;
   };
 
   const renderCellContent = (row: T, col: ColumnConfig<T>): React.ReactNode => {
-    let icons = null;
-    switch (col.iconType) {
-      case 'folder':
-        icons = <FolderIcon sx={{ color: '#fbc02d', pr: 1, fontSize: 32 }} />;
-        break;
-      case 'paper':
-        icons = <DescriptionIcon color='action' sx={{ pr: 1, fontSize: 32 }} />;
-        break;
-      default:
-        break;
-    }
+    const icons = getIcon(col.iconType);
     switch (col.type) {
       case 'text':
         return (
@@ -140,7 +107,7 @@ function SPTable<T extends { id: string | number }>({
             className='warningIcon'
             color='warning'
             onClick={(event) => {
-              handleIconclick(row, String(col.field), event);
+              handleIconClick(row, String(col.field), event);
             }}
             data-testid={`warning_icon_${row.id}`}
           >
@@ -152,7 +119,7 @@ function SPTable<T extends { id: string | number }>({
           <IconButton
             color='primary'
             onClick={(event) => {
-              handleIconclick(row, String(col.field), event);
+              handleIconClick(row, String(col.field), event);
             }}
             data-testid={`download_${row.id}`}
           >
@@ -165,7 +132,7 @@ function SPTable<T extends { id: string | number }>({
             <IconButton
               color='primary'
               onClick={(event) => {
-                handleIconclick(row, `${String(col.field)}_primary`, event);
+                handleIconClick(row, `${String(col.field)}_primary`, event);
               }}
               sx={{ m: 0, p: 0, mr: 2 }}
               data-testid={`primary_${row.id}`}
@@ -175,7 +142,7 @@ function SPTable<T extends { id: string | number }>({
             <IconButton
               color='warning'
               onClick={(event) => {
-                handleIconclick(row, `${String(col.field)}_warning`, event);
+                handleIconClick(row, `${String(col.field)}_warning`, event);
               }}
               sx={{ m: 0, p: 0, ml: 2 }}
               data-testid={`warning_${row.id}`}
@@ -186,7 +153,7 @@ function SPTable<T extends { id: string | number }>({
         );
       case 'textCheckbox': {
         const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-          handleChange?.(row, String(col.field), event.target.checked, event);
+          onChange?.(row, event.target.checked, String(col.field), event);
         };
         return (
           <Box display='flex' alignItems='center' justifyContent='space-between' width='100%'>

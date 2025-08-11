@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Box, InputLabel, List, ListItemButton, ListItemText, Menu, TextField } from '@mui/material';
 import { LocalizationProvider, DateCalendar } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -20,6 +20,7 @@ import { Button, Typography } from '..';
 
 import type { CalendarProps } from '~/types';
 import { predefinedOptions } from '~/configs/calendar.config';
+import { DATE_FORMAT, DATE_REGEX, MAX_YEAR, MESSAGES, MIN_YEAR } from '~/constants';
 
 const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, defaultToDate = null, onChange }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -30,15 +31,15 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
   const [endDate, setEndDate] = useState<Date | null>(fromDate);
   const [value, setValue] = useState<string | null>('');
   const open = Boolean(anchorEl);
-  const today = new Date();
+  const today = useMemo(() => new Date(), []);
 
   const displayDate = () => {
     let value = '';
     if (fromDate && toDate) {
       if (isSameDay(fromDate, toDate)) {
-        value = format(toDate, 'yyyy-MM-dd');
+        value = format(toDate, DATE_FORMAT);
       } else {
-        value = `${format(fromDate, 'yyyy-MM-dd')} / ${format(toDate, 'yyyy-MM-dd')}`;
+        value = `${format(fromDate, DATE_FORMAT)} / ${format(toDate, DATE_FORMAT)}`;
       }
     }
     return value;
@@ -173,42 +174,42 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
     );
   };
 
+  const renderRangeCalendar = () => (
+    <Box sx={{ background: '#deedf7', border: '1px solid #aed0ea', borderRadius: 2 }} m={1} p={1}>
+      <Box sx={{ display: 'flex' }}>
+        <Box>
+          <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
+            Start Date
+          </Typography>
+          <DateCalendar
+            value={startDate}
+            onChange={(event) => handleCalendarChange('startDate', event)}
+            sx={{ background: 'white', border: '1px solid #dddddd', borderRadius: 2, my: 1 }}
+          />
+        </Box>
+        <Box marginLeft={1}>
+          <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
+            End Date
+          </Typography>
+          <DateCalendar
+            value={endDate}
+            onChange={(event) => handleCalendarChange('endDate', event)}
+            sx={{ background: 'white', border: '1px solid #dddddd', borderRadius: 2, my: 1 }}
+          />
+        </Box>
+      </Box>
+      {renderButton()}
+    </Box>
+  );
+
   const renderCalendar = (selection: string) => {
     switch (selection) {
       case 'specificDate':
-        return calendar(selection);
       case 'oneYearBeforeDate':
-        return calendar(selection);
       case 'oneYearAfterDate':
         return calendar(selection);
       case 'dateRange':
-        return (
-          <Box sx={{ background: '#deedf7', border: '1px solid #aed0ea', borderRadius: 2 }} m={1} p={1}>
-            <Box sx={{ display: 'flex' }}>
-              <Box>
-                <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                  Start Date
-                </Typography>
-                <DateCalendar
-                  value={startDate}
-                  onChange={(event) => handleCalendarChange('startDate', event)}
-                  sx={{ background: 'white', border: '1px solid #dddddd', borderRadius: 2, my: 1 }}
-                />
-              </Box>
-              <Box marginLeft={1}>
-                <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                  End Date
-                </Typography>
-                <DateCalendar
-                  value={endDate}
-                  onChange={(event) => handleCalendarChange('endDate', event)}
-                  sx={{ background: 'white', border: '1px solid #dddddd', borderRadius: 2, my: 1 }}
-                />
-              </Box>
-            </Box>
-            {renderButton()}
-          </Box>
-        );
+        return renderRangeCalendar();
       default:
         return;
     }
@@ -221,20 +222,20 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
 
   const onInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const rawValue = event.target.value.trim();
-    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    const dateRegex = DATE_REGEX;
     let fromStr = '';
     let toStr = '';
     if (rawValue.includes(' / ')) {
       const parts = rawValue.split(' / ').map((s) => s.trim());
       if (parts.length !== 2 || !dateRegex.test(parts[0]) || !dateRegex.test(parts[1])) {
-        enqueueSnackbar('Invalid format. Correct: YYYY-MM-DD / YYYY-MM-DD or YYYY-MM-DD', { variant: 'warning' });
+        enqueueSnackbar(MESSAGES.CALENDAR.INVALID_FORMAT, { variant: 'warning' });
         setValue(displayDate);
         return;
       }
       [fromStr, toStr] = parts;
     } else {
       if (!dateRegex.test(rawValue)) {
-        enqueueSnackbar('Invalid format. Correct: YYYY-MM-DD / YYYY-MM-DD or YYYY-MM-DD', { variant: 'warning' });
+        enqueueSnackbar(MESSAGES.CALENDAR.INVALID_FORMAT, { variant: 'warning' });
         setValue(displayDate);
         return;
       }
@@ -246,20 +247,20 @@ const SPCalendar: React.FC<CalendarProps> = ({ label, defaultFromDate = null, de
     const isValidDate = (date: Date) => !isNaN(date.getTime());
     const isValidYear = (date: Date) => {
       const year = date.getFullYear();
-      return year >= 1900 && year <= 2100;
+      return year >= MIN_YEAR && year <= MAX_YEAR;
     };
     if (!isValidDate(fDate) || !isValidDate(tDate)) {
-      enqueueSnackbar('Invalid date', { variant: 'warning' });
+      enqueueSnackbar(MESSAGES.CALENDAR.INVALID_DATE, { variant: 'warning' });
       setValue(displayDate);
       return;
     }
     if (!isValidYear(fDate) || !isValidYear(tDate)) {
-      enqueueSnackbar('Invalid year only accepts 1900 - 2100', { variant: 'warning' });
+      enqueueSnackbar(MESSAGES.CALENDAR.INVALID_YEAR, { variant: 'warning' });
       setValue(displayDate);
       return;
     }
     if (fDate > tDate) {
-      enqueueSnackbar('Start date must be before or equal to end date', { variant: 'warning' });
+      enqueueSnackbar(MESSAGES.CALENDAR.INVALID_RANGE, { variant: 'warning' });
       setValue(displayDate);
       return;
     }

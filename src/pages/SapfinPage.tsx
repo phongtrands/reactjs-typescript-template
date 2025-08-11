@@ -16,6 +16,7 @@ import { openPopup } from '~/redux';
 import { downloadFile, getDataSources, getFiles, loadings, rejectFile, validations } from '~/services';
 import { arrayToMultilineString } from '~/utils';
 import { fileColumns, interfaceColumns, uploadFolderColumns } from '~/configs';
+import { MESSAGES, POPUP_MESSAGES } from '~/constants';
 
 const SapfinPage = () => {
   const dispatch = useAppDispatch();
@@ -117,18 +118,18 @@ const SapfinPage = () => {
           setFileList(file);
         });
       }
-      enqueueSnackbar('Reject data successfully', { variant: 'success' });
+      enqueueSnackbar(MESSAGES.FILE.REJECT_SUCCESS, { variant: 'success' });
       return;
     }
-    enqueueSnackbar('Reject data failed', { variant: 'error' });
+    enqueueSnackbar(MESSAGES.FILE.REJECT_FAILED, { variant: 'error' });
     return;
   };
 
   const handleReject = async () => {
     dispatch(
       openPopup({
-        title: 'Files Reject Confirmation',
-        content: 'Do you want to reject these files ?',
+        title: POPUP_MESSAGES.FILE_REJECT.TITLE,
+        content: POPUP_MESSAGES.FILE_REJECT.CONTENT,
         onOk: handleOnOkReject,
       }),
     );
@@ -137,10 +138,10 @@ const SapfinPage = () => {
   const handleDownload = async () => {
     const response = await downloadFile(checkedFileList);
     if (response) {
-      enqueueSnackbar('Download data successfully', { variant: 'success' });
+      enqueueSnackbar(MESSAGES.FILE.DOWNLOAD_SUCCESS, { variant: 'success' });
       return;
     }
-    enqueueSnackbar('Download data failed', { variant: 'error' });
+    enqueueSnackbar(MESSAGES.FILE.DOWNLOAD_FAILED, { variant: 'error' });
     return;
   };
 
@@ -150,9 +151,9 @@ const SapfinPage = () => {
       setSAPResponse(arrayToMultilineString(notes));
     }
     if (success) {
-      enqueueSnackbar('Test run data completed with no error', { variant: 'success' });
+      enqueueSnackbar(MESSAGES.FILE.TEST_RUN_NO_ERROR, { variant: 'success' });
     } else {
-      enqueueSnackbar('Test run data completed with error', { variant: 'warning' });
+      enqueueSnackbar(MESSAGES.FILE.TEST_RUN_WITH_ERROR, { variant: 'warning' });
     }
     return;
   };
@@ -163,9 +164,9 @@ const SapfinPage = () => {
       setSAPResponse(arrayToMultilineString(notes));
     }
     if (success) {
-      enqueueSnackbar('Actual run data completed with no error', { variant: 'success' });
+      enqueueSnackbar(MESSAGES.FILE.ACTUAL_RUN_NO_ERROR, { variant: 'success' });
     } else {
-      enqueueSnackbar('Actual run data completed with error', { variant: 'warning' });
+      enqueueSnackbar(MESSAGES.FILE.ACTUAL_RUN_WITH_ERROR, { variant: 'warning' });
     }
     return;
   };
@@ -173,8 +174,8 @@ const SapfinPage = () => {
   const handleActualRun = () => {
     dispatch(
       openPopup({
-        title: 'File Run Confirmation',
-        content: 'Do you want to actual run these files ?',
+        title: POPUP_MESSAGES.FILE_ACTUAL_RUN.TITLE,
+        content: POPUP_MESSAGES.FILE_ACTUAL_RUN.CONTENT,
         onOk: handleOnOkActualRun,
       }),
     );

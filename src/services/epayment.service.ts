@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-import { API_URLS } from '~/constants';
+import { API_URLS, DATE_FORMAT } from '~/constants';
 import type {
   Accounts,
   Banks,
@@ -68,8 +68,8 @@ export const getMT940Table = async (
     const response = await api.get<MT940[]>(API_URLS.MT940, {
       bankName,
       bankAccountNo: accountNo,
-      fromDate: format(fromDate, 'yyyy-MM-dd'),
-      toDate: format(toDate, 'yyyy-MM-dd'),
+      fromDate: format(fromDate, DATE_FORMAT),
+      toDate: format(toDate, DATE_FORMAT),
     });
     return addIdToArray(response, 'mt940');
   } catch (error) {
@@ -88,8 +88,8 @@ export const getHostFileTable = async (
     const response = await api.get<HostFile[]>(API_URLS.HOST_FILES, {
       bankName: bankName,
       bankAccountNo: accountNo,
-      fromDate: format(fromDate, 'yyyy-MM-dd'),
-      toDate: format(toDate, 'yyyy-MM-dd'),
+      fromDate: format(fromDate, DATE_FORMAT),
+      toDate: format(toDate, DATE_FORMAT),
     });
     return addIdToArray(response, 'host_file');
   } catch (error) {

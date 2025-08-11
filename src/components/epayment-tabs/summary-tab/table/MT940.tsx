@@ -3,6 +3,7 @@ import React from 'react';
 
 import { Table } from '~/components';
 import { EPAYMENT_TAB, EXPORT_TYPE, mt940Columns } from '~/configs';
+import { MESSAGES } from '~/constants';
 import { changeSelectedFile, changeTab } from '~/redux';
 import { useAppDispatch, useAppSelector } from '~/redux/hook';
 import { exportCSVFile } from '~/services';
@@ -31,7 +32,7 @@ const Mt940: React.FC = () => {
         {
           const response = await exportCSVFile(EXPORT_TYPE.MT940_FILE, accountNo, row.fileName);
           if (response) {
-            enqueueSnackbar('File download successfully ', { variant: 'success' });
+            enqueueSnackbar(MESSAGES.FILE.DOWNLOAD_SUCCESS, { variant: 'success' });
           }
         }
         break;

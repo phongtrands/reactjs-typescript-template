@@ -15,6 +15,7 @@ import {
   getMatchingEpaymentTable,
   getMatchingNonEpaymentTable,
 } from '~/services';
+import { MESSAGES, POPUP_MESSAGES } from '~/constants';
 
 const MatchingTab: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -52,7 +53,7 @@ const MatchingTab: React.FC = () => {
   const onOkConfirm = async () => {
     const bank = banks.find((item) => item.bankName === bankName);
     if (!bank) {
-      enqueueSnackbar('Bank information not found.', { variant: 'error' });
+      enqueueSnackbar(MESSAGES.BANK.NOT_FOUND, { variant: 'error' });
       return;
     }
     const sapFromPath: string = bank.csvFilePathTmp;
@@ -67,8 +68,8 @@ const MatchingTab: React.FC = () => {
   const handleConfirm = () => {
     dispatch(
       openPopup({
-        title: 'Confirm File Submission',
-        content: 'Press OK to confirm ?',
+        title: POPUP_MESSAGES.FILE_CONFIRM.TITLE,
+        content: POPUP_MESSAGES.FILE_CONFIRM.CONTENT,
         onOk: onOkConfirm,
       }),
     );
@@ -77,7 +78,7 @@ const MatchingTab: React.FC = () => {
   const handleDowload = async (type: string) => {
     const response = await exportCSVFile(type, accountNo, fileName);
     if (response) {
-      enqueueSnackbar('File download successfully ', { variant: 'success' });
+      enqueueSnackbar(MESSAGES.FILE.DOWNLOAD_SUCCESS, { variant: 'success' });
     }
     return;
   };
@@ -86,12 +87,12 @@ const MatchingTab: React.FC = () => {
     const bankInfo = banks.find((bank) => bank.bankName === bankName);
     const fileStatus = mt940data.find((mt940) => mt940.fileName === fileName)?.sapfinStatus ?? '';
     if (!bankInfo) {
-      enqueueSnackbar('Bank information not found.', { variant: 'error' });
+      enqueueSnackbar(MESSAGES.BANK.NOT_FOUND, { variant: 'error' });
       return;
     }
     const response = await exportSapfinFile(bankInfo, fileName, accountNo, fileStatus);
     if (response) {
-      enqueueSnackbar('File download successfully ', { variant: 'success' });
+      enqueueSnackbar(MESSAGES.FILE.DOWNLOAD_SUCCESS, { variant: 'success' });
     }
     return;
   };

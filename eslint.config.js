@@ -39,8 +39,6 @@ export default tseslint.config(
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-non-null-assertion': 'warn',
-      '@typescript-eslint/consistent-type-imports': 'warn',
-
       'prettier/prettier': [
         'warn',
         {
@@ -63,7 +61,6 @@ export default tseslint.config(
           'newlines-between': 'always',
         },
       ],
-      // 'import/no-unresolved': 'error',
       'no-duplicate-imports': 'warn',
     },
   },

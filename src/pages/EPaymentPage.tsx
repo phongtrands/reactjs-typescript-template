@@ -64,7 +64,7 @@ const EPaymentPage = () => {
       icon: 'article',
     },
     {
-      label: 'Exception',
+      label: 'Exceptions',
       value: EPAYMENT_TAB.EXCEPTION,
       content: <ExceptionsTab />,
       isHidden: isHidden(EPAYMENT_TAB.EXCEPTION),

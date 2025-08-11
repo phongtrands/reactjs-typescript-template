@@ -142,7 +142,7 @@ describe('SapfinPage Component', () => {
     await act(async () => {
       fireEvent.click(downloadBtn);
     });
-    expect(mockEnqueue.mock.calls[0][0]).toBe('Download data successfully');
+    expect(mockEnqueue.mock.calls[0][0]).toBe('File download successfully');
   });
 
   test('Test Download Button with downloadFile return null', async () => {
@@ -158,7 +158,7 @@ describe('SapfinPage Component', () => {
     await act(async () => {
       fireEvent.click(downloadBtn);
     });
-    expect(mockEnqueue.mock.calls[0][0]).toBe('Download data failed');
+    expect(mockEnqueue.mock.calls[0][0]).toBe('File download failed');
   });
 
   test('Test Test Run Button', async () => {

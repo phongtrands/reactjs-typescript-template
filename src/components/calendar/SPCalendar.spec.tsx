@@ -211,7 +211,7 @@ describe(' SPCalendar Component', () => {
       fireEvent.change(input, { target: { value: '2024-08-01 / 2225-08-01' } });
       fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', charCode: 13 });
     });
-    expect(mockEnqueue.mock.calls[0][0]).toBe('Invalid year only accepts 1900 - 2100');
+    expect(mockEnqueue.mock.calls[0][0]).toBe('Invalid year. Only accepts 1900 - 2100');
   });
 
   test('Test change value manual with date Invalid format 2025-08-01 / 2024-08-01', async () => {

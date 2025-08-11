@@ -9,6 +9,7 @@ import { changeTab, updateExceptions } from '~/redux';
 import { EPAYMENT_TAB, exceptionsHostFileColumns, exceptionsMT940Columns, EXPORT_TYPE } from '~/configs';
 import type { ExceptionsHostFile, ExceptionsMT940, Search } from '~/types';
 import { exportCSVFile, getExceptionHostFileTable, getExceptionMT940Table } from '~/services';
+import { MESSAGES } from '~/constants';
 
 const ExceptionsTab: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -47,7 +48,7 @@ const ExceptionsTab: React.FC = () => {
     const exportType: string = isMT940 ? EXPORT_TYPE.EXCEPTION_MT940_FILE : EXPORT_TYPE.EXCEPTION_HOST_FILE;
     const response = await exportCSVFile(exportType, accountNo, fileName);
     if (response) {
-      enqueueSnackbar('File download successfully ', { variant: 'success' });
+      enqueueSnackbar(MESSAGES.FILE.DOWNLOAD_SUCCESS, { variant: 'success' });
     }
   };
 
